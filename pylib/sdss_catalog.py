@@ -30,6 +30,7 @@ class SDSSspec:
           self.thingid=0
 
       def read(self):
+      #2022-04-22 Fri
           # Define Data Directory
           self.fitsfilename=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
           self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
@@ -46,22 +47,14 @@ class SDSSspec:
           self.idlspec2dver=h['VERSCOMB']
           self.idstart=int(h['coeff0']/0.0001)
           self.idend=self.idstart+self.npix-1
+
+          # Reading FITS Image
           self.fits=fitsio.FITS(self.fitsfilename)
-          #self.flux=numpy.zeros(self.npix,numpy.float32)
-          #self.ivar=numpy.zeros(self.npix,numpy.float32)
-          #self.flux=self.fits[0].read(rows=[0,self.npix-1],columns=[self.fiber-1])
-          #self.flux=self.fits[0].read(columns=[0,self.npix-1],rows=[self.fiber-1])
-          #self.ivar=self.fits[1].read(columns=[self.fiber-1])
-          #self.mask=self.fits[2].read(columns=[self.fiber-1])
-          #self.mask=self.fits[3][self.fiber-1,:]
-          #self.flux=fits[1][self.fiber-1,:]
-          #self.ivar=self.fits[2][self.fiber-1,:]
-          #self.mask=self.fits[3][self.fiber-1,:]
-          self.flux=self.fits[1][551:551,0:2000]
-          self.ivar=self.fits[2][551:551,0:2000]
-          self.mask=self.fits[3][551:551,0:2000]
-          self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
+          self.flux=self.fits[0][self.fiber-1,:][0]
+          self.ivar=self.fits[1][self.fiber-1,:][0]
+          self.mask=self.fits[2][self.fiber-1,:][0]
           self.err=self.ivar
+          self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
       def write(self):
