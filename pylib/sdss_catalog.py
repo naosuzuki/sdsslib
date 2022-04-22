@@ -52,7 +52,7 @@ class SDSSspec:
           self.mask=self.fits[2][self.fiber-1,:]
           self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
           self.err=self.ivar
-          self.wid=int(hdulist[0].header['coeff0']/0.0001)+numpy.arange(self.npix)
+          self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
       def write(self):
       # Jun 12, 2012 (Tue) 3pm
