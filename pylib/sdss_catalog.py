@@ -46,7 +46,7 @@ class SDSSspec:
           self.idlspec2dver=h['VERSCOMB']
           self.idstart=int(h['coeff0']/0.0001)
           self.idend=self.idstart+self.npix-1
-          self.fits=fitsio.FITS(self.fitfilename)
+          self.fits=fitsio.FITS(self.fitsfilename)
           #d=          self.flux=hdulist[0].data[self.fiber-1,]
           #self.ivar=hdulist[1].data[self.fiber-1,]
           #self.mask=hdulist[2].data[self.fiber-1,]
