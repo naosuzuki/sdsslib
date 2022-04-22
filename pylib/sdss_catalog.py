@@ -47,6 +47,9 @@ class SDSSspec:
           self.idstart=int(h['coeff0']/0.0001)
           self.idend=self.idstart+self.npix-1
           self.fits=fitsio.FITS(self.fitsfilename)
+          self.flux=self.fits[0][self.fiber-1,:]
+          self.ivar=self.fits[1][self.fiber-1,:]
+          self.mask=self.fits[2][self.fiber-1,:]
           #d=          self.flux=hdulist[0].data[self.fiber-1,]
           #self.ivar=hdulist[1].data[self.fiber-1,]
           #self.mask=hdulist[2].data[self.fiber-1,]
