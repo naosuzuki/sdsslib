@@ -70,7 +70,7 @@ class SDSSspec:
             asciifilename=asciidir+'/spSpec-'+self.strplate+'-'+self.strmjd+'-000.dat'
           ofile=open(asciifilename,'w')
 
-          print asciifilename
+          print(asciifilename)
           for i in range(len(self.wid)):
              ofile.write("%10.4f"%(self.wave[i])+\
                           "%15.5e"%(self.flux[i])+\
