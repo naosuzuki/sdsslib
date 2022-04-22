@@ -8,6 +8,7 @@ import fitsio
 class SDSSspec:
       def __init__(self,plate,mjd,fiber):
           self.dr='DR17'
+          self.ver='v5_13_2'
           self.plate=plate
           self.mjd=mjd
           self.fiber=fiber
@@ -30,7 +31,7 @@ class SDSSspec:
 
       def read(self):
           # Define Data Directory
-          self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+\
+          self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+self.ver+'/'+\
           self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
           # Read FITS header
           h=fitsio.read_header(self.fitsfilename,ext=1)
