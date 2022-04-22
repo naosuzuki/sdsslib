@@ -47,11 +47,11 @@ class SDSSspec:
           self.idstart=int(h['coeff0']/0.0001)
           self.idend=self.idstart+self.npix-1
           fits=fitsio.FITS(self.fitsfilename)
-          self.flux=numpy.zeros(self.npix,numpy.float32)
-          self.ivar=numpy.zeros(self.npix,numpy.float32)
-          self.flux=fits[1][self.fiber-1,:]
-          self.ivar=fits[2][self.fiber-1,:]
-          self.mask=fits[3][self.fiber-1,:]
+          #self.flux=numpy.zeros(self.npix,numpy.float32)
+          #self.ivar=numpy.zeros(self.npix,numpy.float32)
+          self.flux=fits[1][self.fiber-1,]
+          self.ivar=fits[2][self.fiber-1,]
+          self.mask=fits[3][self.fiber-1,]
           self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
           self.err=self.ivar
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
