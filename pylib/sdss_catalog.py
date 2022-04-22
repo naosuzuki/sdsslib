@@ -34,7 +34,7 @@ class SDSSspec:
           self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+self.ver+'/'+\
           self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
           # Read FITS header
-          h=fitsio.read_header(self.fitsfilename,ext=1)
+          h=fitsio.read_header(self.fitsfilename,ext=0)
           self.nspec=h['NAXIS2']
 
           #h=fitsio.read_header(self.fitsfilename,ext=0)
