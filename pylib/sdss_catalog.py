@@ -50,10 +50,34 @@ class SDSSspec:
           self.flux=self.fits[0][self.fiber-1,:]
           self.ivar=self.fits[1][self.fiber-1,:]
           self.mask=self.fits[2][self.fiber-1,:]
-          #d=          self.flux=hdulist[0].data[self.fiber-1,]
-          #self.ivar=hdulist[1].data[self.fiber-1,]
-          #self.mask=hdulist[2].data[self.fiber-1,]
+          self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
+          self.err=self.ivar
+          self.wid=int(hdulist[0].header['coeff0']/0.0001)+numpy.arange(self.npix)
 
+      def write(self):
+      # Jun 12, 2012 (Tue) 3pm
+      # Write out ascii file
+          asciidir=os.environ['SPECTRO_REDUX']+'/'+self.ver+'/ascii/'+self.strplate
+          if(os.path.exists(asciidir)==False):
+            print asciidir,' directory does not exist'
+            os.mkdir(asciidir,0775)
+            os.chmod(asciidir,0775)
+
+          # Filter Out unnecessary files
+          if(self.fiber!=1000):
+            asciifilename=asciidir+'/spSpec-'+self.strplate+'-'+self.strmjd+'-'+self.strfiber+'.dat'
+          elif(self.fiber==1000):
+            asciifilename=asciidir+'/spSpec-'+self.strplate+'-'+self.strmjd+'-000.dat'
+          ofile=open(asciifilename,'w')
+
+          print asciifilename
+          for i in range(len(self.wid)):
+             ofile.write("%10.4f"%(self.wave[i])+\
+                          "%15.5e"%(self.flux[i])+\
+                          "%15.5e"%(self.ivar[i])+\
+                          "%15i"%(self.mask[i])+\
+                          "%15i"%(self.wid[i])+str("%2s"%('\n')))
+          ofile.close()
 
 class spall():
       def __init__(self):
