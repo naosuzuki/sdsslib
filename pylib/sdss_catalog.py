@@ -27,11 +27,13 @@ class SDSSspec:
 
       def read(self):
           # Define Data Directory
-          h=fitsio.read_header(self.fitstablename,ext=1)
+          self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+\
+          self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+          # Read FITS header
+          h=fitsio.read_header(self.fitsfilename,ext=1)
           self.nspec=h['NAXIS2']
 
-          self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
-          h=fitsio.read_header(self.fitsfilename,ext=0)
+          #h=fitsio.read_header(self.fitsfilename,ext=0)
           self.coeff0=h['coeff0']
           self.coeff1=h['coeff1']
           self.npix=h['naxis1']
