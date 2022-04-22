@@ -49,7 +49,7 @@ class SDSSspec:
           self.fits=fitsio.FITS(self.fitsfilename)
           #self.flux=numpy.zeros(self.npix,numpy.float32)
           #self.ivar=numpy.zeros(self.npix,numpy.float32)
-          self.flux=self.fits[1].read(rows[self.fiber-1])
+          self.flux=self.fits[1].read(rows=[self.fiber-1])
           #self.flux=fits[1][self.fiber-1,:]
           self.ivar=self.fits[2][self.fiber-1,:]
           self.mask=self.fits[3][self.fiber-1,:]
