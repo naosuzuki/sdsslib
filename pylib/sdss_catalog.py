@@ -51,6 +51,7 @@ class SDSSspec:
           self.ivar=self.fits[1][self.fiber-1,:]
           self.mask=self.fits[2][self.fiber-1,:]
           self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
+          print(self.wave)
           self.err=self.ivar
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
