@@ -40,14 +40,14 @@ class SDSSspec:
           #h=fitsio.read_header(self.fitsfilename,ext=0)
           self.coeff0=h['coeff0']
           self.coeff1=h['coeff1']
-          #self.npix=h['naxis1']
-          #self.airmass=h['airmass']
+          self.npix=h['naxis1']
+          self.airmass=h['airmass']
           #if(self.plate <=3509) : self.quality=hdulist[0].header['quality']
-          #self.exptime=h['exptime']
-          #self.nexp=h['nexp']/4
+          self.exptime=h['exptime']
+          self.nexp=h['nexp']/4
           self.idlspec2dver=h['VERSCOMB']
-          #self.idstart=int(h['coeff0']/0.0001)
-          #self.idend=self.idstart+self.npix-1
+          self.idstart=int(h['coeff0']/0.0001)
+          self.idend=self.idstart+self.npix-1
 
 class spall():
       def __init__(self):
