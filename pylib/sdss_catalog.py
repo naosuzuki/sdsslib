@@ -36,8 +36,6 @@ class SDSSspec:
           # Read FITS header
           h=fitsio.read_header(self.fitsfilename,ext=0)
           self.nspec=h['NAXIS2']
-
-          #h=fitsio.read_header(self.fitsfilename,ext=0)
           self.coeff0=h['coeff0']
           self.coeff1=h['coeff1']
           self.npix=h['naxis1']
@@ -48,6 +46,11 @@ class SDSSspec:
           self.idlspec2dver=h['VERSCOMB']
           self.idstart=int(h['coeff0']/0.0001)
           self.idend=self.idstart+self.npix-1
+          self.fits=fitsio.FITS(self.fitfilename)
+          #d=          self.flux=hdulist[0].data[self.fiber-1,]
+          #self.ivar=hdulist[1].data[self.fiber-1,]
+          #self.mask=hdulist[2].data[self.fiber-1,]
+
 
 class spall():
       def __init__(self):
