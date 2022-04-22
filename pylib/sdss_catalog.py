@@ -11,6 +11,9 @@ class SDSSspec:
           self.plate=plate
           self.mjd=mjd
           self.fiber=fiber
+          self.strplate=str(plate)
+          self.strmjd=str(mjd)
+          self.strfiber=str(fiber)
           self.radeg=0.0
           self.decdeg=0.0
           self.z=0.0
