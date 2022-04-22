@@ -9,9 +9,9 @@ class SDSSspec:
       def __init__(self,plate,mjd,fiber):
           self.dr='DR17'
           self.ver='v5_13_2'
-          self.plate=plate
-          self.mjd=mjd
-          self.fiber=fiber
+          self.plate=int(plate)
+          self.mjd=int(mjd)
+          self.fiber=int(fiber)
           self.strplate=str(plate)
           self.strmjd=str(mjd)
           self.strfiber=str(fiber)
@@ -49,8 +49,8 @@ class SDSSspec:
           fits=fitsio.FITS(self.fitsfilename)
           #self.flux=numpy.zeros(self.npix,numpy.float32)
           #self.ivar=numpy.zeros(self.npix,numpy.float32)
-          self.flux=fits[1][(self.fiber-1):(self.fiber-1),:]
-          self.ivar=fits[2][(self.fiber-1):(self.fiber-1),:]
+          self.flux=fits[1][self.fiber-1,:]
+          self.ivar=fits[2][self.fiber-1,:]
           self.mask=fits[3][self.fiber-1,:]
           self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
           self.err=self.ivar
