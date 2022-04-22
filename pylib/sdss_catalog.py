@@ -31,7 +31,7 @@ class SDSSspec:
 
       def read(self):
           # Define Data Directory
-          self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+self.ver+'/'+\
+          self.fitsfilename=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
           self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
           # Read FITS header
           h=fitsio.read_header(self.fitsfilename,ext=0)
