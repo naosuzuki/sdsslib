@@ -61,7 +61,7 @@ class SDSSspec:
           if(os.path.exists(asciidir)==False):
             print(asciidir,' directory does not exist')
             os.mkdir(asciidir,775)
-            os.chmod(asciidir,775)
+            #os.chmod(asciidir,775)
 
           # Filter Out unnecessary files
           if(self.fiber!=1000):
