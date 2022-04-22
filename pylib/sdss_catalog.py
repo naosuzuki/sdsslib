@@ -46,10 +46,10 @@ class SDSSspec:
           self.idlspec2dver=h['VERSCOMB']
           self.idstart=int(h['coeff0']/0.0001)
           self.idend=self.idstart+self.npix-1
-          self.fits=fitsio.FITS(self.fitsfilename)
-          self.flux=self.fits[1][self.fiber-1,:]
-          self.ivar=self.fits[2][self.fiber-1,:]
-          self.mask=self.fits[3][self.fiber-1,:]
+          fits=fitsio.FITS(self.fitsfilename)
+          self.flux=fits[1][self.fiber-1,:]
+          self.ivar=fits[2][self.fiber-1,:]
+          self.mask=fits[3][self.fiber-1,:]
           self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
           self.err=self.ivar
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
