@@ -5,11 +5,49 @@ import numpy
 import scipy
 import fitsio
 
+class SDSSspec:
+      def __init__(self,plate,mjd,fiber):
+          self.dr='DR17'
+          self.plate=plate
+          self.mjd=mjd
+          self.fiber=fiber
+          self.radeg=0.0
+          self.decdeg=0.0
+          self.z=0.0
+          self.zerr=0.0
+          self.zsource='zpipe'
+          self.zspzbest=0.0
+          self.zspzbesterr=0.0
+          self.airmass=1.0
+          self.alt=90.0
+          self.az=0.0
+          self.exptime=0.0
+          self.nexp=0
+          self.thingid=0
+
+      def read(self):
+          # Define Data Directory
+          h=fitsio.read_header(self.fitstablename,ext=1)
+          self.nspec=h['NAXIS2']
+
+          self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+          h=fitsio.read_header(self.fitsfilename,ext=0)
+          self.coeff0=h['coeff0']
+          self.coeff1=h['coeff1']
+          self.npix=h['naxis1']
+          self.airmass=h['airmass']
+          #if(self.plate <=3509) : self.quality=hdulist[0].header['quality']
+          self.exptime=h['exptime']
+          self.nexp=h['nexp']/4
+          self.idlspec2dver=h['VERSCOMB']
+          self.idstart=int(h['coeff0']/0.0001)
+          self.idend=self.idstart+self.npix-1
+
 class spall():
       def __init__(self):
-          self.platelist=[]
-          self.mjdlist=[]
-          self.fiberlist=[]
+          #self.platelist=[]
+          #self.mjdlist=[]
+          #self.fiberlist=[]
           self.version='v5_13_2'
           self.dr='DR17'
           self.fitstablename=os.environ['SPECTRO_REDUX']+'spAll-'+self.version+'.fits'
