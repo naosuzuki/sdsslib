@@ -58,15 +58,12 @@ class SDSSspec:
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
       def write(self):
-      # Jun 12, 2012 (Tue) 3pm
+      # Jun 12, 2012 (Tue) 3pm : Apr 22, 2022 (Fri) 22:52
       # Write out ascii file
           asciidir=os.environ['SPECTRO_REDUX']+self.ver+'/ascii/'+self.strplate
           if(os.path.exists(asciidir)==False):
-            print(asciidir,' directory does not exist')
-            #os.mkdir(asciidir,775)
-            #os.chmod(asciidir,777)
+            #print(asciidir,' directory does not exist')
             os.mkdir(asciidir)
-            #os.chmod(asciidir)
 
           # Filter Out unnecessary files
           if(self.fiber!=1000):
@@ -75,7 +72,7 @@ class SDSSspec:
             asciifilename=asciidir+'/spSpec-'+self.strplate+'-'+self.strmjd+'-000.dat'
           ofile=open(asciifilename,'w')
 
-          print(asciifilename)
+          #print(asciifilename)
           for i in range(len(self.wid)):
              ofile.write("%10.4f"%(self.wave[i])+\
                           "%15.5e"%(self.flux[i])+\
