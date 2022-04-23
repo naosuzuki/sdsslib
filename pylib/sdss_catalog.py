@@ -123,11 +123,16 @@ class spall():
           'PSFMAG','PSFMAGERR','THING_ID',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
           'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR','EXTINCTION',\
-          'AIRMASS','OBJID','Z','Z_ERR']
+          'AIRMASS','OBJID','Z','Z_ERR',\
+          'SN_MEDIAN','SN_MEDIAN_ALL',\
+          'ELODIE_FILENAME','ELODIE_OBJECT','ELODIE_SPTYPE',\
+          'ELODIE_BV','ELODIE_FEH',\
+          'ELODIE_TEFF','ELODIE_LOGG','ELODIE_Z','ELODIE_Z_ERR']
           print('Reading ',self.fitstablename)
           print('Number of Rows is ',len(self.rows))
           d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
           #d=fitsio.read(fitstablename,columns=columns)
+
           self.platelist=d['PLATE']
           self.mjdlist=d['MJD']
           self.fiberlist=d['FIBERID']
@@ -170,4 +175,17 @@ class spall():
           self.bestobjidlist=d['OBJID']
           self.zspzbestlist=d['Z']
           self.zspzbesterrlist=d['Z_ERR']
+
+          self.sn_medianlist    =d['SN_MEDIAN']
+          self.sn_medianalllist =d['SN_MEDIAN_ALL']
+
+          self.elodie_filelist  =d['ELODIE_FILENAME']
+          self.elodie_objectlist=d['ELODIE_OBJECT']
+          self.elodie_sptypelist=d['ELODIE_SPTYPE']
+          self.elodie_bvlist    =d['ELODIE_BV']
+          self.elodie_fehlist   =d['ELODIE_FEH']
+          self.elodie_tefflist  =d['ELODIE_TEFF']
+          self.elodie_logglist  =d['ELODIE_LOGG']
+          self.elodie_zlist     =d['ELODIE_Z']
+          self.elodie_zerrlist  =d['ELODIE_Z_ERR']
           print('Reading spAll FITS file',self.version,' is done')
