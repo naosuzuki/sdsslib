@@ -63,8 +63,10 @@ class SDSSspec:
           asciidir=os.environ['SPECTRO_REDUX']+self.ver+'/ascii/'+self.strplate
           if(os.path.exists(asciidir)==False):
             print(asciidir,' directory does not exist')
-            os.mkdir(asciidir,775)
-            #os.chmod(asciidir,775)
+            #os.mkdir(asciidir,775)
+            #os.chmod(asciidir,777)
+            os.mkdir(asciidir)
+            #os.chmod(asciidir)
 
           # Filter Out unnecessary files
           if(self.fiber!=1000):
