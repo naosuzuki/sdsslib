@@ -84,7 +84,7 @@ class SDSSspec:
       def normalize_at7000(self):
           w6900id=38389
           w7000id=38451
-          w7l00id=38513
+          w7100id=38513
 
           nflux=self.flux[(w6900id-self.wid[0]):(w7100id-self.wid[0])]
           nivar=self.ivar[(w6900id-self.wid[0]):(w7100id-self.wid[0])]
