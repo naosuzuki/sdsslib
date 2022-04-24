@@ -86,8 +86,8 @@ class SDSSspec:
           w7000id=38451
           w7l00id=38513
 
-          nflux=self.flux[(w6900id-self.wd[0]+1):(w7100id-self.wd[0]+1)]
-          nivar=self.ivar[(w6900id-self.wd[0]+1):(w7100id-self.wd[0]+1)]
+          nflux=self.flux[(w6900id-self.wd[0]):(w7100id-self.wd[0])]
+          nivar=self.ivar[(w6900id-self.wd[0]):(w7100id-self.wd[0])]
           nflag=numpy.ones(w7100id-w6900id+1,dtype=numpy.int)
           # Flag Good Data Points
           nflag=numpy.where(nivar>0.0,1,0)
