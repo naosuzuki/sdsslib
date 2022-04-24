@@ -81,6 +81,34 @@ class SDSSspec:
                           "%15i"%(self.wid[i])+str("%2s"%('\n')))
           ofile.close()
 
+      def normalize_at7000(self):
+          w6900id=38389
+          w7000id=38451
+          w7l00id=38513
+
+          nflux=self.flux[(w6900id-self.wd[0]+1):(w7100id-self.wd[0]+1)]
+          nivar=self.ivar[(w6900id-self.wd[0]+1):(w7100id-self.wd[0]+1)]
+          nflag=numpy.ones(w7100id-w6900id+1,dtype=numpy.int)
+          # Flag Good Data Points
+          nflag=numpy.where(nivar>0.0,1,0)
+          # Flag S/N > 1 :  numpy.where (condition, yes, no)
+          nflag=numpy.where(nflux*numpy.sqrt(nivar) > 1.0,1,0)
+          # Extract Good Data Points : extract from nflux with nflag
+          nflux_good=numpy.compress(nflag,nflux)
+
+          # Taking Median : 
+          if(len(nflux_good) > 5):
+             nfactor=numpy.median(nflux_good)
+             nfactor_std=numpy.std(nflux_good)
+          elif(len(nflux) > 1):
+             nfactor=numpy.median(nflux)
+             nfactor_std=numpy.std(nflux)
+          else:
+              nfactor=1.0
+              nfactor_std=0.0
+
+          self.flux/=nfactor
+
 class spall():
       def __init__(self):
           #self.platelist=[]
