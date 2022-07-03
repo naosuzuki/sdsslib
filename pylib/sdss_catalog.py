@@ -5,6 +5,9 @@ import numpy
 import scipy
 import fitsio
 
+## Written by Nao Suzuki
+# 2022-07-03 (Sun) Update
+
 class SDSSspec:
       def __init__(self,plate,mjd,fiber):
           self.dr='DR17'
@@ -165,6 +168,10 @@ class spall():
           self.platelist=d['PLATE']
           self.mjdlist=d['MJD']
           self.fiberlist=d['FIBERID']
+
+          self.ralist=d['RA']
+          self.declist=d['DEC']
+
           self.platequalitylist=d['PLATEQUALITY']
           self.zoffsetlist=d['ZOFFSET']
           self.zwarninglist=d['ZWARNING']
