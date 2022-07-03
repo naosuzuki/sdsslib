@@ -143,6 +143,7 @@ class spall():
 
       def read(self):
           columns=['PLATE','MJD','FIBERID',\
+          'RA','DEC',\
           'PLATEQUALITY','ZOFFSET','ZWARNING',\
           'LAMBDA_EFF','XFOCAL','YFOCAL','PLUG_RA','PLUG_DEC',\
           'OBJTYPE','CLASS','SUBCLASS','SPECPRIMARY',\
