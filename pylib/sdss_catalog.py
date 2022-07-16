@@ -326,22 +326,22 @@ class DR8specobj():
 
 class DR8photomatchplate():
       def __init__(self):
-          self.platelist=[]
-          self.mjdlist=[]
-          self.fiberlist=[]
+          self.version='dr8'
+          self.dr='DR8'
+          self.fitstablename=os.environ['SPECTRO_REDUX']+'photoMatchPlate-dr8.fits'
+          h=fitsio.read_header(self.fitstablename,ext=1)
+          self.nspec=h['NAXIS2']
+          self.rows=numpy.arange(self.nspec)
 
       def read(self):
-          dr8rootdir=os.environ['BOSS_SPECTRO_REDUX']+'/'+'DR8'
-          fitstablename=dr8rootdir+'/photoMatchPlate-dr8.fits'
-          hdulist=pyfits.open(fitstablename,memmap=True)
-          tbdata=hdulist[1].data
-          tbheader=hdulist[1].header
-          hdulist.close()
+          d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
+          columns=['RA','DEC','OBJID','THING_ID']
 
-          self.ralist=tbdata.field('RA')
-          self.declist=tbdata.field('DEC')
-          self.thing_idlist=tbdata.field('THING_ID')
-          self.objidlist=tbdata.field('OBJID')
+          self.ralist=d['RA']
+          self.declist=d['DEC']
+          self.bestobjidlist=d['OBJID']
+          self.thing_idlist=d['THING_ID']
+          self.objidlist=d['OBJID']
 
 '''
       def read(self):
