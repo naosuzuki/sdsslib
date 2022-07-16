@@ -167,4 +167,3 @@ class spPlate():
           self.xyradiuslist=numpy.sqrt(self.xfocallist**2+self.yfocallist**2)
           self.maglist=tbdata.field('MAG')
           hdulist.close()
-
