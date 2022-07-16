@@ -232,13 +232,122 @@ class spall():
 
 class DR8specobj():
       def __init__(self):
+          self.version='dr8'
+          self.dr='DR8'
+          self.fitstablename=os.environ['SPECTRO_REDUX']+'specObj-dr8.fits'
+          h=fitsio.read_header(self.fitstablename,ext=1)
+          self.nspec=h['NAXIS2']
+          self.rows=numpy.arange(self.nspec)
+
+      def read(self):
+          columns=['PLATE','MJD','FIBERID',\
+          'PLUG_RA','PLUG_DEC',\
+          'ZWARNING',\
+          'XFOCAL','YFOCAL','PLUG_RA','PLUG_DEC',\
+          'OBJTYPE','CLASS','SUBCLASS','SPECPRIMARY',\
+          'SPEC1_G','SPEC1_R','SPEC1_I',\
+          'SPEC2_G','SPEC2_R','SPEC2_I',\
+          'SPECTROFLUX','SPECTROFLUX_IVAR',\
+          'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR',\
+          'OBJID','Z','Z_ERR',\
+          'SN_MEDIAN',\
+          'ELODIE_FILENAME','ELODIE_OBJECT','ELODIE_SPTYPE',\
+          'ELODIE_BV','ELODIE_FEH',\
+          'ELODIE_TEFF','ELODIE_LOGG','ELODIE_Z','ELODIE_Z_ERR']
+          print('Reading ',self.fitstablename)
+          print('Number of Rows is ',len(self.rows))
+          d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
+
+          self.platelist=d['PLATE']
+          self.mjdlist=d['MJD']
+          self.fiberlist=d['FIBERID']
+
+          self.ralist=d['PLUG_RA']
+          self.declist=d['PLUG_DEC']
+
+          self.zwarninglist=d['ZWARNING']
+
+          self.xfocallist=d['XFOCAL']
+          self.yfocallist=d['YFOCAL']
+
+          self.plug_ralist=d['PLUG_RA']
+          self.plug_declist=d['PLUG_DEC']
+
+          self.objtypelist=d['OBJTYPE']
+          self.classlist=d['CLASS']
+          self.subclasslist=d['SUBCLASS']
+          self.specprimarylist=d['SPECPRIMARY']
+
+          self.spec1glist=d['SPEC1_G']
+          self.spec1rlist=d['SPEC1_R']
+          self.spec1ilist=d['SPEC1_I']
+
+          self.spec2glist=d['SPEC2_G']
+          self.spec2rlist=d['SPEC2_R']
+          self.spec2ilist=d['SPEC2_I']
+
+#          'PLATEQUALITY','ZOFFSET',
+#          'PSFMAG','PSFMAGERR','THING_ID',\
+#          'CMODELMAG','CMODELMAGERR',\
+#          'EXTINCTION',\
+#          'AIRMASS',\
+#          'SN_MEDIAN_ALL',\
+#         self.platequalitylist=d['PLATEQUALITY']
+#         self.zoffsetlist=d['ZOFFSET']
+#         self.lambdaefflist=d['LAMBDA_EFF']
+#         self.psfmaglist   =d['PSFMAG']
+#         self.psfmagerrlist=d['PSFMAGERR']
+#         self.thing_idlist =d['THING_ID']
+#         self.cmodelmaglist   =d['CMODELMAG']
+#         self.cmodelmagerrlist=d['CMODELMAGERR']
+#         self.extinctionlist=d['EXTINCTION']
+#         self.airmasslist=d['AIRMASS']
+#         self.sn_medianalllist =d['SN_MEDIAN_ALL']
+
+          # DR8 and DR9 definition
+          self.spectrofluxlist=d['SPECTROFLUX']
+          self.spectroflux_ivarlist=d['SPECTROFLUX_IVAR']
+          self.spectrosynfluxlist=d['SPECTROSYNFLUX']
+          self.spectrosynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
+          self.bestobjidlist=d['OBJID']
+          self.zspzbestlist=d['Z']
+          self.zspzbesterrlist=d['Z_ERR']
+          self.sn_medianlist    =d['SN_MEDIAN']
+          self.elodie_filelist  =d['ELODIE_FILENAME']
+          self.elodie_objectlist=d['ELODIE_OBJECT']
+          self.elodie_sptypelist=d['ELODIE_SPTYPE']
+          self.elodie_bvlist    =d['ELODIE_BV']
+          self.elodie_fehlist   =d['ELODIE_FEH']
+          self.elodie_tefflist  =d['ELODIE_TEFF']
+          self.elodie_logglist  =d['ELODIE_LOGG']
+          self.elodie_zlist     =d['ELODIE_Z']
+          self.elodie_zerrlist  =d['ELODIE_Z_ERR']
+          print('Reading specObj FITS file',self.version,' is done')
+
+class DR8photomatchplate():
+      def __init__(self):
           self.platelist=[]
           self.mjdlist=[]
           self.fiberlist=[]
 
       def read(self):
-          dr8rootdir=os.environ['SPECTRO_REDUX']+'/'+'DR8'
-          fitstablename=dr8rootdir+'/specObj-dr8.fits'
+          dr8rootdir=os.environ['BOSS_SPECTRO_REDUX']+'/'+'DR8'
+          fitstablename=dr8rootdir+'/photoMatchPlate-dr8.fits'
+          hdulist=pyfits.open(fitstablename,memmap=True)
+          tbdata=hdulist[1].data
+          tbheader=hdulist[1].header
+          hdulist.close()
+
+          self.ralist=tbdata.field('RA')
+          self.declist=tbdata.field('DEC')
+          self.thing_idlist=tbdata.field('THING_ID')
+          self.objidlist=tbdata.field('OBJID')
+
+'''
+      def read(self):
+          #dr8rootdir=os.environ['SPECTRO_REDUX']+'/'+'DR8'
+          #dr8rootdir=os.environ['SPECTRO_REDUX']
+          #fitstablename=dr8rootdir+'/specObj-dr8.fits'
           hdulist=pyfits.open(fitstablename,memmap=True)
           specobj_tbdata=hdulist[1].data
           specobj_tbheader=hdulist[1].header
@@ -277,4 +386,4 @@ class DR8specobj():
           self.spec2glist=specobj_tbdata.field('SPEC2_G')
           self.spec2rlist=specobj_tbdata.field('SPEC2_R')
           self.spec2ilist=specobj_tbdata.field('SPEC2_I')
-
+'''
