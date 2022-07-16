@@ -237,7 +237,7 @@ class DR8specobj():
           self.fiberlist=[]
 
       def read(self):
-          dr8rootdir=os.environ['BOSS_SPECTRO_REDUX']+'/'+'DR8'
+          dr8rootdir=os.environ['SPECTRO_REDUX']+'/'+'DR8'
           fitstablename=dr8rootdir+'/specObj-dr8.fits'
           hdulist=pyfits.open(fitstablename,memmap=True)
           specobj_tbdata=hdulist[1].data
