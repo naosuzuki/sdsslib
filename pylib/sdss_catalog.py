@@ -6,6 +6,8 @@ import scipy
 import fitsio
 
 ## Written by Nao Suzuki
+
+# 2022-07-16 (Sat) DR8 is added
 # 2022-07-03 (Sun) Update
 
 class SDSSspec:
@@ -230,6 +232,7 @@ class spall():
           self.elodie_zerrlist  =d['ELODIE_Z_ERR']
           print('Reading spAll FITS file',self.version,' is done')
 
+# 2022-07-16 (Sat) : rewritten from sdss_data.py
 class DR8specobj():
       def __init__(self):
           self.version='dr8'
@@ -262,8 +265,8 @@ class DR8specobj():
           self.mjdlist=d['MJD']
           self.fiberlist=d['FIBERID']
 
-          self.ralist=d['PLUG_RA']
-          self.declist=d['PLUG_DEC']
+          #self.ralist=d['PLUG_RA']
+          #self.declist=d['PLUG_DEC']
 
           self.zwarninglist=d['ZWARNING']
 
@@ -286,6 +289,7 @@ class DR8specobj():
           self.spec2rlist=d['SPEC2_R']
           self.spec2ilist=d['SPEC2_I']
 
+# The following are missing from DR8 
 #          'PLATEQUALITY','ZOFFSET',
 #          'PSFMAG','PSFMAGERR','THING_ID',\
 #          'CMODELMAG','CMODELMAGERR',\
@@ -334,14 +338,36 @@ class DR8photomatchplate():
           self.rows=numpy.arange(self.nspec)
 
       def read(self):
-          d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
           columns=['RA','DEC','OBJID','THING_ID']
-
+          d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
           self.ralist=d['RA']
           self.declist=d['DEC']
           self.bestobjidlist=d['OBJID']
           self.thing_idlist=d['THING_ID']
           self.objidlist=d['OBJID']
+          del d
+
+# 2022-07-16 (Sat) : rewritten from sdss_data.py
+class DR8photoplate():
+      def __init__(self):
+          self.version='dr8'
+          self.dr='DR8'
+          self.fitstablename=os.environ['SPECTRO_REDUX']+'photoPlate-dr8.fits'
+          h=fitsio.read_header(self.fitstablename,ext=1)
+          self.nspec=h['NAXIS2']
+          self.rows=numpy.arange(self.nspec)
+
+      def read(self):
+          columns=['RA','DEC','PSFMAG','PSFMAGERR','CMODELMAG','CMODELMAGERR','THING_ID']
+          d=fitsio.read(self.fitstablename,columns=columns)
+          self.ralist=d['RA']
+          self.declist=d['DEC']
+          self.psfmaglist=d['PSFMAG']
+          self.psfmagerrlist=d['PSFMAGERR']
+          self.cmodelmaglist   =d['CMODELMAG']
+          self.cmodelmagerrlist=d['CMODELMAGERR']
+          self.thing_idlist=d['THING_ID']
+          del d
 
 '''
       def read(self):
