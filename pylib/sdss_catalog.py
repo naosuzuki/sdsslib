@@ -229,3 +229,52 @@ class spall():
           self.elodie_zlist     =d['ELODIE_Z']
           self.elodie_zerrlist  =d['ELODIE_Z_ERR']
           print('Reading spAll FITS file',self.version,' is done')
+
+class DR8specobj():
+      def __init__(self):
+          self.platelist=[]
+          self.mjdlist=[]
+          self.fiberlist=[]
+
+      def read(self):
+          dr8rootdir=os.environ['BOSS_SPECTRO_REDUX']+'/'+'DR8'
+          fitstablename=dr8rootdir+'/specObj-dr8.fits'
+          hdulist=pyfits.open(fitstablename,memmap=True)
+          specobj_tbdata=hdulist[1].data
+          specobj_tbheader=hdulist[1].header
+          hdulist.close()
+
+          self.platelist=specobj_tbdata.field('PLATE')
+          self.mjdlist=specobj_tbdata.field('MJD')
+          self.fiberlist=specobj_tbdata.field('FIBERID')
+
+          self.plug_ralist=specobj_tbdata.field('PLUG_RA')
+          self.plug_declist=specobj_tbdata.field('PLUG_DEC')
+
+          self.platerunlist=specobj_tbdata.field('PLATERUN')
+          self.objtypelist=specobj_tbdata.field('OBJTYPE')
+          self.classlist=specobj_tbdata.field('CLASS')
+          self.subclasslist=specobj_tbdata.field('SUBCLASS')
+
+          self.specprimarylist=specobj_tbdata.field('SPECPRIMARY')
+          self.spectrofluxlist=specobj_tbdata.field('SPECTROFLUX')
+          self.spectroflux_ivarlist=specobj_tbdata.field('SPECTROFLUX_IVAR')
+          self.spectrosynfluxlist=specobj_tbdata.field('SPECTROSYNFLUX')
+          self.spectrosynflux_ivarlist=specobj_tbdata.field('SPECTROSYNFLUX_IVAR')
+
+          self.bestobjidlist=specobj_tbdata.field('BESTOBJID')
+          self.zspzbestlist=specobj_tbdata.field('Z')
+          self.zspzbesterrlist=specobj_tbdata.field('Z_ERR')
+          self.zwarninglist=specobj_tbdata.field('ZWARNING')
+          self.xfocallist=specobj_tbdata.field('XFOCAL')
+          self.yfocallist=specobj_tbdata.field('YFOCAL')
+
+          # Recording S/N^2 / plage
+          self.spec1glist=specobj_tbdata.field('SPEC1_G')
+          self.spec1rlist=specobj_tbdata.field('SPEC1_R')
+          self.spec1ilist=specobj_tbdata.field('SPEC1_I')
+
+          self.spec2glist=specobj_tbdata.field('SPEC2_G')
+          self.spec2rlist=specobj_tbdata.field('SPEC2_R')
+          self.spec2ilist=specobj_tbdata.field('SPEC2_I')
+
