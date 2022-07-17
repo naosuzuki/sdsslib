@@ -247,7 +247,7 @@ class DR8specobj():
           'PLUG_RA','PLUG_DEC',\
           'ZWARNING',\
           'XFOCAL','YFOCAL','PLUG_RA','PLUG_DEC',\
-          'OBJTYPE','CLASS','SUBCLASS','SPECPRIMARY',\
+          'CLASS','SUBCLASS','SPECPRIMARY',\
           'SPEC1_G','SPEC1_R','SPEC1_I',\
           'SPEC2_G','SPEC2_R','SPEC2_I',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
@@ -258,17 +258,21 @@ class DR8specobj():
           'ELODIE_FILENAME','ELODIE_OBJECT','ELODIE_SPTYPE',\
           'ELODIE_BV','ELODIE_FEH',\
           'ELODIE_TEFF','ELODIE_LOGG','ELODIE_Z','ELODIE_Z_ERR']
+
+          if(self.dr=='DR8'): columns.append('OBJTYPE')
+          if(self.dr=='DR9'): columns.append('BOSS_SPECOBJ_ID')
+
           print('Reading ',self.fitstablename)
           print('Number of Rows is ',len(self.rows))
+          # Reading FITS TABLE
           d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
+
+          if(self.dr=='DR8'): self.objtypelist=d['OBJTYPE']
+          if(self.dr=='DR9'): self.boss_specobjidlist=d['BOSS_SPECOBJ_ID']
 
           self.platelist=d['PLATE']
           self.mjdlist=d['MJD']
           self.fiberlist=d['FIBERID']
-
-          #self.ralist=d['PLUG_RA']
-          #self.declist=d['PLUG_DEC']
-
           self.zwarninglist=d['ZWARNING']
 
           self.xfocallist=d['XFOCAL']
@@ -277,7 +281,6 @@ class DR8specobj():
           self.plug_ralist=d['PLUG_RA']
           self.plug_declist=d['PLUG_DEC']
 
-          self.objtypelist=d['OBJTYPE']
           self.classlist=d['CLASS']
           self.subclasslist=d['SUBCLASS']
           self.specprimarylist=d['SPECPRIMARY']
@@ -290,26 +293,6 @@ class DR8specobj():
           self.spec2rlist=d['SPEC2_R']
           self.spec2ilist=d['SPEC2_I']
 
-# The following are missing from DR8 
-#          'PLATEQUALITY','ZOFFSET',
-#          'PSFMAG','PSFMAGERR','THING_ID',\
-#          'CMODELMAG','CMODELMAGERR',\
-#          'EXTINCTION',\
-#          'AIRMASS',\
-#          'SN_MEDIAN_ALL',\
-#         self.platequalitylist=d['PLATEQUALITY']
-#         self.zoffsetlist=d['ZOFFSET']
-#         self.lambdaefflist=d['LAMBDA_EFF']
-#         self.psfmaglist   =d['PSFMAG']
-#         self.psfmagerrlist=d['PSFMAGERR']
-#         self.thing_idlist =d['THING_ID']
-#         self.cmodelmaglist   =d['CMODELMAG']
-#         self.cmodelmagerrlist=d['CMODELMAGERR']
-#         self.extinctionlist=d['EXTINCTION']
-#         self.airmasslist=d['AIRMASS']
-#         self.sn_medianalllist =d['SN_MEDIAN_ALL']
-
-          # DR8 and DR9 definition
           self.spectrofluxlist=d['SPECTROFLUX']
           self.spectroflux_ivarlist=d['SPECTROFLUX_IVAR']
           self.spectrosynfluxlist=d['SPECTROSYNFLUX']
