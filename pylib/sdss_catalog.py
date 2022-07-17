@@ -252,7 +252,7 @@ class DR8specobj():
           'SPEC2_G','SPEC2_R','SPEC2_I',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
           'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR',\
-          'OBJID','Z','Z_ERR',\
+          'BESTOBJID','Z','Z_ERR',\
           'SN_MEDIAN',\
           'ELODIE_FILENAME','ELODIE_OBJECT','ELODIE_SPTYPE',\
           'ELODIE_BV','ELODIE_FEH',\
@@ -313,7 +313,7 @@ class DR8specobj():
           self.spectroflux_ivarlist=d['SPECTROFLUX_IVAR']
           self.spectrosynfluxlist=d['SPECTROSYNFLUX']
           self.spectrosynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
-          self.bestobjidlist=d['OBJID']
+          self.bestobjidlist=d['BESTOBJID']
           self.zspzbestlist=d['Z']
           self.zspzbesterrlist=d['Z_ERR']
           self.sn_medianlist    =d['SN_MEDIAN']
@@ -358,7 +358,8 @@ class DR8photoplate():
           self.rows=numpy.arange(self.nspec)
 
       def read(self):
-          columns=['RA','DEC','PSFMAG','PSFMAGERR','CMODELMAG','CMODELMAGERR','THING_ID']
+          columns=['RA','DEC','PSFMAG','PSFMAGERR','CMODELMAG','CMODELMAGERR',\
+                   'THING_ID','OBJID']
           d=fitsio.read(self.fitstablename,columns=columns)
           self.ralist=d['RA']
           self.declist=d['DEC']
@@ -367,8 +368,8 @@ class DR8photoplate():
           self.cmodelmaglist   =d['CMODELMAG']
           self.cmodelmagerrlist=d['CMODELMAGERR']
           self.thing_idlist=d['THING_ID']
+          self.objidlist=d['OBJID']
           del d
-
 '''
       def read(self):
           #dr8rootdir=os.environ['SPECTRO_REDUX']+'/'+'DR8'
