@@ -252,7 +252,8 @@ class DR8specobj():
           'SPEC2_G','SPEC2_R','SPEC2_I',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
           'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR',\
-          'BESTOBJID','Z','Z_ERR',\
+          'SPECOBJID','ORIGOBJID','TARGETOBJID','BESTOBJID',\
+          'Z','Z_ERR',\
           'SN_MEDIAN',\
           'ELODIE_FILENAME','ELODIE_OBJECT','ELODIE_SPTYPE',\
           'ELODIE_BV','ELODIE_FEH',\
@@ -314,6 +315,11 @@ class DR8specobj():
           self.spectrosynfluxlist=d['SPECTROSYNFLUX']
           self.spectrosynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
           self.bestobjidlist=d['BESTOBJID']
+
+          self.specobjidlist=d['SPECOBJID']
+          self.targetobjidlist=d['TARGETOBJID']
+          self.origobjidlist=d['ORIGOBJID']
+
           self.zspzbestlist=d['Z']
           self.zspzbesterrlist=d['Z_ERR']
           self.sn_medianlist    =d['SN_MEDIAN']
