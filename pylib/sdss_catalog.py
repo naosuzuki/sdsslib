@@ -252,14 +252,17 @@ class DR8specobj():
           'SPEC2_G','SPEC2_R','SPEC2_I',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
           'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR',\
-          'SPECOBJID','ORIGOBJID','TARGETOBJID','BESTOBJID',\
+          'SPECOBJID','BESTOBJID',\
           'Z','Z_ERR',\
           'SN_MEDIAN',\
           'ELODIE_FILENAME','ELODIE_OBJECT','ELODIE_SPTYPE',\
           'ELODIE_BV','ELODIE_FEH',\
           'ELODIE_TEFF','ELODIE_LOGG','ELODIE_Z','ELODIE_Z_ERR']
 
-          if(self.dr=='DR8'): columns.append('OBJTYPE')
+          if(self.dr=='DR8'): 
+             columns.append('OBJTYPE')
+             columns.append('ORIGOBJID')
+             columns.append('TARGETOBJID')
           if(self.dr=='DR9'): columns.append('BOSS_SPECOBJ_ID')
 
           print('Reading ',self.fitstablename)
