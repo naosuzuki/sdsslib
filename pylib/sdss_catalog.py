@@ -316,9 +316,9 @@ class DR8specobj():
           self.spectrosynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
 
           self.bestobjidlist=d['BESTOBJID']
-          self.specobjidlist=d['SPECOBJID']
-          self.targetobjidlist=d['TARGETOBJID']
-          self.origobjidlist=d['ORIGOBJID']
+          #self.specobjidlist=d['SPECOBJID']
+          #self.targetobjidlist=d['TARGETOBJID']
+          #self.origobjidlist=d['ORIGOBJID']
 
           self.zspzbestlist=d['Z']
           self.zspzbesterrlist=d['Z_ERR']
