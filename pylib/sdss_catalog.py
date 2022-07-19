@@ -263,7 +263,9 @@ class DR8specobj():
              columns.append('OBJTYPE')
              columns.append('ORIGOBJID')
              columns.append('TARGETOBJID')
-          if(self.dr=='DR9'): columns.append('BOSS_SPECOBJ_ID')
+          if(self.dr=='DR9'): 
+             columns.append('BOSS_SPECOBJ_ID')
+             columns.append('SN_MEDIAN_ALL')
 
           print('Reading ',self.fitstablename)
           print('Number of Rows is ',len(self.rows))
@@ -271,7 +273,9 @@ class DR8specobj():
           d=fitsio.read(self.fitstablename,columns=columns,rows=self.rows)
 
           if(self.dr=='DR8'): self.objtypelist=d['OBJTYPE']
-          if(self.dr=='DR9'): self.boss_specobjidlist=d['BOSS_SPECOBJ_ID']
+          if(self.dr=='DR9'): 
+             self.boss_specobjidlist=d['BOSS_SPECOBJ_ID']
+             self.sn_medianalllist =d['SN_MEDIAN_ALL']
 
           self.platelist=d['PLATE']
           self.mjdlist=d['MJD']
