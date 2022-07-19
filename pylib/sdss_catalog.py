@@ -366,6 +366,7 @@ class DR8photoplate():
           self.thing_idlist=d['THING_ID']
           self.objidlist=d['OBJID']
           del d
+
 '''
       def read(self):
           #dr8rootdir=os.environ['SPECTRO_REDUX']+'/'+'DR8'
