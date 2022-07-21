@@ -67,7 +67,6 @@ class SDSSspec:
       # Write out ascii file
           asciidir=os.environ['SPECTRO_REDUX']+self.ver+'/ascii/'+self.strplate
           if(os.path.exists(asciidir)==False):
-            #print(asciidir,' directory does not exist')
             os.mkdir(asciidir)
 
           # Filter Out unnecessary files
