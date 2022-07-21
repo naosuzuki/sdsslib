@@ -1,5 +1,6 @@
 import numpy
 import fitsio
+import os
 
 class SDSSspec:
       def __init__(self,plate,mjd,fiber):
@@ -7,6 +8,9 @@ class SDSSspec:
           self.plate=plate
           self.mjd=mjd
           self.fiber=fiber
+          self.strplate=str(plate)
+          self.strmjd=str(mjd)
+          self.strfiber=str(fiber)
           self.radeg=0.0
           self.decdeg=0.0
           self.z=0.0
@@ -99,14 +103,14 @@ class SDSSspec:
 
       def read(self):
           # Define Data Directory
-          h=fitsio.read_header(self.fitstablename,ext=1)
-          self.nspec=h['NAXIS2']
+          #h=fitsio.read_header(self.fitstablename,ext=1)
 
           self.fitsfilename=os.environ['SPECTRO_REDUX']+'/'+self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
           h=fitsio.read_header(self.fitsfilename,ext=0)
           self.coeff0=h['coeff0']
           self.coeff1=h['coeff1']
           self.npix=h['naxis1']
+          self.nspec=h['NAXIS2']
           self.airmass=h['airmass']
           #if(self.plate <=3509) : self.quality=hdulist[0].header['quality']
           self.exptime=h['exptime']
@@ -130,9 +134,9 @@ class spPlate():
 
           #hdulist=pyfits.open(spplatename)
           h=fitsio.read_header(self.fitstablename,ext=1)
-          print hdulist.info()
+          print(hdulist.info())
           cols=hdulist[5].columns
-          print cols.info()
+          print(cols.info())
           self.coeff0=hdulist[0].header['coeff0']
           self.coeff1=hdulist[0].header['coeff1']
           self.npix=hdulist[0].header['naxis1']

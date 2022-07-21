@@ -17,9 +17,9 @@ class SDSSspec:
           self.plate=int(plate)
           self.mjd=int(mjd)
           self.fiber=int(fiber)
-          self.strplate=str(plate)
-          self.strmjd=str(mjd)
-          self.strfiber=str(fiber)
+          self.strmjd=str("%05i"%(self.mjd))
+          self.strplate=str("%04i"%(self.plate))
+          self.strfiber=str("%03i"%(self.fiber))
           self.radeg=0.0
           self.decdeg=0.0
           self.z=0.0
@@ -116,9 +116,6 @@ class SDSSspec:
 
 class spall():
       def __init__(self):
-          #self.platelist=[]
-          #self.mjdlist=[]
-          #self.fiberlist=[]
           self.version='v5_13_2'
           self.dr='DR17'
           self.fitstablename=os.environ['SPECTRO_REDUX']+'spAll-'+self.version+'.fits'
