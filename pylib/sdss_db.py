@@ -59,7 +59,12 @@ class SDSSspec:
           self.ivar=self.fits[1][self.fiber-1,:][0]
           self.mask=self.fits[2][self.fiber-1,:][0]
           self.err=self.ivar
+          # Wavelength Definition
           self.wave=10.0**(self.coeff0+self.coeff1*numpy.arange(self.npix))
+          self.wave_plus =10.0**(self.coeff0+self.coeff1*(numpy.arange(self.npix)+0.5))
+          self.wave_minus=10.0**(self.coeff0+self.coeff1*(numpy.arange(self.npix)-0.5))
+          self.dwave=self.wave_plus-self.wave_minus
+
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
       def write(self):
