@@ -67,6 +67,45 @@ class SDSSspec:
 
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
+      def photopoints20(self):
+          # Find 20 photometric points from GAIA XP spectrum
+          # We have 251 spectral points = 11pix*1 + 12pix*19 = 20 points
+          self.ptx=numpy.zeros(20)
+          self.pty=numpy.zeros(20)
+          self.ptyerr=numpy.zeros(20)
+          self.ptmask=numpy.zeros(20,dtype=numpy.int32)
+          self.ptwid=numpy.zeros(20,dtype=numpy.int32)
+
+          # S/N > 5 criterion for good flux value
+          spec_mask=numpy.where(self.flux*numpy.sqrt(self.ivar)>5.0,1.0,0)
+          # Flux area = flux * dwave
+          spec_maskedflux=self.flux*spec_mask*self.dwave
+          spec_maskedwave=self.dwave*spec_mask
+
+          wid0=35286        ; wid1=35646
+          wid0_end=wid1-120 ; wid1_start=wid1-119 ; wid1_end=wid1+120
+          # Calculate the first point
+          self.ptx[0]=10.0**(self.coeff1*float(wid0)) ; self.ptwid[0]=wid0
+
+          if(self.wid[0]<wid0_end):
+            nbin=wid0_end-self.wid[0]+1
+            if(numpy.sum(spec_mask[0:nbin])>0): 
+               self.pty[0]=numpy.sum(spec_maskedflux[0:nbin])/numpy.sum(spec_maskedwave[0:nbin])
+
+          for j in range(1,20):
+             self.ptwid[j]=wid1+240*(j-1)
+             self.ptx[j]=10.0**(self.coeff1*float(self.ptwid[j]))
+             
+        
+          if(numpy.sum(gaia_mask[0:10])>0.0):
+            self.pty[0]=numpy.sum(gaia_maskedflux[0:10])/numpy.sum(gaia_maskedwave[0:10])
+            self.ptwid[0]=self.wid[5]
+            self.ptmask[0]=1
+            # Error is estimated from the average S/N
+            self.ptyerr[0]=self.pty[0]/numpy.average(self.flux[0:10]/self.fluxerr[0:10])
+          #else:
+
+
       def write(self):
       # Jun 12, 2012 (Tue) 3pm : Apr 22, 2022 (Fri) 22:52
       # Write out ascii file
