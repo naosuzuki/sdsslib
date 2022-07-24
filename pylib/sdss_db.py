@@ -92,7 +92,7 @@ class SDSSspec:
             nbin=wid0_end-self.wid[0]+1
             if(numpy.sum(spec_mask[0:nbin])>0): 
                self.pty[0]=numpy.sum(spec_maskedflux[0:nbin])/numpy.sum(spec_maskedwave[0:nbin])
-               self.ptmaxk[0]=1
+               self.ptmask[0]=1
 
           # Define the pixel 1-19
           for j in range(1,20):
@@ -104,9 +104,9 @@ class SDSSspec:
              if((self.wid[0] < wid_end) and (self.wid[-1] > wid_start)):
                 if(self.wid[0] >= wid_start):
                    nstart=0 ;  nend=wid_end-self.wid[0]+1
-                elif((self.wid[0] < wid_start) and (self.wid[-1] >= wid_end):
+                elif((self.wid[0] < wid_start) and (self.wid[-1] >= wid_end)):
                    nstart=wid_start-self.wid[0] ; nend=wid_end-self.wid[0]+1
-                elif((self.wid[-1] >= wid_start) and (self.wid[-1] < wid_end):
+                elif((self.wid[-1] >= wid_start) and (self.wid[-1] < wid_end)):
                    nstart=wid_start-self.wid[0] ; nend=self.wid[-1]-self.wid[0]+1
 
                 if(numpy.sum(spec_mask[nstart:nend])>0): 
