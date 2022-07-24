@@ -87,25 +87,33 @@ class SDSSspec:
           # Calculate the first point
           self.ptx[0]=10.0**(self.coeff1*float(wid0)) ; self.ptwid[0]=wid0
 
+          # Define the first pixel
           if(self.wid[0]<wid0_end):
             nbin=wid0_end-self.wid[0]+1
             if(numpy.sum(spec_mask[0:nbin])>0): 
                self.pty[0]=numpy.sum(spec_maskedflux[0:nbin])/numpy.sum(spec_maskedwave[0:nbin])
+               self.ptmaxk[0]=1
 
+          # Define the pixel 1-19
           for j in range(1,20):
              self.ptwid[j]=wid1+240*(j-1)
              self.ptx[j]=10.0**(self.coeff1*float(self.ptwid[j]))
-             
+             wid_start=self.ptwid[j]-119
+             wid_end  =self.ptwid[j]+120
+
+             if((self.wid[0] < wid_end) and (self.wid[-1] > wid_start)):
+                if(self.wid[0] >= wid_start):
+                   nstart=0 ;  nend=wid_end-self.wid[0]+1
+                elif((self.wid[0] < wid_start) and (self.wid[-1] >= wid_end):
+                   nstart=wid_start-self.wid[0] ; nend=wid_end-self.wid[0]+1
+                elif((self.wid[-1] >= wid_start) and (self.wid[-1] < wid_end):
+                   nstart=wid_start-self.wid[0] ; nend=self.wid[-1]-self.wid[0]+1
+
+                if(numpy.sum(spec_mask[nstart:nend])>0): 
+                   self.pty[j]=numpy.sum(spec_maskedflux[nstart:nend])/numpy.sum(spec_maskedwave[nstart:nend])
+                   self.ptmask[j]=1
+                   self.ptyerr[j]=self.pty[j]/numpy.average(self.flux[nstart:nend]*numpy.sqrt(self.ivar[nstart:nend]))
         
-          if(numpy.sum(gaia_mask[0:10])>0.0):
-            self.pty[0]=numpy.sum(gaia_maskedflux[0:10])/numpy.sum(gaia_maskedwave[0:10])
-            self.ptwid[0]=self.wid[5]
-            self.ptmask[0]=1
-            # Error is estimated from the average S/N
-            self.ptyerr[0]=self.pty[0]/numpy.average(self.flux[0:10]/self.fluxerr[0:10])
-          #else:
-
-
       def write(self):
       # Jun 12, 2012 (Tue) 3pm : Apr 22, 2022 (Fri) 22:52
       # Write out ascii file
