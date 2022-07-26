@@ -67,6 +67,12 @@ class SDSSspec:
 
           self.wid=int(h['coeff0']/0.0001)+numpy.arange(self.npix)
 
+          # Plate Properties
+          self.lambdaeff=5400.
+          self.xfocal=0.0
+          self.yfocal=0.0
+          self.zoffset=0.0
+
       def photopoints20(self):
           # Find 20 photometric points from GAIA XP spectrum
           # We have 251 spectral points = 11pix*1 + 12pix*19 = 20 points
