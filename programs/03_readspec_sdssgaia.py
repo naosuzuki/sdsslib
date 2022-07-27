@@ -21,51 +21,80 @@ def read_spec(csvfile,fitsfilename):
    # Loading Gaia XP spectra
    gaiaxp=gaia_db.GAIAXP(fitsfilename)
    gaiaxp.readall()
+   print(gaiaxp.df)
+   #gaiaxp.df.to_csv('df.list',index=False)
+   source_id=2543137551432791296
+   #for j in range(len(gaiaxp.source_id_list)):
+   #  if(gaiaxp.source_id_list[j]==source_id): print('found',j,source_id)
+   #  print(j,gaiaxp.source_id_list[j])
+
+   print('list=',len(gaiaxp.source_id_list))
+   print('df=',len(gaiaxp.df))
+   print(gaiaxp.df['source_id'].iloc[8286])
+   print(gaiaxp.df['source_id'].iloc[8287])
+   print(gaiaxp.df['source_id'].iloc[8288])
+   #for i in range(len(gaiaxp.df)):
+   #  if(gaiaxp.df['source_id'].iloc[i]==2543137551432791296):
+   #     print('found one',i,gaiaxp.df['source_id'].iloc[i])
+     #print(i,gaiaxp.df['source_id'].iloc[i])
+   #sys.exit(1)
 
    # Reading SDSS-GAIA csvfile
    df=pd.read_csv(csvfile)
    # A plate example
+   plate=4221  ; mjd=55443
    plate=11675 ; mjd=58523
    plate=6783 ;  mjd=56284
+   plate=3587  ; mjd=55182
+   plate=3586  ; mjd=55181
    dftmp=df[(df['plate']==plate) & (df['mjd']==mjd)]
    dftmp.reset_index()
    print(dftmp)
-   sys.exit(1)
 
    print(len(dftmp))
    for i in range(len(dftmp)):
    #for i in range(4,5):
       mjd      =dftmp['mjd'].iloc[i]
       fiber    =dftmp['fiber'].iloc[i]
+      print('#',plate,mjd,fiber)
       source_id=dftmp['source_id'].iloc[i]
-      #print('source_id=',source_id)
-      lambdaeff=dftmp['lambdaeff'].iloc[i]
-      zoffset  =dftmp['lambdaeff'].iloc[i]
+      print('source_id=',source_id)
    
+      #for j in range(len(gaiaxp.source_id_list)):
+      #   if(gaiaxp.source_id_list[j]==source_id): print('found',j,source_id)
+      #  print(i,gaiaxp.source_id_list[i])
+      #print(gaiaxp.df)
+      print('row_number',i,gaiaxp.df[gaiaxp.df['source_id']==source_id])
+      row_number=gaiaxp.df[gaiaxp.df['source_id']==source_id].index[0]
+      #print('finding gaia counterpart=',gaiaxp.df[gaiaxp.df['source_id']==source_id])
+      #sys.exit(1)
+  
       # Reading GAIA data
       gaiaxp.read(source_id)
       # GAIA data in 20 points
       gaiaxp.photopoints20()
 
       print(plate,mjd,fiber,source_id)
-      # Reading SDSS data
+
+      ## Reading SDSS data
       spec=sdss_db.SDSSspec(plate,mjd,fiber)
       spec.read()
+      spec.lambdaeff=dftmp['lambdaeff'].iloc[i]
+      spec.zoffset  =dftmp['zoffset'].iloc[i]
+      spec.xfocal   =dftmp['xfocal'].iloc[i]
+      spec.yfocal   =dftmp['yfocal'].iloc[i]
+      spec.sdssclass=dftmp['class'].iloc[i]
+      spec.subclass =dftmp['subclass'].iloc[i]
+
+# SDSS 20 pionts photometry
       spec.photopoints20()
-      print('lambdaeff',spec.lambdaeff)
-      sys.exit(1)
-    
-      # Plot
-      #gaia_sdss(gaiaxp,spec)
+# Calculate Ratios SDSS / GAIA
       [ratio_ptx,ratio_pty,ratio_err]=sdss_gaira_ratios(gaiaxp,spec)
-      #for j in range(len(ratio_ptx)):
-      #   print(ratio_ptx[j],ratio_pty[j])
+
 # Plot
       gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err)
 #     [curve_x,curve_y]=fitting_curve(ratio_ptx,ratio_pty,ratio_err)
-#     sys.exit(1)
 
-      #sys.exit(1)
 
 def sdss_gaira_ratios(gaiaxp,spec):
    flag_gaia=numpy.where(gaiaxp.ptmask==1,1,0)
@@ -105,6 +134,7 @@ def fitting_curve(ratio_ptx,ratio_pty,ratio_err):
    #errfunc = lambda p, x, y: (fitfunc(p,x) - y)**2
    errfunc = lambda p, x, y, z: (fitfunc(p,x) - y)**2/z**2
    p0 = [1.0,0.1,-1.0,0.1]
+   p0 = [1.0,0.0,0.0,0.0]
    #p0 = [1.0,0.1,-1.0]
    #p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(rwave,rflux),maxfev=10000)
    #p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(xtmp,ytmp),maxfev=10000)
@@ -176,6 +206,9 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err):
    axs[0].errorbar(spec.ptx,spec.pty,yerr=spec.ptyerr,fmt='o',color='cyan',elinewidth=2,capsize=3)
    # Spectrum Name
    axs[0].text(xmin+dx*0.48,ymin+0.90*dy,specname,fontsize=18)
+   axs[0].text(xmin+dx*0.48,ymin+0.80*dy,'$\lambda_{eff}=$'+"%4.0f"%(spec.lambdaeff),fontsize=12)
+   axs[0].text(xmin+dx*0.68,ymin+0.80*dy,'$z_{offset}$='+"%3.0f"%(spec.zoffset),fontsize=12)
+   axs[0].text(xmin+dx*0.68,ymin+0.80*dy,"%10s"%(spec.class),fontsize=12)
 
    plt.savefig(specname+'.png')
    plt.clf()

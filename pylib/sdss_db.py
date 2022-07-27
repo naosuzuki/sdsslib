@@ -73,6 +73,9 @@ class SDSSspec:
           self.yfocal=0.0
           self.zoffset=0.0
 
+          self.sdssclass='STAR'
+          self.subclass=''
+
       def photopoints20(self):
           # Find 20 photometric points from GAIA XP spectrum
           # We have 251 spectral points = 11pix*1 + 12pix*19 = 20 points
