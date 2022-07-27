@@ -42,11 +42,11 @@ def read_spec(csvfile,fitsfilename):
    # Reading SDSS-GAIA csvfile
    df=pd.read_csv(csvfile)
    # A plate example
-   plate=4221  ; mjd=55443
-   plate=11675 ; mjd=58523
-   plate=6783 ;  mjd=56284
-   plate=3587  ; mjd=55182
    plate=3586  ; mjd=55181
+   plate=3587  ; mjd=55182
+   plate=4221  ; mjd=55443
+   plate=6783 ;  mjd=56284
+   plate=11675 ; mjd=58523
    dftmp=df[(df['plate']==plate) & (df['mjd']==mjd)]
    dftmp.reset_index()
    print(dftmp)
@@ -188,7 +188,8 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err):
    axs[1].set_xlabel('Wavelength',fontsize=12)
    axs[1].set_ylabel('Ratio',fontsize=12)
    axs[1].set_xlim([xmin,xmax])
-   axs[1].set_ylim([0.6,1.4])
+   #axs[1].set_ylim([0.6,1.4])
+   axs[1].set_ylim([0.4,1.6])
    axs[1].plot(zero_ptx,zero_pty,'--')
    axs[1].plot(curve_x,curve_y,'-',color='salmon')
    axs[1].plot(line_x,line_y,':',color='blue')
@@ -207,8 +208,11 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err):
    # Spectrum Name
    axs[0].text(xmin+dx*0.48,ymin+0.90*dy,specname,fontsize=18)
    axs[0].text(xmin+dx*0.48,ymin+0.80*dy,'$\lambda_{eff}=$'+"%4.0f"%(spec.lambdaeff),fontsize=12)
-   axs[0].text(xmin+dx*0.68,ymin+0.80*dy,'$z_{offset}$='+"%3.0f"%(spec.zoffset),fontsize=12)
-   axs[0].text(xmin+dx*0.68,ymin+0.80*dy,"%10s"%(spec.class),fontsize=12)
+   axs[0].text(xmin+dx*0.72,ymin+0.80*dy,'$z_{offset}$='+"%3.0f"%(spec.zoffset),fontsize=12)
+   axs[0].text(xmin+dx*0.48,ymin+0.70*dy,"%-10s"%(spec.sdssclass),fontsize=12)
+   axs[0].text(xmin+dx*0.72,ymin+0.70*dy,"%-15s"%(spec.subclass),fontsize=12)
+   axs[0].text(xmin+dx*0.48,ymin+0.60*dy,'$x_{focal}$='+"%4.1f"%(spec.xfocal),fontsize=12)
+   axs[0].text(xmin+dx*0.72,ymin+0.60*dy,'$y_{focal}$='+"%4.1f"%(spec.yfocal),fontsize=12)
 
    plt.savefig(specname+'.png')
    plt.clf()
@@ -256,14 +260,14 @@ def read_2dspec(fitsfilename):
    for i in range(len(gaiaxp.flux)):
       print(gaiaxp.wave[i],gaiaxp.flux[i],gaiaxp.fluxerr[i])
 
-fitsfilename='../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits'
 fitsfilename='../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits'
+fitsfilename='../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits'
 
 #csvfile='../../projects_gaia/data/gaiadr3_sdssdr17_star.csv'
 #csvfile='../../projects_gaia/data/gaiadr3_sdssdr17_quasar.csv'
 #csvfile='../../projects_gaia/csvfiles/gaiadr3id_sdssdr17_star.csv'
-csvfile='../../projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv'
 csvfile='../../projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv'
+csvfile='../../projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv'
 read_spec(csvfile,fitsfilename)
 #spPlate-11675-58523.fits
 
