@@ -181,7 +181,7 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err):
    # Font to be Times
    plt.rc('font',family='serif')
 
-   fig,axs=plt.subplots(2,1,sharex=True,gridspec_kw={'height_ratios': [3, 1]})
+   fig,axs=plt.subplots(2,1,sharex=True,gridspec_kw={'height_ratios': [3, 1]},tight_layout=True)
 
    # Bottom Panel
    zero_ptx=numpy.array([xmin,xmax]) ; zero_pty=numpy.array([1.0,1.0])

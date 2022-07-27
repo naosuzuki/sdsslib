@@ -8,6 +8,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib import colors
 from matplotlib.patches import Ellipse
+from matplotlib.patches import Circle
 import pandas as pd
 pylibdir=os.environ['PYLIB']
 sys.path.append(pylibdir)
@@ -25,13 +26,53 @@ def read_spec(csvfile,fitsfilename):
    # Reading SDSS-GAIA csvfile
    df=pd.read_csv(csvfile)
    # A plate example
+   plate=6783 ;  mjd=56284
+   plate=11675 ; mjd=58523
    plate=3586  ; mjd=55181
    plate=3587  ; mjd=55182
    plate=4221  ; mjd=55443
-   plate=6783 ;  mjd=56284
-   plate=11675 ; mjd=58523
    dftmp=df[(df['plate']==plate) & (df['mjd']==mjd)]
    dftmp.reset_index()
+ 
+   fig0,axs0=plt.subplots(nrows=2,ncols=2,sharex=False,\
+           gridspec_kw={'width_ratios': [1.25, 2]},constrained_layout=True)
+
+   xmin=-350.;  xmax=350. ; ymin=-350. ; ymax=350.
+   dx=xmax-xmin ; dy=ymax-ymin
+   zero_ptx1=numpy.array([xmin,xmax]) ; zero_pty1=numpy.array([0.0,0.0])
+   zero_ptx2=numpy.array([0.0,0.0])   ; zero_pty2=numpy.array([ymin,ymax])
+   axs0[0,0].text(xmin+0.1*dx,ymin+0.9*dy,'Slope')
+   axs0[0,0].set_ylabel('Y Focal',fontsize=12)
+   axs0[0,0].set_xlim([-350.,350.])
+   axs0[0,0].set_ylim([-350.,350.])
+   axs0[0,0].plot(zero_ptx1,zero_pty1,'--',color='k')
+   axs0[0,0].plot(zero_ptx2,zero_pty2,'--',color='k')
+   circle=Circle((350.,350.), 0.5, color='b', fill=False)
+   axs0[0,0].add_patch(circle)
+
+   axs0[1,0].text(xmin+0.1*dx,ymin+0.9*dy,'Offset')
+   axs0[1,0].set_xlabel('X Focal',fontsize=12)
+   axs0[1,0].set_ylabel('Y Focal',fontsize=12)
+   axs0[1,0].set_xlim([-350.,350.])
+   axs0[1,0].set_ylim([-350.,350.])
+   axs0[1,0].plot(zero_ptx1,zero_pty1,'--',color='k')
+   axs0[1,0].plot(zero_ptx2,zero_pty2,'--',color='k')
+   circle=Circle((350.,350.), 0.5, color='b', fill=False)
+   axs0[1,0].add_patch(circle)
+
+   xmin=3300.;  xmax=10500.
+   zero_ptx=numpy.array([xmin,xmax]) ; zero_pty=numpy.array([1.0,1.0])
+   axs0[0,1].set_xlim([xmin,xmax])
+   axs0[0,1].set_ylim([0.4,1.6])
+   axs0[0,1].plot(zero_ptx,zero_pty,'--',color='k')
+
+   axs0[1,1].set_xlim([xmin,xmax])
+   axs0[1,1].set_ylim([0.4,1.6])
+   axs0[1,1].plot(zero_ptx,zero_pty,'--',color='k')
+
+   nobject=len(dftmp)
+   image_ratiocurve=numpy.zeros((100,nobject),dtype=numpy.float64)
+   image_ratioline =numpy.zeros((100,nobject),dtype=numpy.float64)
 
    for i in range(len(dftmp)):
    #for i in range(4,5):
@@ -66,16 +107,42 @@ def read_spec(csvfile,fitsfilename):
 # Calculate Ratios SDSS / GAIA
       [ratio_ptx,ratio_pty,ratio_err]=sdss_gaira_ratios(gaiaxp,spec)
 # Plot
-      gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err)
+      #gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err)
+      [curve_x,curve_y,line_x,line_y,a,b]=gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err)
+      image_ratiocurve[:,i]=curve_y
+      image_ratioline[:,i] =line_y
+ 
+      print('slope=',a,'offset=',b)
 
+      square1=axs0[0,0].scatter(spec.xfocal,spec.yfocal,c=a,cmap='rainbow',marker='o',vmin=-1.5,vmax=1.5,s=8.0,alpha=0.7)
+      square2=axs0[1,0].scatter(spec.xfocal,spec.yfocal,c=b,cmap='rainbow',marker='o',vmin=0.6,vmax=1.4,s=8.0,alpha=0.7)
+
+      axs0[0,1].plot(curve_x,curve_y,'-',color='salmon',linewidth=0.2)
+      axs0[0,1].plot(line_x,line_y,':',color='blue',linewidth=0.2)
+      axs0[0,1].errorbar(ratio_ptx,ratio_pty,yerr=ratio_err,fmt='o',color='red',elinewidth=0.2,capsize=0.2,markersize=0.5)
+
+   #ax=asx0[0,0]
+   median_curve=numpy.median(image_ratiocurve,axis=1)
+   median_line =numpy.median(image_ratioline,axis=1)
+   axs0[0,1].plot(curve_x,median_curve,'-',color='red',linewidth=5.0)
+   axs0[0,1].plot(line_x,median_line,'-',color='blue',linewidth=5.0)
+
+   platename=spec.strplate+'+'+spec.strmjd
+   fig0.suptitle(platename)
+   fig0.colorbar(square1,ax=axs0[0,0])
+   fig0.colorbar(square2,ax=axs0[1,0])
+   #fig0.colorbar(ax='y')
+   #fig0.colorbar(ax='x')
+   fig0.savefig(platename+'.png')
+   fig0.clf()
 
 def sdss_gaira_ratios(gaiaxp,spec):
    flag_gaia=numpy.where(gaiaxp.ptmask==1,1,0)
    flag_sdss=numpy.where(gaiaxp.ptmask==1,1,0)
-   print('flag_gaia',flag_gaia)
-   print('flag_sdss',flag_sdss)
+   #print('flag_gaia',flag_gaia)
+   #print('flag_sdss',flag_sdss)
    flag=flag_gaia*flag_sdss
-   print('total flag',flag)
+   #print('total flag',flag)
 
    ratio_ptx=numpy.compress(flag,gaiaxp.ptx)
 
@@ -113,7 +180,7 @@ def fitting_curve(ratio_ptx,ratio_pty,ratio_err):
    #p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(xtmp,ytmp),maxfev=10000)
    #p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(ratio_ptx,ratio_pty),maxfev=10000)
    p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(ratio_ptx,ratio_pty,ratio_err),maxfev=10000)
-   curve_x=3000.0+numpy.arange(750)*10 ; curve_y=numpy.zeros(100)
+   curve_x=3000.0+numpy.arange(100)*75 ; curve_y=numpy.zeros(100)
    curve_y=p1[0]*((curve_x/10000.0)**p1[1])*numpy.exp(p1[2]*(curve_x/10000.0))+p1[3]
    
    print(p1)
@@ -121,14 +188,15 @@ def fitting_curve(ratio_ptx,ratio_pty,ratio_err):
 
 def fitting_line(ratio_ptx,ratio_pty,ratio_err):
 
-   fitfunc = lambda p, x: p[0]*(x/10000.0)+p[1]
+   fitfunc = lambda p, x: p[0]*(x/10000.0-0.7)+p[1]
    errfunc = lambda p, x, y, z: (fitfunc(p,x) - y)**2/z**2
    #p0 = [1.0,0.1,-1.0,0.1]
    p0 = [0.0,1.0]
    p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(ratio_ptx,ratio_pty,ratio_err),maxfev=10000)
 
-   line_x=3000.0+numpy.arange(750)*10 ; line_y=numpy.zeros(100)
-   line_y=p1[0]*(line_x/10000.0)+p1[1]
+   line_x=3000.0+numpy.arange(100)*75 ; line_y=numpy.zeros(100)
+   #line_y=p1[0]*(line_x/10000.0-0.7)+p1[1]
+   line_y=p1[0]*(line_x/10000.0-0.7)+p1[1]
    a=p1[0] ; b=p1[1]
    #curve_y=p1[0]*((curve_x/10000.0)**p1[1])*numpy.exp(p1[2]*(curve_x/10000.0))+p1[3]
   
@@ -155,7 +223,7 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err):
    # Font to be Times
    plt.rc('font',family='serif')
 
-   fig,axs=plt.subplots(2,1,sharex=True,gridspec_kw={'height_ratios': [3, 1]})
+   fig,axs=plt.subplots(2,1,sharex=True,gridspec_kw={'height_ratios': [3, 1]},tight_layout=True)
 
    # Bottom Panel
    zero_ptx=numpy.array([xmin,xmax]) ; zero_pty=numpy.array([1.0,1.0])
@@ -192,6 +260,7 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err):
    plt.clf()
    plt.close()
 
+   return [curve_x,curve_y,line_x,line_y,a,b]
 
 def gaia_sdss(gaiaxp,spec):
    specname=spec.strplate+'+'+spec.strmjd+'+'+spec.strfiber
@@ -221,6 +290,7 @@ def gaia_sdss(gaiaxp,spec):
    plt.clf()
    plt.close()
 
+
 def read_2dspec(fitsfilename):
    gaiaxp=gaia_db.GAIAXP(fitsfilename)
    gaiaxp.readall()
@@ -234,14 +304,14 @@ def read_2dspec(fitsfilename):
    for i in range(len(gaiaxp.flux)):
       print(gaiaxp.wave[i],gaiaxp.flux[i],gaiaxp.fluxerr[i])
 
-fitsfilename='../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits'
 fitsfilename='../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits'
+fitsfilename='../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits'
 
 #csvfile='../../projects_gaia/data/gaiadr3_sdssdr17_star.csv'
 #csvfile='../../projects_gaia/data/gaiadr3_sdssdr17_quasar.csv'
 #csvfile='../../projects_gaia/csvfiles/gaiadr3id_sdssdr17_star.csv'
-csvfile='../../projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv'
 csvfile='../../projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv'
+csvfile='../../projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv'
 read_spec(csvfile,fitsfilename)
 #spPlate-11675-58523.fits
 
