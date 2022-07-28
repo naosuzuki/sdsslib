@@ -368,7 +368,9 @@ df5=df4.groupby(['plate','mjd']).size().reset_index()
 
 #for i in range(28,len(df5)):
 #for i in range(202,203):
-for i in range(202,len(df5)):
+nstart=sys.argv[1]
+nend=sys.argv[2]
+for i in range(nstart,nend):
   plate=df5['plate'].iloc[i]
   mjd  =df5['mjd'].iloc[i]
   print(i,plate,mjd)
