@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'GAIADR3-2500'
+#PBS -N 'GAIADR3-3000'
  
 #PBS -l nodes=1
  
