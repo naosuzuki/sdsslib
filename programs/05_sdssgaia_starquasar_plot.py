@@ -20,7 +20,7 @@ import gaia_db
 
 pngdir=os.environ['SDSS_PNGDIR']
 
-def read_spec(csvfile,fitsfilename):
+def read_spec(csvfiles,fitsfilenames):
   plate=6783 ;  mjd=56284
   plate=3586  ; mjd=55181
   plate=3587  ; mjd=55182
@@ -45,6 +45,8 @@ def read_spec(csvfile,fitsfilename):
    dftmp.reset_index()
  
    nobject=len(dftmp)
+   if(nobject==0): continue
+
    image_ratiocurve=numpy.zeros((100,nobject),dtype=numpy.float64)
    image_ratioline =numpy.zeros((100,nobject),dtype=numpy.float64)
 
@@ -330,6 +332,23 @@ fitsfilenames=['../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits',\
               '../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits']
 csvfiles=['../../projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv',\
          '../../projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv']
-read_spec(csvfiles,fitsfilenames)
+
+df1=pd.read_csv(csvfiles[0])
+df2=pd.read_csv(csvfiles[1])
+df3=df1.append(df2,ignore_index=True)
+df4=df3.reset_index()
+print(df4)
+df4.to_csv('dfall.csv',index=False)
+
+df5=df4.groupby(['plate','mjd']).size().reset_index()
+df5.to_csv('df5.csv',index=False)
+
+#df5 = pd.unique(df4[['plate','mjd']].values.ravel())
+#df5 = pd.unique(df4[['plate','mjd']].values())
+#column_values = df4[['plate', 'mjd']].values
+#df5 = numpy.unique(column_values)
+#print(df5)
+
+#read_spec(csvfiles,fitsfilenames)
 #spPlate-11675-58523.fits
 
