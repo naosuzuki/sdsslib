@@ -26,6 +26,7 @@ def read_spec(csvfiles,fitsfilenames):
   plate=3587  ; mjd=55182
   plate=4221  ; mjd=55443
   plate=11675 ; mjd=58523
+  plate=3878  ; mjd=55361
 
   if(plate<10000): strplate=str("%04i"%(plate))
   if(plate>=10000): strplate=str("%05i"%(plate))
@@ -341,7 +342,7 @@ print(df4)
 df4.to_csv('dfall.csv',index=False)
 
 df5=df4.groupby(['plate','mjd']).size().reset_index()
-df5.to_csv('df5.csv',index=False)
+#df5.to_csv('df5.csv',index=False)
 
 #df5 = pd.unique(df4[['plate','mjd']].values.ravel())
 #df5 = pd.unique(df4[['plate','mjd']].values())
@@ -349,6 +350,6 @@ df5.to_csv('df5.csv',index=False)
 #df5 = numpy.unique(column_values)
 #print(df5)
 
-#read_spec(csvfiles,fitsfilenames)
+read_spec(csvfiles,fitsfilenames)
 #spPlate-11675-58523.fits
 

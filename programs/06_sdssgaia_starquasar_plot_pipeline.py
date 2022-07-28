@@ -127,11 +127,14 @@ def sdss_gaira_ratios(gaiaxp,spec):
    flag=flag_gaia*flag_sdss
    #print('total flag',flag)
    flagsum=numpy.sum(flag)
-   if(flagsum==0):
-      ratio_ptx=numpy.zeros(1)
-      ratio_ptx=numpy.ones(1)
-      ratio_err=numpy.ones(1)
-      ratio_ptx[0]=gaiaxp.ptx[5]
+   if(flagsum<=4):
+      ratio_ptx=numpy.zeros(4)
+      ratio_pty=numpy.ones(4)
+      ratio_err=numpy.ones(4)
+      ratio_ptx[0]=gaiaxp.ptx[10]
+      ratio_ptx[1]=gaiaxp.ptx[11]
+      ratio_ptx[2]=gaiaxp.ptx[12]
+      ratio_ptx[3]=gaiaxp.ptx[13]
       return [ratio_ptx,ratio_pty,ratio_err]
       
    ratio_ptx=numpy.compress(flag,gaiaxp.ptx)
@@ -360,12 +363,12 @@ df4=df3.reset_index()
 #df4.to_csv('dfall.csv',index=False)
 
 df5=df4.groupby(['plate','mjd']).size().reset_index()
-df5.to_csv('df5.csv',index=False)
+#df5.to_csv('df5.csv',index=False)
 #sys.exit(1)
 
-#for i in range(27,28):
 #for i in range(28,len(df5)):
-for i in range(len(df5)):
+#for i in range(202,203):
+for i in range(202,len(df5)):
   plate=df5['plate'].iloc[i]
   mjd  =df5['mjd'].iloc[i]
   print(i,plate,mjd)
