@@ -8,6 +8,6 @@
  
 #PBS -l walltime=48:00:00 
  
-/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/06_sdssgaia_starquasar_plot_pipeline.py 2500 3000
+/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/06_sdssgaia_starquasar_plot_pipeline.py 3000 3500
  
  
