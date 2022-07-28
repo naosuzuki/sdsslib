@@ -17,6 +17,7 @@ import sdss_db
 gaialibdir=os.environ['GAIALIB']
 sys.path.append(gaialibdir)
 import gaia_db
+githubdir=os.environ['GITHUB_DIR']
 
 pngdir=os.environ['SDSS_PNGDIR']
 
@@ -329,10 +330,10 @@ def plot_ratiosummary_step1():
    
    return [fig0,axs0]
 
-fitsfilenames=['../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits',\
-              '../../projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits']
-csvfiles=['../../projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv',\
-         '../../projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv']
+fitsfilenames=[githubdir+'/projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits',\
+              githubdir+'/projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits']
+csvfiles=[githubdir+'/projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv',\
+         githubdir+'/projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv']
 
 df1=pd.read_csv(csvfiles[0])
 df2=pd.read_csv(csvfiles[1])
