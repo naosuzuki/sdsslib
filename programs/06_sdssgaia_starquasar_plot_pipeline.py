@@ -343,7 +343,8 @@ df4=df3.reset_index()
 #df4.to_csv('dfall.csv',index=False)
 
 df5=df4.groupby(['plate','mjd']).size().reset_index()
-#df5.to_csv('df5.csv',index=False)
+df5.to_csv('df5.csv',index=False)
+sys.exit(1)
 
 for i in range(len(df5)):
   plate=df5['plate'].iloc[i]
