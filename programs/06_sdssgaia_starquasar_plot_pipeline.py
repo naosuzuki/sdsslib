@@ -363,7 +363,8 @@ df5=df4.groupby(['plate','mjd']).size().reset_index()
 df5.to_csv('df5.csv',index=False)
 #sys.exit(1)
 
-for i in range(28,len(df5)):
+#for i in range(28,len(df5)):
+for i in range(27,28):
   plate=df5['plate'].iloc[i]
   mjd  =df5['mjd'].iloc[i]
   print(i,plate,mjd)
