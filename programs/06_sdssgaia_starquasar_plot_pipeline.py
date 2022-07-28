@@ -288,6 +288,7 @@ def read_2dspec(fitsfilename):
 
 
 def plot_ratiosummary_step1():
+   matplotlib.use('Agg')
    plt.rc('font',family='serif')
    fig0,axs0=plt.subplots(nrows=2,ncols=2,sharex=False,\
            gridspec_kw={'width_ratios': [1.25, 2]},constrained_layout=True)
@@ -346,6 +347,7 @@ df5=df4.groupby(['plate','mjd']).size().reset_index()
 for i in range(len(df5)):
   plate=df5['plate'].iloc[i]
   mjd  =df5['mjd'].iloc[i]
+  print(i,plate,mjd)
   read_spec(csvfiles,fitsfilenames,plate,mjd)
 #spPlate-11675-58523.fits
 
