@@ -126,7 +126,14 @@ def sdss_gaira_ratios(gaiaxp,spec):
    #print('flag_sdss',flag_sdss)
    flag=flag_gaia*flag_sdss
    #print('total flag',flag)
-
+   flagsum=numpy.sum(flag)
+   if(flagsum==0):
+      ratio_ptx=numpy.zeros(1)
+      ratio_ptx=numpy.ones(1)
+      ratio_err=numpy.ones(1)
+      ratio_ptx[0]=gaiaxp.ptx[5]
+      return [ratio_ptx,ratio_pty,ratio_err]
+      
    ratio_ptx=numpy.compress(flag,gaiaxp.ptx)
 
    gaia_pty=numpy.compress(flag,gaiaxp.pty)
@@ -134,6 +141,7 @@ def sdss_gaira_ratios(gaiaxp,spec):
    gaia_snr=gaia_pty/gaia_err
    sdss_pty=numpy.compress(flag,spec.pty)
    sdss_err=numpy.compress(flag,spec.ptyerr)
+
    sdss_snr=sdss_pty/sdss_err
    ratio_pty=sdss_pty/gaia_pty
 
@@ -153,6 +161,11 @@ def sdss_gaira_ratios(gaiaxp,spec):
 
 def fitting_curve(ratio_ptx,ratio_pty,ratio_err):
 
+   curve_x=3000.0+numpy.arange(100)*75 ; curve_y=numpy.zeros(100)
+   if(len(ratio_ptx)<=4):
+      curve_y=numpy.ones(100)
+      return [curve_x,curve_y]
+
    fitfunc = lambda p, x: p[0]*((x/10000.0)**p[1])*numpy.exp(p[2]*(x/10000.0))+p[3]
    #errfunc = lambda p, x, y: (fitfunc(p,x) - y)**2
    errfunc = lambda p, x, y, z: (fitfunc(p,x) - y)**2/z**2
@@ -163,7 +176,7 @@ def fitting_curve(ratio_ptx,ratio_pty,ratio_err):
    #p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(xtmp,ytmp),maxfev=10000)
    #p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(ratio_ptx,ratio_pty),maxfev=10000)
    p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(ratio_ptx,ratio_pty,ratio_err),maxfev=10000)
-   curve_x=3000.0+numpy.arange(100)*75 ; curve_y=numpy.zeros(100)
+
    curve_y=p1[0]*((curve_x/10000.0)**p1[1])*numpy.exp(p1[2]*(curve_x/10000.0))+p1[3]
    
    print(p1)
@@ -171,13 +184,17 @@ def fitting_curve(ratio_ptx,ratio_pty,ratio_err):
 
 def fitting_line(ratio_ptx,ratio_pty,ratio_err):
 
+   line_x=3000.0+numpy.arange(100)*75 ; line_y=numpy.ones(100)
+   if(len(ratio_ptx)<=4):
+      a=0.0 ; b=1.0
+      return [line_x,line_y,a,b]
+
    fitfunc = lambda p, x: p[0]*(x/10000.0-0.7)+p[1]
    errfunc = lambda p, x, y, z: (fitfunc(p,x) - y)**2/z**2
    #p0 = [1.0,0.1,-1.0,0.1]
    p0 = [0.0,1.0]
    p1,success=scipy.optimize.leastsq(errfunc,p0[:],args=(ratio_ptx,ratio_pty,ratio_err),maxfev=10000)
 
-   line_x=3000.0+numpy.arange(100)*75 ; line_y=numpy.zeros(100)
    #line_y=p1[0]*(line_x/10000.0-0.7)+p1[1]
    line_y=p1[0]*(line_x/10000.0-0.7)+p1[1]
    a=p1[0] ; b=p1[1]
