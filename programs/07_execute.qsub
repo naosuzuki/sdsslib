@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'GAIADR3'
+#PBS -N 'GAIADR3-2500'
  
 #PBS -l nodes=1
  
@@ -8,6 +8,6 @@
  
 #PBS -l walltime=48:00:00 
  
-/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/06_sdssgaia_starquasar_plot_pipeline.py 1500 2000
+/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/06_sdssgaia_starquasar_plot_pipeline.py 2000 2500
  
  
