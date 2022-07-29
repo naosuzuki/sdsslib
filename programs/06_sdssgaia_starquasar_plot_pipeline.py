@@ -104,10 +104,12 @@ def read_spec(csvfiles,fitsfilenames,plate,mjd):
          square2=axs0[1,0].scatter(spec.xfocal,spec.yfocal,c=b,cmap='rainbow',marker='D',vmin=0.8,vmax=1.2,s=12.0,alpha=0.9,edgecolors='k')
 
    #ax=asx0[0,0]
-   median_curve=numpy.median(image_ratiocurve,axis=1)
-   median_line =numpy.median(image_ratioline,axis=1)
-   axs0[k,1].plot(curve_x,median_curve,'-',color='red',linewidth=3.0)
-   axs0[k,1].plot(line_x,median_line,'-',color='blue',linewidth=3.0)
+   #median_curve=numpy.median(image_ratiocurve,axis=1)
+   #median_line =numpy.median(image_ratioline,axis=1)
+   median_curve=numpy.mean(image_ratiocurve,axis=1)
+   median_line =numpy.mean(image_ratioline,axis=1)
+   axs0[k,1].plot(curve_x,median_curve,'-',color='red',linewidth=3.0,alpha=0.5)
+   axs0[k,1].plot(line_x,median_line,'-',color='blue',linewidth=3.0,alpha=0.5)
 
    if(k==0): axs0[0,1].text(xmin+0.7*dx,ymin+dy*0.9,"%3i"%(nobject)+' Stars')
    if(k==1): axs0[1,1].text(xmin+0.7*dx,ymin+dy*0.9,"%3i"%(nobject)+' Quasars')
