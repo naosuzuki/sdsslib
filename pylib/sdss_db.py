@@ -12,8 +12,12 @@ import fitsio
 
 class SDSSspec:
       def __init__(self,plate,mjd,fiber):
-          self.dr='DR17'
-          self.ver='v5_13_2'
+          if(plate>3500): 
+             self.dr='DR17'
+             self.ver='v5_13_2'
+          elif(plate<3500): 
+             self.dr='DR8'
+             self.ver='DR8'
           self.plate=int(plate)
           self.mjd=int(mjd)
           self.fiber=int(fiber)

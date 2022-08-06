@@ -5,12 +5,14 @@ import pandas as pd
 pylibdir=os.environ['PYLIB']
 sys.path.append(pylibdir)
 import sdss_catalog
+import numpy
 
 # Reading DR8 specObj fitsfile
 # Missing thing_id, psfmag etc
 spobj=sdss_catalog.DR8specobj()
-spobj.dr='DR9'
-spobj.fitstablename='/Users/suzuki/sdssredux/specObj-SDSS-dr9.fits'
+spobj.dr='DR8'
+#spobj.dr='DR9'
+#spobj.fitstablename='/Users/suzuki/sdssredux/specObj-SDSS-dr9.fits'
 print(spobj.dr)
 print(spobj.fitstablename)
 spobj.read()
@@ -82,13 +84,29 @@ df1.columns=['ra','dec','objid','thing_id',\
 # Drop Duplicates
 df1a=df1.drop_duplicates(subset='thing_id',keep='last')
 # Drop No OBJID rows
-df1b=df1a[df1a['objid']!='                   ']
-# Convert ID to an integer
-df1c=df1b.astype({'objid':'int'})
-df1d=df1c[df1c['thing_id']!='                   ']
-df1e=df1d.astype({'thing_id':'int'})
+#df1b=df1a[(df1a['objid']!='                   ') & (df1a['ra']>0)]
+#df1b=df1a[df1a['objid']!='                   ']
+df1b=df1a[(df1a['objid']!='                   ') & (df1a['ra'].notnull()) & (df1a['dec'].notnull())]
 
-df=pd.merge(df0b,df1e,how='left',on='objid')
+#df1b.to_csv('df1b.csv',index=False)
+#sys.exit(1)
+#df1b=df1a[(df1a['objid']!='                   ') & (df1a['ra']!='') & (df1a['dec']!='')]
+# Convert ID to an integer
+#df1b['ra'].replace('',numpy.nan,inplace=True)
+##df1b_2=df1b_1['dec'].replace('',numpy.nan,inplace=True)
+#df1b.dropna(subset=['ra'], inplace=True)
+#df1b_4=df1b_3.dropna(subset=['dec'], inplace=True)
+
+df1c=df1b.astype({'thing_id':'int'})
+df1d=df1c.astype({'objid':'int'})
+df0c=df0b.astype({'objid':'int'})
+
+#df=pd.merge(df0b,df1e,how='left',on='objid')
+#df=pd.merge(df0b,df1b,how='left',on='objid')
+
+df2=pd.merge(df0c,df1d,how='left',on='objid')
+df=df2[(df2['ra'].notnull()) & (df2['dec'].notnull())]
+
 if(spobj.dr=='DR8'):
    df.to_csv('../csvfiles/dr8_spall.csv',index=False)
 elif(spobj.dr=='DR9'):
