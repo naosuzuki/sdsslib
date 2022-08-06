@@ -70,10 +70,17 @@ def read_spec(csvfiles,fitsfilenames,plate,mjd):
       #print(plate,mjd,fiber,source_id)
 
       ## Reading SDSS data
+      #if(plate>3500):
+      #   self.dr='DR17'
+      #   self.ver='v5_13_2'
+      #elif(plate<3500):
+      #   self.dr='DR8'
+      #   self.ver='DR8'
       spec=sdss_db.SDSSspec(plate,mjd,fiber)
       spec.read()
-      spec.lambdaeff=dftmp['lambdaeff'].iloc[i]
-      spec.zoffset  =dftmp['zoffset'].iloc[i]
+      if(spec.dr=='DR17'):
+         spec.lambdaeff=dftmp['lambdaeff'].iloc[i]
+         spec.zoffset  =dftmp['zoffset'].iloc[i]
       spec.xfocal   =dftmp['xfocal'].iloc[i]
       spec.yfocal   =dftmp['yfocal'].iloc[i]
       spec.sdssclass=dftmp['class'].iloc[i]
@@ -254,8 +261,9 @@ def gaia_sdss_panels(gaiaxp,spec,ratio_ptx,ratio_pty,ratio_err,platedir):
    axs[0].errorbar(spec.ptx,spec.pty,yerr=spec.ptyerr,fmt='o',color='cyan',elinewidth=2,capsize=3)
    # Spectrum Name
    axs[0].text(xmin+dx*0.48,ymin+0.90*dy,specname,fontsize=18)
-   axs[0].text(xmin+dx*0.48,ymin+0.80*dy,'$\lambda_{eff}=$'+"%4.0f"%(spec.lambdaeff),fontsize=12)
-   axs[0].text(xmin+dx*0.72,ymin+0.80*dy,'$z_{offset}$='+"%3.0f"%(spec.zoffset),fontsize=12)
+   if(spec.dr=='DR17'):
+      axs[0].text(xmin+dx*0.48,ymin+0.80*dy,'$\lambda_{eff}=$'+"%4.0f"%(spec.lambdaeff),fontsize=12)
+      axs[0].text(xmin+dx*0.72,ymin+0.80*dy,'$z_{offset}$='+"%3.0f"%(spec.zoffset),fontsize=12)
    axs[0].text(xmin+dx*0.48,ymin+0.70*dy,"%-10s"%(spec.sdssclass),fontsize=12)
    axs[0].text(xmin+dx*0.72,ymin+0.70*dy,"%-15s"%(spec.subclass),fontsize=12)
    axs[0].text(xmin+dx*0.48,ymin+0.60*dy,'$x_{focal}$='+"%4.1f"%(spec.xfocal),fontsize=12)
@@ -369,13 +377,15 @@ df3=df1.append(df2,ignore_index=True)
 df4=df3.reset_index()
 
 df5=df4.groupby(['plate','mjd']).size().reset_index()
+df5.to_csv('dr8platelist.csv')
 
-nstart=int(sys.argv[1])
-nend=int(sys.argv[2])
+#nstart=int(sys.argv[1])
+#nend=int(sys.argv[2])
+nstart=2516
+nend=2517
 for i in range(nstart,nend):
   plate=df5['plate'].iloc[i]
   mjd  =df5['mjd'].iloc[i]
   print(i,plate,mjd)
   read_spec(csvfiles,fitsfilenames,plate,mjd)
 #spPlate-11675-58523.fits
-
