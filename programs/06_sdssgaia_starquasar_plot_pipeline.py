@@ -352,10 +352,16 @@ def plot_ratiosummary_step1():
    
    return [fig0,axs0]
 
+#DR17
 fitsfilenames=[githubdir+'/projects_gaia/data/gaiadr3_xpspec_sdssdr17_star.fits',\
               githubdir+'/projects_gaia/data/gaiadr3_xpspec_sdssdr17_quasar.fits']
 csvfiles=[githubdir+'/projects_gaia/csvfiles/gaiadr3_sdssdr17_star_combined.csv',\
          githubdir+'/projects_gaia/csvfiles/gaiadr3_sdssdr17_quasar_combined.csv']
+#DR8
+fitsfilenames=[githubdir+'/projects_gaia/data/gaiadr3_xpspec_sdssdr8_star.fits',\
+              githubdir+'/projects_gaia/data/gaiadr3_xpspec_sdssdr8_quasar.fits']
+csvfiles=[githubdir+'/projects_gaia/csvfiles/gaiadr3_sdssdr8_star_combined.csv',\
+         githubdir+'/projects_gaia/csvfiles/gaiadr3_sdssdr8_quasar_combined.csv']
 
 df1=pd.read_csv(csvfiles[0])
 df2=pd.read_csv(csvfiles[1])
