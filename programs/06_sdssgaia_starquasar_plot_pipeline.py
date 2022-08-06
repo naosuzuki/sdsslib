@@ -361,15 +361,9 @@ df1=pd.read_csv(csvfiles[0])
 df2=pd.read_csv(csvfiles[1])
 df3=df1.append(df2,ignore_index=True)
 df4=df3.reset_index()
-#print(df4)
-#df4.to_csv('dfall.csv',index=False)
 
 df5=df4.groupby(['plate','mjd']).size().reset_index()
-#df5.to_csv('df5.csv',index=False)
-#sys.exit(1)
 
-#for i in range(28,len(df5)):
-#for i in range(202,203):
 nstart=int(sys.argv[1])
 nend=int(sys.argv[2])
 for i in range(nstart,nend):
