@@ -14,7 +14,31 @@ spall.read()
 # Star
 objtype='star'
 if(objtype=='star'):
-   products_list=[spall.platelist,spall.mjdlist,spall.fiberlist,\
+#   products_list=[spall.platelist,spall.mjdlist,spall.fiberlist,\
+#               spall.ralist,spall.declist,\
+#               spall.thing_idlist,\
+#               spall.classlist,spall.subclasslist,\
+#               spall.psfmaglist[:,0],spall.psfmagerrlist[:,0],\
+#               spall.psfmaglist[:,1],spall.psfmagerrlist[:,1],\
+#               spall.psfmaglist[:,2],spall.psfmagerrlist[:,2],\
+#               spall.psfmaglist[:,3],spall.psfmagerrlist[:,3],\
+#               spall.psfmaglist[:,4],spall.psfmagerrlist[:,4],\
+#               spall.lambdaefflist,\
+#               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
+#               spall.sn_medianalllist,\
+#               spall.elodie_objectlist,\
+#               spall.elodie_sptypelist,spall.elodie_bvlist,spall.elodie_fehlist,\
+#               spall.elodie_tefflist,spall.elodie_logglist]
+#   df=pd.DataFrame(products_list).transpose()
+#   df.columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
+#               'psfmag_u','psfmagerr_u',\
+#               'psfmag_g','psfmagerr_g',\
+#               'psfmag_r','psfmagerr_r',\
+#               'psfmag_i','psfmagerr_i',\
+#               'psfmag_z','psfmagerr_z',\
+#               'lambdaeff','xfocal','yfocal','zoffset',\
+#               'snall','object','sptype','bv','feh','teff','logg']
+   df=pd.DataFrame(list(zip(spall.platelist,spall.mjdlist,spall.fiberlist,\
                spall.ralist,spall.declist,\
                spall.thing_idlist,\
                spall.classlist,spall.subclasslist,\
@@ -28,20 +52,17 @@ if(objtype=='star'):
                spall.sn_medianalllist,\
                spall.elodie_objectlist,\
                spall.elodie_sptypelist,spall.elodie_bvlist,spall.elodie_fehlist,\
-               spall.elodie_tefflist,spall.elodie_logglist]
-   df=pd.DataFrame(products_list).transpose()
-   df.columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
+               spall.elodie_tefflist,spall.elodie_logglist)),\
+               columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
                'psfmag_u','psfmagerr_u',\
                'psfmag_g','psfmagerr_g',\
                'psfmag_r','psfmagerr_r',\
                'psfmag_i','psfmagerr_i',\
                'psfmag_z','psfmagerr_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
-               'snall','object','sptype','bv','feh','teff','logg']
-
+               'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
    dfstar=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
-   #dfstar=df[(df['class']=='STAR  ') & (df['thing_id']==-1)]
    print(dfstar)
    dfstar.to_csv('../csvfiles/v5_13_2_spall_star.csv',index=False)
    del products_list ; del df ; del dfstar
