@@ -47,6 +47,11 @@ if(objtype=='star'):
                spall.psfmaglist[:,2],spall.psfmagerrlist[:,2],\
                spall.psfmaglist[:,3],spall.psfmagerrlist[:,3],\
                spall.psfmaglist[:,4],spall.psfmagerrlist[:,4],\
+               spall.spectromaglist[:,0],spall.spectromagerrlist[:,0],\
+               spall.spectromaglist[:,1],spall.spectromagerrlist[:,1],\
+               spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
+               spall.spectromaglist[:,3],spall.spectromagerrlist[:,3],\
+               spall.spectromaglist[:,4],spall.spectromagerrlist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,\
@@ -59,6 +64,11 @@ if(objtype=='star'):
                'psfmag_r','psfmagerr_r',\
                'psfmag_i','psfmagerr_i',\
                'psfmag_z','psfmagerr_z',\
+               'specmag_u','specmagerr_u',\
+               'specmag_g','specmagerr_g',\
+               'specmag_r','specmagerr_r',\
+               'specmag_i','specmagerr_i',\
+               'specmag_z','specmagerr_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
@@ -70,7 +80,29 @@ if(objtype=='star'):
 # Galaxy
 objtype='galaxy'
 if(objtype=='galaxy'):
-   products_list=[spall.platelist,spall.mjdlist,spall.fiberlist,\
+#   products_list=[spall.platelist,spall.mjdlist,spall.fiberlist,\
+#               spall.ralist,spall.declist,\
+#               spall.thing_idlist,\
+#               spall.classlist,spall.subclasslist,\
+#               spall.cmodelmaglist[:,0],spall.cmodelmagerrlist[:,0],\
+#               spall.cmodelmaglist[:,1],spall.cmodelmagerrlist[:,1],\
+#               spall.cmodelmaglist[:,2],spall.cmodelmagerrlist[:,2],\
+#               spall.cmodelmaglist[:,3],spall.cmodelmagerrlist[:,3],\
+#               spall.cmodelmaglist[:,4],spall.cmodelmagerrlist[:,4],\
+#               spall.lambdaefflist,\
+#               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
+#               spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist]
+#   df=pd.DataFrame(products_list).transpose()
+#
+#   df.columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
+#               'cmodelmag_u','cmodelmagerr_u',\
+#               'cmodelmag_g','cmodelmagerr_g',\
+#               'cmodelmag_r','cmodelmagerr_r',\
+#               'cmodelmag_i','cmodelmagerr_i',\
+#               'cmodelmag_z','cmodelmagerr_z',\
+#               'lambdaeff','xfocal','yfocal','zoffset',\
+#               'snall','z','zerr','zwarning']
+   df=pd.DataFrame(list(zip(spall.platelist,spall.mjdlist,spall.fiberlist,\
                spall.ralist,spall.declist,\
                spall.thing_idlist,\
                spall.classlist,spall.subclasslist,\
@@ -81,17 +113,15 @@ if(objtype=='galaxy'):
                spall.cmodelmaglist[:,4],spall.cmodelmagerrlist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
-               spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist]
-   df=pd.DataFrame(products_list).transpose()
-
-   df.columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
+               spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
+               columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
                'cmodelmag_u','cmodelmagerr_u',\
                'cmodelmag_g','cmodelmagerr_g',\
                'cmodelmag_r','cmodelmagerr_r',\
                'cmodelmag_i','cmodelmagerr_i',\
                'cmodelmag_z','cmodelmagerr_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
-               'snall','z','zerr','zwarning']
+               'snall','z','zerr','zwarning'])
    print(df)
    dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
    print(dfgalaxy)
