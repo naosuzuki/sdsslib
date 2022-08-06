@@ -111,6 +111,11 @@ if(objtype=='galaxy'):
                spall.cmodelmaglist[:,2],spall.cmodelmagerrlist[:,2],\
                spall.cmodelmaglist[:,3],spall.cmodelmagerrlist[:,3],\
                spall.cmodelmaglist[:,4],spall.cmodelmagerrlist[:,4],\
+               spall.spectromaglist[:,0],spall.spectromagerrlist[:,0],\
+               spall.spectromaglist[:,1],spall.spectromagerrlist[:,1],\
+               spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
+               spall.spectromaglist[:,3],spall.spectromagerrlist[:,3],\
+               spall.spectromaglist[:,4],spall.spectromagerrlist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
@@ -120,6 +125,11 @@ if(objtype=='galaxy'):
                'cmodelmag_r','cmodelmagerr_r',\
                'cmodelmag_i','cmodelmagerr_i',\
                'cmodelmag_z','cmodelmagerr_z',\
+               'specmag_u','specmagerr_u',\
+               'specmag_g','specmagerr_g',\
+               'specmag_r','specmagerr_r',\
+               'specmag_i','specmagerr_i',\
+               'specmag_z','specmagerr_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','z','zerr','zwarning'])
    print(df)
