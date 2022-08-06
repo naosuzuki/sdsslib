@@ -75,7 +75,8 @@ if(objtype=='star'):
    dfstar=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
    print(dfstar)
    dfstar.to_csv('../csvfiles/v5_13_2_spall_star.csv',index=False)
-   del products_list ; del df ; del dfstar
+   #del products_list ; del df ; del dfstar
+   del df ; del dfstar
 
 # Galaxy
 objtype='galaxy'
@@ -136,7 +137,7 @@ if(objtype=='galaxy'):
    dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
    print(dfgalaxy)
    dfgalaxy.to_csv('../csvfiles/v5_13_2_spall_galaxy.csv',index=False)
-   del dfgalaxy
+   del df ; del dfgalaxy
 
 # Quasar
 objtype='quasar'
@@ -198,4 +199,5 @@ if(objtype=='quasar'):
    print(df)
    dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
    dfquasar.to_csv('../csvfiles/v5_13_2_spall_quasar.csv',index=False)
-   del products_list ; del df ; del dfquasar
+   #del products_list ; del df ; del dfquasar
+   del df ; del dfquasar
