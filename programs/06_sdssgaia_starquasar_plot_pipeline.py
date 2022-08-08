@@ -379,10 +379,10 @@ df4=df3.reset_index()
 df5=df4.groupby(['plate','mjd']).size().reset_index()
 df5.to_csv('dr8platelist.csv')
 
-#nstart=int(sys.argv[1])
-#nend=int(sys.argv[2])
-nstart=2516
-nend=2517
+nstart=int(sys.argv[1])
+nend=int(sys.argv[2])
+#nstart=2516
+#nend=2517
 for i in range(nstart,nend):
   plate=df5['plate'].iloc[i]
   mjd  =df5['mjd'].iloc[i]
