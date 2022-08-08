@@ -64,6 +64,11 @@ products_list1=[photoplate.ralist,photoplate.declist,\
                photoplate.psfmaglist[:,2],photoplate.psfmagerrlist[:,2],\
                photoplate.psfmaglist[:,3],photoplate.psfmagerrlist[:,3],\
                photoplate.psfmaglist[:,4],photoplate.psfmagerrlist[:,4],\
+               photoplate.fibermaglist[:,0],photoplate.fibermagerrlist[:,0],\
+               photoplate.fibermaglist[:,1],photoplate.fibermagerrlist[:,1],\
+               photoplate.fibermaglist[:,2],photoplate.fibermagerrlist[:,2],\
+               photoplate.fibermaglist[:,3],photoplate.fibermagerrlist[:,3],\
+               photoplate.fibermaglist[:,4],photoplate.fibermagerrlist[:,4],\
                photoplate.cmodelmaglist[:,0],photoplate.cmodelmagerrlist[:,0],\
                photoplate.cmodelmaglist[:,1],photoplate.cmodelmagerrlist[:,1],\
                photoplate.cmodelmaglist[:,2],photoplate.cmodelmagerrlist[:,2],\
@@ -76,6 +81,11 @@ df1.columns=['ra','dec','objid','thing_id',\
              'psfmag_r','psfmagerr_r',\
              'psfmag_i','psfmagerr_i',\
              'psfmag_z','psfmagerr_z',\
+             'fibermag_u','fibermagerr_u',\
+             'fibermag_g','fibermagerr_g',\
+             'fibermag_r','fibermagerr_r',\
+             'fibermag_i','fibermagerr_i',\
+             'fibermag_z','fibermagerr_z',\
              'cmodelmag_u','cmodelmagerr_u',\
              'cmodelmag_g','cmodelmagerr_g',\
              'cmodelmag_r','cmodelmagerr_r',\
@@ -140,6 +150,11 @@ if(objtype=='star'):
 objtype='galaxy'
 if(objtype=='galaxy'):
    output_columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
+               'fibermag_u','fibermagerr_u',\
+               'fibermag_g','fibermagerr_g',\
+               'fibermag_r','fibermagerr_r',\
+               'fibermag_i','fibermagerr_i',\
+               'fibermag_z','fibermagerr_z',\
                'cmodelmag_u','cmodelmagerr_u',\
                'cmodelmag_g','cmodelmagerr_g',\
                'cmodelmag_r','cmodelmagerr_r',\
