@@ -312,8 +312,15 @@ class DR8specobj():
 
           self.spectrofluxlist=d['SPECTROFLUX']
           self.spectroflux_ivarlist=d['SPECTROFLUX_IVAR']
+          # Derive mag from observed spectra
+          self.spectromaglist=22.5-2.5*numpy.log10(d['SPECTROFLUX'])
+          self.spectromagerrlist=2.5*numpy.log10(1.0+1.0/d['SPECTROFLUX']/numpy.sqrt(d['SPECTROFLUX_IVAR']))
+
           self.spectrosynfluxlist=d['SPECTROSYNFLUX']
           self.spectrosynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
+          # Derive mag from synthesized spectra
+          self.spectrosynmaglist=22.5-2.5*numpy.log10(d['SPECTROSYNFLUX'])
+          self.spectrosynmagerrlist=2.5*numpy.log10(1.0+1.0/d['SPECTROSYNFLUX']/numpy.sqrt(d['SPECTROSYNFLUX_IVAR']))
 
           self.bestobjidlist=d['BESTOBJID']
           #self.specobjidlist=d['SPECOBJID']
