@@ -313,14 +313,14 @@ class DR8specobj():
           self.spectrofluxlist=d['SPECTROFLUX']
           self.spectroflux_ivarlist=d['SPECTROFLUX_IVAR']
           # Derive mag from observed spectra
-          self.spectromaglist=22.5-2.5*numpy.log10(d['SPECTROFLUX'])
-          self.spectromagerrlist=2.5*numpy.log10(1.0+1.0/d['SPECTROFLUX']/numpy.sqrt(d['SPECTROFLUX_IVAR']))
+          self.specmaglist=22.5-2.5*numpy.log10(d['SPECTROFLUX'])
+          self.specmagerrlist=2.5*numpy.log10(1.0+1.0/d['SPECTROFLUX']/numpy.sqrt(d['SPECTROFLUX_IVAR']))
 
-          self.spectrosynfluxlist=d['SPECTROSYNFLUX']
-          self.spectrosynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
+          self.specsynfluxlist=d['SPECTROSYNFLUX']
+          self.specsynflux_ivarlist=d['SPECTROSYNFLUX_IVAR']
           # Derive mag from synthesized spectra
-          self.spectrosynmaglist=22.5-2.5*numpy.log10(d['SPECTROSYNFLUX'])
-          self.spectrosynmagerrlist=2.5*numpy.log10(1.0+1.0/d['SPECTROSYNFLUX']/numpy.sqrt(d['SPECTROSYNFLUX_IVAR']))
+          self.specsynmaglist=22.5-2.5*numpy.log10(d['SPECTROSYNFLUX'])
+          self.specsynmagerrlist=2.5*numpy.log10(1.0+1.0/d['SPECTROSYNFLUX']/numpy.sqrt(d['SPECTROSYNFLUX_IVAR']))
 
           self.bestobjidlist=d['BESTOBJID']
           #self.specobjidlist=d['SPECOBJID']
@@ -371,13 +371,18 @@ class DR8photoplate():
           self.rows=numpy.arange(self.nspec)
 
       def read(self):
-          columns=['RA','DEC','PSFMAG','PSFMAGERR','CMODELMAG','CMODELMAGERR',\
-                   'THING_ID','OBJID']
+          columns=['RA','DEC','AIRMASS','PSFMAG','PSFMAGERR','FIBERMAG','FIBERMAGERR',\
+                   'CMODELMAG','CMODELMAGERR','THING_ID','OBJID']
           d=fitsio.read(self.fitstablename,columns=columns)
           self.ralist=d['RA']
           self.declist=d['DEC']
+          self.airmasslist=d['AIRMASS']
           self.psfmaglist=d['PSFMAG']
           self.psfmagerrlist=d['PSFMAGERR']
+
+          self.fibermaglist=d['FIBERMAG']
+          self.fibermagerrlist=d['FIBERMAGERR']
+
           self.cmodelmaglist   =d['CMODELMAG']
           self.cmodelmagerrlist=d['CMODELMAGERR']
           self.thing_idlist=d['THING_ID']

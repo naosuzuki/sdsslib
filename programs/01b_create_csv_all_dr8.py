@@ -20,6 +20,11 @@ spobj.read()
 products_list=[spobj.platelist,spobj.mjdlist,spobj.fiberlist,\
                spobj.bestobjidlist,\
                spobj.classlist,spobj.subclasslist,\
+               spobj.specmaglist[:,0],spobj.specmagerrlist[:,0],\
+               spobj.specmaglist[:,1],spobj.specmagerrlist[:,1],\
+               spobj.specmaglist[:,2],spobj.specmagerrlist[:,2],\
+               spobj.specmaglist[:,3],spobj.specmagerrlist[:,3],\
+               spobj.specmaglist[:,4],spobj.specmagerrlist[:,4],\
                spobj.xfocallist,spobj.yfocallist,\
                spobj.zspzbestlist,spobj.zspzbesterrlist,spobj.zwarninglist,\
                spobj.elodie_objectlist,\
@@ -32,7 +37,13 @@ if(spobj.dr=='DR9'): products_list.append(spobj.sn_medianalllist)
 
 df0=pd.DataFrame(products_list).transpose()
 column_names=['plate','mjd','fiber','objid',\
-            'class','subclass','xfocal','yfocal',\
+            'class','subclass',\
+            'specmag_u','specmagerr_u',\
+            'specmag_g','specmagerr_g',\
+            'specmag_r','specmagerr_r',\
+            'specmag_i','specmagerr_i',\
+            'specmag_z','specmagerr_z',\
+            'xfocal','yfocal',\
             'z','zerr','zwarning',\
             'object','sptype','bv','feh','teff','logg','plug_ra','plug_dec']
 
@@ -59,6 +70,7 @@ photoplate.read()
 products_list1=[photoplate.ralist,photoplate.declist,\
                photoplate.objidlist,\
                photoplate.thing_idlist,\
+               photoplate.airmasslist,\
                photoplate.psfmaglist[:,0],photoplate.psfmagerrlist[:,0],\
                photoplate.psfmaglist[:,1],photoplate.psfmagerrlist[:,1],\
                photoplate.psfmaglist[:,2],photoplate.psfmagerrlist[:,2],\
@@ -75,7 +87,7 @@ products_list1=[photoplate.ralist,photoplate.declist,\
                photoplate.cmodelmaglist[:,3],photoplate.cmodelmagerrlist[:,3],\
                photoplate.cmodelmaglist[:,4],photoplate.cmodelmagerrlist[:,4]]
 df1=pd.DataFrame(products_list1).transpose()
-df1.columns=['ra','dec','objid','thing_id',\
+df1.columns=['ra','dec','objid','thing_id','airmass',\
              'psfmag_u','psfmagerr_u',\
              'psfmag_g','psfmagerr_g',\
              'psfmag_r','psfmagerr_r',\
@@ -131,6 +143,12 @@ if(objtype=='star'):
                'psfmag_r','psfmagerr_r',\
                'psfmag_i','psfmagerr_i',\
                'psfmag_z','psfmagerr_z',\
+               'specmag_u','specmagerr_u',\
+               'specmag_g','specmagerr_g',\
+               'specmag_r','specmagerr_r',\
+               'specmag_i','specmagerr_i',\
+               'specmag_z','specmagerr_z',\
+               'airmass',\
                'xfocal','yfocal',\
                'z','zerr','zwarning',\
                'object','sptype','bv','feh','teff','logg']
@@ -150,16 +168,22 @@ if(objtype=='star'):
 objtype='galaxy'
 if(objtype=='galaxy'):
    output_columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
-               'fibermag_u','fibermagerr_u',\
-               'fibermag_g','fibermagerr_g',\
-               'fibermag_r','fibermagerr_r',\
-               'fibermag_i','fibermagerr_i',\
-               'fibermag_z','fibermagerr_z',\
                'cmodelmag_u','cmodelmagerr_u',\
                'cmodelmag_g','cmodelmagerr_g',\
                'cmodelmag_r','cmodelmagerr_r',\
                'cmodelmag_i','cmodelmagerr_i',\
                'cmodelmag_z','cmodelmagerr_z',\
+               'fibermag_u','fibermagerr_u',\
+               'fibermag_g','fibermagerr_g',\
+               'fibermag_r','fibermagerr_r',\
+               'fibermag_i','fibermagerr_i',\
+               'fibermag_z','fibermagerr_z',\
+               'specmag_u','specmagerr_u',\
+               'specmag_g','specmagerr_g',\
+               'specmag_r','specmagerr_r',\
+               'specmag_i','specmagerr_i',\
+               'specmag_z','specmagerr_z',\
+               'airmass',\
                'xfocal','yfocal',\
                'z','zerr','zwarning']
    if(spobj.dr=='DR8'): output_columns.append('snmedian')
@@ -184,6 +208,12 @@ if(objtype=='quasar'):
                'psfmag_r','psfmagerr_r',\
                'psfmag_i','psfmagerr_i',\
                'psfmag_z','psfmagerr_z',\
+               'specmag_u','specmagerr_u',\
+               'specmag_g','specmagerr_g',\
+               'specmag_r','specmagerr_r',\
+               'specmag_i','specmagerr_i',\
+               'specmag_z','specmagerr_z',\
+               'airmass',\
                'xfocal','yfocal',\
                'z','zerr','zwarning']
    if(spobj.dr=='DR8'): output_columns.append('snmedian')
