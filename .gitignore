@@ -1,3 +1,8 @@
+# Ignore Data Files
+data/
+csvfiles/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
