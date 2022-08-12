@@ -70,7 +70,11 @@ photoplate.read()
 products_list1=[photoplate.ralist,photoplate.declist,\
                photoplate.objidlist,\
                photoplate.thing_idlist,\
-               photoplate.airmasslist,\
+               photoplate.airmasslist[:,0],\
+               photoplate.airmasslist[:,1],\
+               photoplate.airmasslist[:,2],\
+               photoplate.airmasslist[:,3],\
+               photoplate.airmasslist[:,4],\
                photoplate.psfmaglist[:,0],photoplate.psfmagerrlist[:,0],\
                photoplate.psfmaglist[:,1],photoplate.psfmagerrlist[:,1],\
                photoplate.psfmaglist[:,2],photoplate.psfmagerrlist[:,2],\
@@ -87,7 +91,12 @@ products_list1=[photoplate.ralist,photoplate.declist,\
                photoplate.cmodelmaglist[:,3],photoplate.cmodelmagerrlist[:,3],\
                photoplate.cmodelmaglist[:,4],photoplate.cmodelmagerrlist[:,4]]
 df1=pd.DataFrame(products_list1).transpose()
-df1.columns=['ra','dec','objid','thing_id','airmass',\
+df1.columns=['ra','dec','objid','thing_id',\
+             'airmass_u',\
+             'airmass_g',\
+             'airmass_r',\
+             'airmass_i',\
+             'airmass_z',\
              'psfmag_u','psfmagerr_u',\
              'psfmag_g','psfmagerr_g',\
              'psfmag_r','psfmagerr_r',\
@@ -148,7 +157,11 @@ if(objtype=='star'):
                'specmag_r','specmagerr_r',\
                'specmag_i','specmagerr_i',\
                'specmag_z','specmagerr_z',\
-               'airmass',\
+               'airmass_u',\
+               'airmass_g',\
+               'airmass_r',\
+               'airmass_i',\
+               'airmass_z',\
                'xfocal','yfocal',\
                'z','zerr','zwarning',\
                'object','sptype','bv','feh','teff','logg']
@@ -183,7 +196,11 @@ if(objtype=='galaxy'):
                'specmag_r','specmagerr_r',\
                'specmag_i','specmagerr_i',\
                'specmag_z','specmagerr_z',\
-               'airmass',\
+               'airmass_u',\
+               'airmass_g',\
+               'airmass_r',\
+               'airmass_i',\
+               'airmass_z',\
                'xfocal','yfocal',\
                'z','zerr','zwarning']
    if(spobj.dr=='DR8'): output_columns.append('snmedian')
@@ -213,7 +230,11 @@ if(objtype=='quasar'):
                'specmag_r','specmagerr_r',\
                'specmag_i','specmagerr_i',\
                'specmag_z','specmagerr_z',\
-               'airmass',\
+               'airmass_u',\
+               'airmass_g',\
+               'airmass_r',\
+               'airmass_i',\
+               'airmass_z',\
                'xfocal','yfocal',\
                'z','zerr','zwarning']
    if(spobj.dr=='DR8'): output_columns.append('snmedian')

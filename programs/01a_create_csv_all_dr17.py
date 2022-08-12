@@ -52,7 +52,11 @@ if(objtype=='star'):
                spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
                spall.spectromaglist[:,3],spall.spectromagerrlist[:,3],\
                spall.spectromaglist[:,4],spall.spectromagerrlist[:,4],\
-               spall.airmasslist,\
+               spall.airmasslist[:,0],\
+               spall.airmasslist[:,1],\
+               spall.airmasslist[:,2],\
+               spall.airmasslist[:,3],\
+               spall.airmasslist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,\
@@ -70,7 +74,11 @@ if(objtype=='star'):
                'specmag_r','specmagerr_r',\
                'specmag_i','specmagerr_i',\
                'specmag_z','specmagerr_z',\
-               'airmass',\
+               'airmass_u',\
+               'airmass_g',\
+               'airmass_r',\
+               'airmass_i',\
+               'airmass_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
@@ -119,7 +127,11 @@ if(objtype=='galaxy'):
                spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
                spall.spectromaglist[:,3],spall.spectromagerrlist[:,3],\
                spall.spectromaglist[:,4],spall.spectromagerrlist[:,4],\
-               spall.airmasslist,\
+               spall.airmasslist[:,0],\
+               spall.airmasslist[:,1],\
+               spall.airmasslist[:,2],\
+               spall.airmasslist[:,3],\
+               spall.airmasslist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
@@ -134,7 +146,11 @@ if(objtype=='galaxy'):
                'specmag_r','specmagerr_r',\
                'specmag_i','specmagerr_i',\
                'specmag_z','specmagerr_z',\
-               'airmass',\
+               'airmass_u',\
+               'airmass_g',\
+               'airmass_r',\
+               'airmass_i',\
+               'airmass_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','z','zerr','zwarning'])
    print(df)
@@ -181,7 +197,11 @@ if(objtype=='quasar'):
                spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
                spall.spectromaglist[:,3],spall.spectromagerrlist[:,3],\
                spall.spectromaglist[:,4],spall.spectromagerrlist[:,4],\
-               spall.airmasslist,\
+               spall.airmasslist[:,0],\
+               spall.airmasslist[:,1],\
+               spall.airmasslist[:,2],\
+               spall.airmasslist[:,3],\
+               spall.airmasslist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,\
@@ -199,7 +219,11 @@ if(objtype=='quasar'):
                'specmag_r','specmagerr_r',\
                'specmag_i','specmagerr_i',\
                'specmag_z','specmagerr_z',\
-               'airmass',\
+               'airmass_u',\
+               'airmass_g',\
+               'airmass_r',\
+               'airmass_i',\
+               'airmass_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
