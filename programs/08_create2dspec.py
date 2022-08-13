@@ -64,12 +64,21 @@ if(objtype=='star'):
                (dfstar['subclass']=='WDcoller') | \
                (dfstar['subclass']=='WDmagnetic') | \
                (dfstar['subclass']=='CalciumWD')]
-   df=dfwd.sort_values(by=['teff'],ascending=False)
-   del dfwd ; del dfstar
+   print(dfwd)
+   dfspec=dfwd.sort_values(by=['teff'],ascending=False)
+   dfspec.reset_index()
+   del dfwd ; del dfstar ; del df
 
-   fitsfilename='sdssDR17_wd.fits'
-   sdss_db.create_2dspec(df,fitsfilename)
+   print(dfspec)
+   for i in range(100):
+    plate=dfspec['plate'].iloc[i]
+    mjd  =dfspec['mjd'].iloc[i]
+    fiber=dfspec['fiber'].iloc[i]
+    print(i,plate,mjd,fiber)
+   
    sys.exit(1)
+   fitsfilename='sdssDR17_wd.fits'
+   sdss_db.create_2dspec(dfspec,fitsfilename)
 
    #print(dfstar)
    #dfstar.to_csv('../csvfiles/v5_13_2_spall_star.csv',index=False)
@@ -120,7 +129,13 @@ if(objtype=='galaxy'):
                'snall','z','zerr','zwarning'])
    print(df)
    dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
-   print(dfgalaxy)
+   #print(dfgalaxy)
+   df=dfgalaxy.sort_values(by=['teff'],ascending=False)
+   del dfgalaxy 
+
+   fitsfilename='sdssDR17_wd.fits'
+   sdss_db.create_2dspec(df,fitsfilename)
+   sys.exit(1)
    dfgalaxy.to_csv('../csvfiles/v5_13_2_spall_galaxy.csv',index=False)
    del df ; del dfgalaxy
 
