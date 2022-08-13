@@ -291,9 +291,9 @@ def create_2dspec(df,fitsfilename,objtype):
       cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
                         col11,col12,col13,col14,col15,col16,col17,col18,col19,col20])
    else:
-      col15=fits.Column(name='z',format='E',array=object_list)
-      col16=fits.Column(name='zerr',format='E',array=sptype_list)
-      col17=fits.Column(name='zwarning',format='J',array=bv_list)
+      col15=fits.Column(name='z',format='E',array=z_list)
+      col16=fits.Column(name='zerr',format='E',array=zerr_list)
+      col17=fits.Column(name='zwarning',format='J',array=zwarning_list)
       cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
                         col11,col12,col13,col14,col15,col16,col17])
 
