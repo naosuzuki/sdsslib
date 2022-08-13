@@ -197,7 +197,7 @@ def create_2dspec(df,fitsfilename):
       fiber=df['fiber'].iloc[i]
    
       # Define Spectrum
-      spec=sdss_catalog.SDSSspec(plate,mjd,fiber)
+      spec=SDSSspec(plate,mjd,fiber)
       spec.read()
       #spec.normalize_at7000()
       #spec.read_MWcorrected()
