@@ -199,6 +199,7 @@ def create_2dspec(df,fitsfilename,objtype):
    ra_list =df['ra'].to_numpy()
    dec_list=df['dec'].to_numpy()
    thing_id_list=df['thing_id'].to_numpy()
+   snall_list   =df['snall'].to_numpy()
 
    psfmag_u_list=df['psfmag_u'].to_numpy()
    psfmagerr_u_list=df['psfmagerr_u'].to_numpy()
@@ -210,7 +211,6 @@ def create_2dspec(df,fitsfilename,objtype):
    psfmagerr_i_list=df['psfmagerr_i'].to_numpy()
    psfmag_z_list=df['psfmag_z'].to_numpy()
    psfmagerr_z_list=df['psfmagerr_z'].to_numpy()
-   snall_list   =df['snall'].to_numpy()
 
    if(objtype=='star'):
       object_list=df['object'].to_numpy()
@@ -219,6 +219,10 @@ def create_2dspec(df,fitsfilename,objtype):
       feh_list   =df['feh'].to_numpy()
       teff_list  =df['teff'].to_numpy()
       logg_list  =df['logg'].to_numpy()
+   else:
+      z_list       =df['z'].to_numpy()
+      zerr_list    =df['zerr'].to_numpy()
+      zwarning_list=df['zwarning'].to_numpy()
 
    #for i in range(len(dfwd)):
    for i in range(100):
@@ -274,11 +278,63 @@ def create_2dspec(df,fitsfilename,objtype):
    col13=fits.Column(name='psfmag_z',format='E',array=psfmag_z_list)
    col14=fits.Column(name='psfmagerr_z',format='E',array=psfmagerr_z_list)
 
-   cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9])
+   if(objtype=='star'):
+      col15=fits.Column(name='object',format='A',array=object_list)
+      col16=fits.Column(name='sptype',format='A',array=sptype_list)
+      col17=fits.Column(name='bv',format='E',array=bv_list)
+      col18=fits.Column(name='feh',format='E',array=feh_list)
+      col19=fits.Column(name='teff',format='E',array=teff_list)
+      col20=fits.Column(name='logg',format='E',array=logg_list)
+      cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
+                        col11,col12,col13,col14,col15,col16,col17,col18,col19,col20])
+   else:
+      col15=fits.Column(name='z',format='E',array=object_list)
+      col16=fits.Column(name='zerr',format='E',array=sptype_list)
+      col17=fits.Column(name='zwarning',format='J',array=bv_list)
+      cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
+                        col11,col12,col13,col14,col15,col16,col17])
+
+#  Define FITS Table
    tbhdu=fits.BinTableHDU.from_columns(cols)
 
-   fitsio.write(fitsfilename,imageflux)
+#  Define FITS Image and Extention
+   hdulist=fits.HDUList([hdu1,hdu2,hdu3,tbhdu])
 
+#  Writing FITS Header
+   hdr=hdulist[0].header
+   hdr.set('COEFF0',coeff0)
+   hdr.set('COEFF1',coeff1)
+   hdr['comment']='Created by Nao Suzuki 2022-08-12'
+   hdr['comment']='1st EXT=Flux, 2nd EXT=INVVAR, 3rd EXT=MASK'
+   hdr['comment']='SDSS DR17'
+   hdr['comment']='Wavelength=1.0**(COEFF0+COEFF1*i)'
+   hdr['comment']=''
+   hdr['comment']='1:  RA          (SDSS)'
+   hdr['comment']='2:  DEC         (SDSS)'
+   hdr['comment']='3:  THING_ID    (SDSS)'
+   hdr['comment']='4:  S/N         (SDSS)'
+   hdr['comment']='5:  PSFMAG_u    (SDSS)'
+   hdr['comment']='6:  PSFMAGerr_u (SDSS)'
+   hdr['comment']='7:  PSFMAG_g    (SDSS)'
+   hdr['comment']='8:  PSFMAGerr_g (SDSS)'
+   hdr['comment']='9:  PSFMAG_r    (SDSS)'
+   hdr['comment']='10: PSFMAGerr_r (SDSS)'
+   hdr['comment']='11: PSFMAG_i    (SDSS)'
+   hdr['comment']='12: PSFMAGerr_i (SDSS)'
+   hdr['comment']='13: PSFMAG_z    (SDSS)'
+   hdr['comment']='14: PSFMAGerr_z (SDSS)'
+   if(objtype=='star'):
+      hdr['comment']='15: OBJECT      (SDSS)'
+      hdr['comment']='16: SPTYPE      (SDSS)'
+      hdr['comment']='17: FEH         (SDSS)'
+      hdr['comment']='18: TEFF        (SDSS)'
+      hdr['comment']='19: LOGG        (SDSS)'
+   else:
+      hdr['comment']='15: Z           (SDSS)'
+      hdr['comment']='16: Zerr        (SDSS)'
+      hdr['comment']='17: ZWARNING    (SDSS)'
+
+   hdulist.writeto(outputfits)
 
 
 
