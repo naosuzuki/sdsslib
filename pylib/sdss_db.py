@@ -337,7 +337,7 @@ def create_2dspec(df,fitsfilename,objtype):
       hdr['comment']='16: Zerr        (SDSS)'
       hdr['comment']='17: ZWARNING    (SDSS)'
 
-   hdulist.writeto(fitsfilename)
+   hdulist.writeto(fitsfilename,overwrite=True)
 
 
 
