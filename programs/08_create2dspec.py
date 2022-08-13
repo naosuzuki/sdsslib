@@ -59,30 +59,53 @@ if(objtype=='star'):
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
+   #print('subclass=',df.loc['subclass'])
+   #print('subclass=',df.iloc['subclass',:])
    dfstar=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
-   dfwd=dfstar[(dfstar['subclass']=='WDhotter') | \
+   dfstar['class']=dfstar['class'].str.strip()
+   dfstar['subclass']=dfstar['subclass'].str.strip()
+   print('dfstar=',dfstar)
+   print('subclass=',dfstar['subclass'])
+   #dfwd=dfstar[dfstar['subclass']=='WDhotter']
+   dfwd=dfstar[((dfstar['subclass']=='WDhotter') | \
                (dfstar['subclass']=='WDcoller') | \
                (dfstar['subclass']=='WDmagnetic') | \
-               (dfstar['subclass']=='CalciumWD')]
-   print(dfwd)
+               (dfstar['subclass']=='CalciumWD'))]
    dfspec=dfwd.sort_values(by=['teff'],ascending=False)
    dfspec.reset_index()
-   del dfwd ; del dfstar ; del df
 
-   print(dfspec)
+   dfstar2=dfstar[((dfstar['subclass']!='WDhotter') | \
+               (dfstar['subclass']!='WDcoller') | \
+               (dfstar['subclass']!='WDmagnetic') | \
+               (dfstar['subclass']!='CalciumWD'))]
+   dfspec2=dfstar2.sort_values(by=['teff'],ascending=False)
+   dfspec2.reset_index()
+
+   print('dfwd=',dfwd)
+   print('dfspec=',dfspec)
    for i in range(100):
     plate=dfspec['plate'].iloc[i]
     mjd  =dfspec['mjd'].iloc[i]
     fiber=dfspec['fiber'].iloc[i]
     print(i,plate,mjd,fiber)
-   
-   sys.exit(1)
-   fitsfilename='sdssDR17_wd.fits'
-   sdss_db.create_2dspec(dfspec,fitsfilename)
+    print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
 
-   #print(dfstar)
-   #dfstar.to_csv('../csvfiles/v5_13_2_spall_star.csv',index=False)
-   #del products_list ; del df ; del dfstar
+   fitsfilename='sdssDR17_wd.fits'
+   #sdss_db.create_2dspec(dfspec,fitsfilename)
+
+
+   print('dfspec2=',dfspec2)
+   for i in range(100,200):
+    plate=dfspec2['plate'].iloc[i]
+    mjd  =dfspec2['mjd'].iloc[i]
+    fiber=dfspec2['fiber'].iloc[i]
+    print(i,plate,mjd,fiber)
+    print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
+
+   fitsfilename='sdssDR17_star.fits'
+   #sdss_db.create_2dspec(dfspec2,fitsfilename)
+   del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
+   sys.exit(1)
 
 # Galaxy
 objtype='galaxy'
@@ -128,16 +151,16 @@ if(objtype=='galaxy'):
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','z','zerr','zwarning'])
    print(df)
+   df['class']=df['class'].str.strip()
+   df['subclass']=df['subclass'].str.strip()
    dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
    #print(dfgalaxy)
-   df=dfgalaxy.sort_values(by=['teff'],ascending=False)
+   dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)
    del dfgalaxy 
 
-   fitsfilename='sdssDR17_wd.fits'
-   sdss_db.create_2dspec(df,fitsfilename)
+   fitsfilename='sdssDR17_galaxy.fits'
+   sdss_db.create_2dspec(dfspec,fitsfilename)
    sys.exit(1)
-   dfgalaxy.to_csv('../csvfiles/v5_13_2_spall_galaxy.csv',index=False)
-   del df ; del dfgalaxy
 
 # Quasar
 objtype='quasar'
@@ -163,10 +186,7 @@ if(objtype=='quasar'):
                spall.airmasslist[:,4],\
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
-               spall.sn_medianalllist,\
-               spall.elodie_objectlist,\
-               spall.elodie_sptypelist,spall.elodie_bvlist,spall.elodie_fehlist,\
-               spall.elodie_tefflist,spall.elodie_logglist)),\
+               spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
                columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
                'psfmag_u','psfmagerr_u',\
                'psfmag_g','psfmagerr_g',\
@@ -184,9 +204,19 @@ if(objtype=='quasar'):
                'airmass_i',\
                'airmass_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
-               'snall','object','sptype','bv','feh','teff','logg'])
+               'snall','z','zerr','zwarning'])
+               #'lambdaeff','xfocal','yfocal','zoffset',\
+               #'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
-   dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
-   dfquasar.to_csv('../csvfiles/v5_13_2_spall_quasar.csv',index=False)
+   df['class']=df['class'].str.strip()
+   df['subclass']=df['subclass'].str.strip()
+   #dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
+   dfquasar=df[(df['class']=='QSO') & (df['thing_id']!=-1)]
+   #print(dfgalaxy)
+   dfspec=dfquasar.sort_values(by=['z'],ascending=False)
+
+   fitsfilename='sdssDR17_quasar.fits'
+   sdss_db.create_2dspec(dfspec,fitsfilename)
+   sys.exit(1)
    #del products_list ; del df ; del dfquasar
    del df ; del dfquasar
