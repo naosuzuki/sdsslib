@@ -59,14 +59,11 @@ if(objtype=='star'):
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
-   #print('subclass=',df.loc['subclass'])
-   #print('subclass=',df.iloc['subclass',:])
    dfstar=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
    dfstar['class']=dfstar['class'].str.strip()
    dfstar['subclass']=dfstar['subclass'].str.strip()
    print('dfstar=',dfstar)
    print('subclass=',dfstar['subclass'])
-   #dfwd=dfstar[dfstar['subclass']=='WDhotter']
    dfwd=dfstar[((dfstar['subclass']=='WDhotter') | \
                (dfstar['subclass']=='WDcoller') | \
                (dfstar['subclass']=='WDmagnetic') | \
@@ -92,7 +89,6 @@ if(objtype=='star'):
 
    fitsfilename='sdssDR17_wd.fits'
    sdss_db.create_2dspec(dfspec,fitsfilename)
-
 
    print('dfspec2=',dfspec2)
    for i in range(100,200):
