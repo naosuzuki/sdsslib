@@ -184,6 +184,9 @@ def create_2dspec(df,fitsfilename,objtype):
 # 2022-08-12 LBNL
 # Create 2D FITS File from DataFrame
 
+   # Wavelength Range : 3536.71 - 10415.98
+   coeff0=3.5486 
+   coeff1=0.0001
    startID=35486
    endID  =40177
    npixall=endID-startID+1
@@ -334,7 +337,7 @@ def create_2dspec(df,fitsfilename,objtype):
       hdr['comment']='16: Zerr        (SDSS)'
       hdr['comment']='17: ZWARNING    (SDSS)'
 
-   hdulist.writeto(outputfits)
+   hdulist.writeto(fitsfilename)
 
 
 
