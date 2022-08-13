@@ -132,8 +132,7 @@ if(objtype=='galaxy'):
                spall.airmasslist[:,2],\
                spall.airmasslist[:,3],\
                spall.airmasslist[:,4],\
-               spall.lambdaefflist,\
-               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
+               spall.lambdaefflist,spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
                columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
                'cmodelmag_u','cmodelmagerr_u',\
@@ -202,11 +201,7 @@ if(objtype=='quasar'):
                spall.airmasslist[:,2],\
                spall.airmasslist[:,3],\
                spall.airmasslist[:,4],\
-               spall.lambdaefflist,\
-               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
-               spall.sn_medianalllist,\
-               spall.lambdaefflist,\
-               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
+               spall.lambdaefflist,spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
                columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
                'psfmag_u','psfmagerr_u',\
@@ -226,7 +221,7 @@ if(objtype=='quasar'):
                'airmass_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','z','zerr','zwarning'])
-               #'lambdaeff','xfocal','yfocal','zoffset',\
+               #'lambdaeff','xfocal','yfocal','zoffset',
                #'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
    dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
