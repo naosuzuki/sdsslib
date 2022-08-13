@@ -177,3 +177,54 @@ class SDSSspec:
               nfactor_std=0.0
 
           self.flux/=nfactor
+
+def create_2dspec(df,fitsfilename):
+# 2022-08-12 LBNL
+# Create 2D FITS File from DataFrame
+
+   startID=35486
+   endID  =40177
+   npixall=endID-startID+1
+   # Define Arrays
+   imageflux=numpy.zeros((len(df),npixall),dtype=numpy.float32)
+   imageivar=numpy.zeros((len(df),npixall),dtype=numpy.float32)
+   imagemask=numpy.zeros((len(df),npixall),dtype=numpy.int32)
+
+   #for i in range(len(dfwd)):
+   for i in range(100):
+      plate=df['plate'].iloc[i]
+      mjd  =df['mjd'].iloc[i]
+      fiber=df['fiber'].iloc[i]
+   
+      # Define Spectrum
+      spec=sdss_catalog.SDSSspec(plate,mjd,fiber)
+      spec.read()
+      #spec.normalize_at7000()
+      #spec.read_MWcorrected()
+
+      # Define the spectrum range : first pixel and the last pixel
+      if(spec.wid[0] > startID):
+         kstart=0
+         jstart=spec.wid[0]-startID
+      else:
+         kstart=spec.wid[0]-startID
+         jstart=0
+
+      if(spec.wid[-1] < endID):
+         kend=spec.npix-1
+         jend=spec.wid[-1]-startID
+      else:
+         kend=endID-spec.wid[0]
+         jend=npixall-1
+
+      #print('reading',i,jstart,jend)
+      print('reading',i,plate,mjd,fiber)
+      imageflux[i,jstart:jend]=spec.flux[kstart:kend]
+      imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
+      imagemask[i,jstart:jend]=spec.mask[kstart:kend]
+
+   fitsio.write(fitsfilename,imageflux)
+
+
+
+
