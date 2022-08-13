@@ -205,9 +205,9 @@ if(objtype=='quasar'):
                spall.lambdaefflist,\
                spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
                spall.sn_medianalllist,\
-               spall.elodie_objectlist,\
-               spall.elodie_sptypelist,spall.elodie_bvlist,spall.elodie_fehlist,\
-               spall.elodie_tefflist,spall.elodie_logglist)),\
+               spall.lambdaefflist,\
+               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
+               spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
                columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
                'psfmag_u','psfmagerr_u',\
                'psfmag_g','psfmagerr_g',\
@@ -225,7 +225,9 @@ if(objtype=='quasar'):
                'airmass_i',\
                'airmass_z',\
                'lambdaeff','xfocal','yfocal','zoffset',\
-               'snall','object','sptype','bv','feh','teff','logg'])
+               'snall','z','zerr','zwarning'])
+               #'lambdaeff','xfocal','yfocal','zoffset',\
+               #'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
    dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
    dfquasar.to_csv('../csvfiles/v5_13_2_spall_quasar.csv',index=False)
