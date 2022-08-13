@@ -1,10 +1,10 @@
 
-01a : create csvfile version of spall for DR17
+01a : create csvfile version of spall for DR17 : bugfix 2022-08-13 (Sat)
 01b : create csvfile version of spall for DR8
       DR8 does not have spall, and thing_id is missing
       we combine files and generate as is DR17
 
-02  : reading spectra test
+02  : reading spectra example
 03  : make a SDSS/GAIA spectral + ration plot
 
 07  : execute 06
