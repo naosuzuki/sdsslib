@@ -7,13 +7,15 @@ sys.path.append(pylibdir)
 import sdss_catalog
 import sdss_db
 
+objtype=sys.argv[1]
+
 spall=sdss_catalog.spall()
 print(spall.dr)
 print(spall.fitstablename)
 spall.read()
 
 # Star
-objtype='star'
+#objtype='star'
 if(objtype=='star'):
    df=pd.DataFrame(list(zip(spall.platelist,spall.mjdlist,spall.fiberlist,\
                spall.ralist,spall.declist,\
@@ -103,7 +105,7 @@ if(objtype=='star'):
    del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
 
 # Galaxy
-objtype='galaxy'
+#objtype='galaxy'
 if(objtype=='galaxy'):
    df=pd.DataFrame(list(zip(spall.platelist,spall.mjdlist,spall.fiberlist,\
                spall.ralist,spall.declist,\
@@ -158,7 +160,7 @@ if(objtype=='galaxy'):
    del dfspec
 
 # Quasar
-objtype='quasar'
+#objtype='quasar'
 if(objtype=='quasar'):
    df=pd.DataFrame(list(zip(spall.platelist,spall.mjdlist,spall.fiberlist,\
                spall.ralist,spall.declist,\
