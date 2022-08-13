@@ -89,7 +89,6 @@ if(objtype=='star'):
     print(i,plate,mjd,fiber)
     print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
 
-   sys.exit(1)
    fitsfilename='sdssDR17_wd.fits'
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype)
 
