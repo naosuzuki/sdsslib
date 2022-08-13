@@ -1,0 +1,12 @@
+#!/bin/sh
+
+#PBS -N 'SDSS-DR17-Quasar'
+ 
+#PBS -l nodes=1
+ 
+#PBS -V 
+ 
+#PBS -l walltime=48:00:00 
+ 
+/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/08_create2dspec.py quasar
+ 
