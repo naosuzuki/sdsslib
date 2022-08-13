@@ -69,6 +69,7 @@ if(objtype=='star'):
 
    fitsfilename='sdssDR17_wd.fits'
    sdss_db.create_2dspec(df,fitsfilename)
+   sys.exit(1)
 
    #print(dfstar)
    #dfstar.to_csv('../csvfiles/v5_13_2_spall_star.csv',index=False)
