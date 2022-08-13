@@ -88,7 +88,7 @@ if(objtype=='star'):
     print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
 
    fitsfilename='sdssDR17_wd.fits'
-   sdss_db.create_2dspec(dfspec,fitsfilename)
+   sdss_db.create_2dspec(dfspec,fitsfilename,objtype)
 
    print('dfspec2=',dfspec2)
    for i in range(100,200):
@@ -99,7 +99,7 @@ if(objtype=='star'):
     print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
 
    fitsfilename='sdssDR17_star.fits'
-   sdss_db.create_2dspec(dfspec2,fitsfilename)
+   sdss_db.create_2dspec(dfspec2,fitsfilename,objtype)
    del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
 
 # Galaxy
@@ -154,7 +154,7 @@ if(objtype=='galaxy'):
    del dfgalaxy 
 
    fitsfilename='sdssDR17_galaxy.fits'
-   sdss_db.create_2dspec(dfspec,fitsfilename)
+   sdss_db.create_2dspec(dfspec,fitsfilename,objtype)
    del dfspec
 
 # Quasar
@@ -211,7 +211,7 @@ if(objtype=='quasar'):
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
    fitsfilename='sdssDR17_quasar.fits'
-   sdss_db.create_2dspec(dfspec,fitsfilename)
+   sdss_db.create_2dspec(dfspec,fitsfilename,objtype)
    #del products_list ; del df ; del dfquasar
    del df ; del dfquasar
    del dfspec

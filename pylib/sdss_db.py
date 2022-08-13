@@ -190,6 +190,26 @@ def create_2dspec(df,fitsfilename):
    imageivar=numpy.zeros((len(df),npixall),dtype=numpy.float32)
    imagemask=numpy.zeros((len(df),npixall),dtype=numpy.int32)
 
+   plate_list =df['plate'].to_numpy()
+   mjd_list   =df['mjd'].to_numpy()
+   fiber_list   =df['fiber'].to_numpy()
+
+   ra_list =df['ra'].to_numpy()
+   dec_list=df['dec'].to_numpy()
+
+   thing_id_list=df['thing_id'].to_numpy()
+   psfmag_u_list=df['psfmag_u'].to_numpy()
+   psfmag_u_list=df['psfmagerr_u'].to_numpy()
+   psfmag_g_list=df['psfmag_g'].to_numpy()
+   psfmag_g_list=df['psfmagerr_g'].to_numpy()
+   psfmag_r_list=df['psfmag_r'].to_numpy()
+   psfmag_r_list=df['psfmagerr_r'].to_numpy()
+   psfmag_i_list=df['psfmag_i'].to_numpy()
+   psfmag_i_list=df['psfmagerr_i'].to_numpy()
+   psfmag_z_list=df['psfmag_z'].to_numpy()
+   psfmag_z_list=df['psfmagerr_z'].to_numpy()
+   snall_list   =df['snall'].to_numpy()
+
    #for i in range(len(dfwd)):
    for i in range(100):
       plate=df['plate'].iloc[i]
