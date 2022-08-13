@@ -61,9 +61,12 @@ if(objtype=='star'):
                'lambdaeff','xfocal','yfocal','zoffset',\
                'snall','object','sptype','bv','feh','teff','logg'])
    print(df)
-   dfstar=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
-   dfstar['class']=dfstar['class'].str.strip()
-   dfstar['subclass']=dfstar['subclass'].str.strip()
+   dftmp=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
+   dfstar=dftmp.copy()
+   update_class  =dftmp[:,'class'].str.strip()
+   update_suclass=dftmp[:,'subclass'].str.strip()
+   dfstar.loc[:,'class']=update_class
+   dfstar.loc[:,'subclass']=update_subclass
    print('dfstar=',dfstar)
    print('subclass=',dfstar['subclass'])
    dfwd=dfstar[((dfstar['subclass']=='WDhotter') | \
