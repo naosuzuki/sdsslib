@@ -4,9 +4,11 @@ import string
 import numpy
 import scipy
 import fitsio
+from astropy.io import fits
 
 ## Written by Nao Suzuki
 
+# 2022-08-13 (Sat) Create 2D Fits is added
 # 2022-07-16 (Sat) DR8 is added
 # 2022-07-03 (Sun) Update
 
@@ -178,7 +180,7 @@ class SDSSspec:
 
           self.flux/=nfactor
 
-def create_2dspec(df,fitsfilename):
+def create_2dspec(df,fitsfilename,objtype):
 # 2022-08-12 LBNL
 # Create 2D FITS File from DataFrame
 
@@ -196,19 +198,27 @@ def create_2dspec(df,fitsfilename):
 
    ra_list =df['ra'].to_numpy()
    dec_list=df['dec'].to_numpy()
-
    thing_id_list=df['thing_id'].to_numpy()
+
    psfmag_u_list=df['psfmag_u'].to_numpy()
-   psfmag_u_list=df['psfmagerr_u'].to_numpy()
+   psfmagerr_u_list=df['psfmagerr_u'].to_numpy()
    psfmag_g_list=df['psfmag_g'].to_numpy()
-   psfmag_g_list=df['psfmagerr_g'].to_numpy()
+   psfmagerr_g_list=df['psfmagerr_g'].to_numpy()
    psfmag_r_list=df['psfmag_r'].to_numpy()
-   psfmag_r_list=df['psfmagerr_r'].to_numpy()
+   psfmagerr_r_list=df['psfmagerr_r'].to_numpy()
    psfmag_i_list=df['psfmag_i'].to_numpy()
-   psfmag_i_list=df['psfmagerr_i'].to_numpy()
+   psfmagerr_i_list=df['psfmagerr_i'].to_numpy()
    psfmag_z_list=df['psfmag_z'].to_numpy()
-   psfmag_z_list=df['psfmagerr_z'].to_numpy()
+   psfmagerr_z_list=df['psfmagerr_z'].to_numpy()
    snall_list   =df['snall'].to_numpy()
+
+   if(objtype=='star'):
+      object_list=df['object'].to_numpy()
+      sptype_list=df['sptype'].to_numpy()
+      bv_list    =df['bv'].to_numpy()
+      feh_list   =df['feh'].to_numpy()
+      teff_list  =df['teff'].to_numpy()
+      logg_list  =df['logg'].to_numpy()
 
    #for i in range(len(dfwd)):
    for i in range(100):
@@ -242,6 +252,30 @@ def create_2dspec(df,fitsfilename):
       imageflux[i,jstart:jend]=spec.flux[kstart:kend]
       imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
       imagemask[i,jstart:jend]=spec.mask[kstart:kend]
+
+
+   hdu1=fits.PrimaryHDU(imageflux)
+   hdu2=fits.ImageHDU(imageivar)
+   hdu3=fits.ImageHDU(imagemask)
+
+   col1=fits.Column(name='RA',format='E',array=ra_list)
+   col2=fits.Column(name='DEC',format='E',array=dec_list)
+   col3=fits.Column(name='thing_id',format='K',array=thing_id_list)
+   col4=fits.Column(name='SNR',format='E',array=snall_list)
+
+   col5=fits.Column(name='psfmag_u',format='E',array=psfmag_u_list)
+   col6=fits.Column(name='psfmagerr_u',format='E',array=psfmagerr_u_list)
+   col7=fits.Column(name='psfmag_g',format='E',array=psfmag_g_list)
+   col8=fits.Column(name='psfmagerr_g',format='E',array=psfmagerr_g_list)
+   col9=fits.Column(name='psfmag_r',format='E',array=psfmag_r_list)
+   col10=fits.Column(name='psfmagerr_r',format='E',array=psfmagerr_r_list)
+   col11=fits.Column(name='psfmag_i',format='E',array=psfmag_i_list)
+   col12=fits.Column(name='psfmagerr_i',format='E',array=psfmagerr_i_list)
+   col13=fits.Column(name='psfmag_z',format='E',array=psfmag_z_list)
+   col14=fits.Column(name='psfmagerr_z',format='E',array=psfmagerr_z_list)
+
+   cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9])
+   tbhdu=fits.BinTableHDU.from_columns(cols)
 
    fitsio.write(fitsfilename,imageflux)
 
