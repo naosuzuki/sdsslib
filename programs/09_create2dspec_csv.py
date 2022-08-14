@@ -80,17 +80,16 @@ if(objtype=='galaxy'):
    dfgalaxy=df.copy()
    #print(dfgalaxy)
    dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)
-   del dfgalaxy 
 
    fitsfilename='sdssDR17_galaxy.fits'
    flag_gaia=False
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
-   del dfspec
+   del dfgalaxy ; del dfspec ; del df
 
 # Quasar
 #objtype='quasar'
 if(objtype=='quasar'):
-   csvfile='../csvfiles/v5_13_2_spall_galaxy.csv'
+   csvfile='../csvfiles/v5_13_2_spall_quasar.csv'
    df=pd.read_csv(csvfile)
    print(df)
    dfquasar=df.copy()
@@ -105,5 +104,4 @@ if(objtype=='quasar'):
    flag_gaia=False
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
    #del products_list ; del df ; del dfquasar
-   del df ; del dfquasar
-   del dfspec
+   del df ; del dfquasar ;  del dfspec
