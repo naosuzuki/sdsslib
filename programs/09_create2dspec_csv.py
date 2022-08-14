@@ -11,6 +11,7 @@ githubdir=os.environ['GITHUB_DIR']
 gaiacsvdir=githubdir+'projects_gaia/csvfiles/'
 
 objtype=sys.argv[1]
+dr=sys.argv[2]
 
 #spall=sdss_catalog.spall()
 #print(spall.dr)
@@ -21,8 +22,15 @@ objtype=sys.argv[1]
 #objtype='star'
 if(objtype=='star'):
    flag_gaia=True
-   csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
-   csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
+   if(dr=='dr8'):
+      csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
+      fitsfilename1='sdssDR8_wd.fits'
+      fitsfilename2='sdssDR8_star.fits'
+   elif(dr=='dr17'):
+      csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
+      fitsfilename1='sdssDR17_wd.fits'
+      fitsfilename2='sdssDR17_star.fits'
+
    df=pd.read_csv(csvfile)
    print(df)
    dfstar=df.copy()
@@ -30,48 +38,53 @@ if(objtype=='star'):
    #            (dfstar['subclass']=='WDcooler') | \
    #            (dfstar['subclass']=='WDmagnetic') | \
    #            (dfstar['subclass']=='CalciumWD'))]
+
+# Selecting White Dwarfs
    dfwd=dfstar[dfstar['subclass'].str.contains('WD')]
    dfspec=dfwd.sort_values(by=['teff'],ascending=False)
    dfspec.reset_index()
+   sdss_db.create_2dspec(dfspec,fitsfilename1,objtype,flag_gaia)
 
-   dfstar2=dfstar[((dfstar['subclass']!='WDhotter') | \
-               (dfstar['subclass']!='WDcoller') | \
-               (dfstar['subclass']!='WDmagnetic') | \
-               (dfstar['subclass']!='WD') | \
-               (dfstar['subclass']!='CalciumWD'))]
-   dfspec2=dfstar2.sort_values(by=['teff'],ascending=False)
+   #dfstar2=dfstar[((dfstar['subclass']!='WDhotter') & \
+   #            (dfstar['subclass']!='WDcoller') & \
+   #            (dfstar['subclass']!='WDmagnetic') & \
+   #            (dfstar['subclass']!='WD') & \
+   #            (dfstar['subclass']!='CalciumWD'))]
+
+# All of Stars
+   dfspec2=dfstar.sort_values(by=['teff'],ascending=False)
    dfspec2.reset_index()
-
-   print('dfwd=',dfwd)
-   print('dfspec=',dfspec)
-   #for i in range(1000):
-   for i in range(len(dfspec)):
-    plate=dfspec['plate'].iloc[i]
-    mjd  =dfspec['mjd'].iloc[i]
-    fiber=dfspec['fiber'].iloc[i]
-    #print(i,plate,mjd,fiber)
-    print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
-
-   fitsfilename='sdssDR17_wd.fits'
-   sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
-
    print('dfspec2=',dfspec2)
-   #for i in range(100,200):
-   for i in range(len(dfspec2)):
-    plate=dfspec2['plate'].iloc[i]
-    mjd  =dfspec2['mjd'].iloc[i]
-    fiber=dfspec2['fiber'].iloc[i]
-    print(i,plate,mjd,fiber)
-    print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
+   sdss_db.create_2dspec(dfspec2,fitsfilename2,objtype,flag_gaia)
 
-   fitsfilename='sdssDR17_star.fits'
-   sdss_db.create_2dspec(dfspec2,fitsfilename,objtype,flag_gaia)
+   #for i in range(1000):
+#   for i in range(len(dfspec)):
+#    plate=dfspec['plate'].iloc[i]
+#    mjd  =dfspec['mjd'].iloc[i]
+#    fiber=dfspec['fiber'].iloc[i]
+    #print(i,plate,mjd,fiber)
+#    print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
+
+   #for i in range(100,200):
+   #for i in range(len(dfspec2)):
+   # plate=dfspec2['plate'].iloc[i]
+   # mjd  =dfspec2['mjd'].iloc[i]
+   # fiber=dfspec2['fiber'].iloc[i]
+   # print(i,plate,mjd,fiber)
+   # print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
+
    del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
 
 # Galaxy
 #objtype='galaxy'
 if(objtype=='galaxy'):
-   csvfile='../csvfiles/v5_13_2_spall_galaxy.csv'
+   flag_gaia=False
+   if(dr=='dr8'):
+      csvfile='../csvfiles/dr8_spall_galaxy.csv'
+      fitsfilename='sdssDR8_galaxy.fits'
+   elif(dr=='dr17'):
+      csvfile='../csvfiles/v5_13_2_spall_galaxy.csv'
+      fitsfilename='sdssDR17_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
    #df['class']=df['class'].str.strip()
@@ -81,7 +94,6 @@ if(objtype=='galaxy'):
    #print(dfgalaxy)
    dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)
 
-   fitsfilename='sdssDR17_galaxy.fits'
    flag_gaia=False
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
    del dfgalaxy ; del dfspec ; del df
@@ -89,7 +101,13 @@ if(objtype=='galaxy'):
 # Quasar
 #objtype='quasar'
 if(objtype=='quasar'):
-   csvfile='../csvfiles/v5_13_2_spall_quasar.csv'
+   flag_gaia=False
+   if(dr=='dr8'):
+      csvfile='../csvfiles/dr8_spall_quasar.csv'
+      fitsfilename='sdssDR8_quasar.fits'
+   elif(dr=='dr17'):
+      csvfile='../csvfiles/v5_13_2_spall_quasar.csv'
+      fitsfilename='sdssDR17_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)
    dfquasar=df.copy()
@@ -100,8 +118,6 @@ if(objtype=='quasar'):
    #print(dfgalaxy)
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
-   fitsfilename='sdssDR17_quasar.fits'
-   flag_gaia=False
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
    #del products_list ; del df ; del dfquasar
    del df ; del dfquasar ;  del dfspec
