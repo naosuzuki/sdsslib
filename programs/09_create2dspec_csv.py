@@ -56,7 +56,8 @@ if(objtype=='star'):
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,gaia_flag)
 
    print('dfspec2=',dfspec2)
-   for i in range(100,200):
+   #for i in range(100,200):
+   for i in range(len(dfspec2)):
     plate=dfspec2['plate'].iloc[i]
     mjd  =dfspec2['mjd'].iloc[i]
     fiber=dfspec2['fiber'].iloc[i]
@@ -66,7 +67,6 @@ if(objtype=='star'):
    fitsfilename='sdssDR17_star.fits'
    sdss_db.create_2dspec(dfspec2,fitsfilename,objtype,gaia_flag)
    del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
-   sys.exit(1)
 
 # Galaxy
 #objtype='galaxy'
