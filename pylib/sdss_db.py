@@ -7,6 +7,7 @@ import fitsio
 from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from dustmaps.sfd import SFDQuery
+import extinction
 
 ## Written by Nao Suzuki
 
@@ -192,6 +193,8 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    startID=35486
    endID  =40177
    npixall=endID-startID+1
+
+   #wave=10.0**(coeff0+numpy.arrange(npixall)*coeff1)
    # Define Arrays
    imageflux=numpy.zeros((len(df),npixall),dtype=numpy.float32)
    imageivar=numpy.zeros((len(df),npixall),dtype=numpy.float32)
@@ -248,6 +251,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       ebv_list=sfd(coords)
       #print('EBV=',ebv_list)
 
+   Rv=3.1
    for i in range(len(df)):
    #for i in range(100):
       plate=df['plate'].iloc[i]
@@ -257,6 +261,13 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       # Define Spectrum
       spec=SDSSspec(plate,mjd,fiber)
       spec.read()
+
+      if(objtype!='star'):
+         extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa',out=extinction_mag)
+         newflux=extinction.remove(extinction_mag,spec.flux,inplace=False)
+         for j in range(len(spec.wave)):
+            print(spec.wave[j],spec.flux[j],newflux[j])
+         sys.exit(1)
       #spec.normalize_at7000()
       #spec.read_MWcorrected()
 
