@@ -207,6 +207,8 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    coords  =SkyCoord(ra_list,dec_list,frame='icrs',unit='deg')
    sfd     =SFDQuery()
    ebv_list=sfd(coords)
+   print('EBV=',ebv_list)
+   sys.exit(1)
 
    thing_id_list=df['thing_id'].to_numpy()
    snall_list   =df['snall'].to_numpy()
