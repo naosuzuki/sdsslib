@@ -230,6 +230,12 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
          gaia_bpmag_list =df['phot_bp_mean_mag'].to_numpy()
          gaia_rpmag_list =df['phot_rp_mean_mag'].to_numpy()
          gaia_bprp_list  =df['bp_rp'].to_numpy()
+         gaia_mg_list    =gaia_gmag_list+5.0*numpy.log10(parallax_list)-10.0
+         gaia_pc_list    =1000.0/parallax_list
+         # Replace NAN value by -1
+         gaia_mg_list    =numpy.nan_to_num(gaia_mg_list,nan=-1.0)
+         gaia_pc_list    =numpy.nan_to_num(gaia_pc_list,nan=-1.0)
+         #phot_g_mean_mag+5*log10(parallax)-10 as mg, 1000/parallax as dpc
    else:
       z_list       =df['z'].to_numpy()
       zerr_list    =df['zerr'].to_numpy()
@@ -298,6 +304,20 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       col20=fits.Column(name='logg',format='E',array=logg_list)
       cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
                         col11,col12,col13,col14,col15,col16,col17,col18,col19,col20])
+      if(gaia_flag):
+         col21=fits.Column(name='parallax',format='E',array=parallax_list)
+         col22=fits.Column(name='parallaxerr',format='E',array=parallaxerr_list)
+         col23=fits.Column(name='parallaxsnr',format='E',array=parallaxsnr_list)
+         col24=fits.Column(name='gaia_gmag',format='E',array=gaia_gmag_list)
+         col25=fits.Column(name='gaia_bpmag',format='E',array=gaia_bpmag_list)
+         col26=fits.Column(name='gaia_rpmag',format='E',array=gaia_rpmag_list)
+         col27=fits.Column(name='gaia_bprp',format='E',array=gaia_bprp_list)
+         col28=fits.Column(name='gaia_mg',format='E',array=gaia_mg_list)
+         col29=fits.Column(name='gaia_pc',format='E',array=gaia_pc_list)
+         del cols
+         cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
+              col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,\
+              col21,col22,col23,col24,col25,col26,col27,col28,col29])
    else:
       col15=fits.Column(name='z',format='E',array=z_list)
       col16=fits.Column(name='zerr',format='E',array=zerr_list)
@@ -337,9 +357,20 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    if(objtype=='star'):
       hdr['comment']='15: OBJECT      (SDSS)'
       hdr['comment']='16: SPTYPE      (SDSS)'
-      hdr['comment']='17: FEH         (SDSS)'
-      hdr['comment']='18: TEFF        (SDSS)'
-      hdr['comment']='19: LOGG        (SDSS)'
+      hdr['comment']='17: BV          (SDSS)'
+      hdr['comment']='18: FEH         (SDSS)'
+      hdr['comment']='19: TEFF        (SDSS)'
+      hdr['comment']='20: LOGG        (SDSS)'
+      if(flag_gaia):
+         hdr['comment']='21: PARALLAX    (GAIA)'
+         hdr['comment']='22: PARALLAXERR (GAIA)'
+         hdr['comment']='23: PARALLAXSNR (GAIA)'
+         hdr['comment']='24: GAIA g-mag  (GAIA)'
+         hdr['comment']='25: GAIA bp-mag (GAIA)'
+         hdr['comment']='26: GAIA bp-mag (GAIA)'
+         hdr['comment']='27: GAIA bp-rp  (GAIA)'
+         hdr['comment']='28: GAIA M_g    (GAIA)'
+         hdr['comment']='29: GAIA pc     (GAIA)'
    else:
       hdr['comment']='15: Z           (SDSS)'
       hdr['comment']='16: Zerr        (SDSS)'
