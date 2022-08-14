@@ -204,12 +204,6 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    ra_list =df['ra'].to_numpy()
    dec_list=df['dec'].to_numpy()
 
-   coords  =SkyCoord(ra_list,dec_list,frame='icrs',unit='deg')
-   sfd     =SFDQuery()
-   ebv_list=sfd(coords)
-   print('EBV=',ebv_list)
-   sys.exit(1)
-
    thing_id_list=df['thing_id'].to_numpy()
    snall_list   =df['snall'].to_numpy()
 
@@ -249,6 +243,10 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       z_list       =df['z'].to_numpy()
       zerr_list    =df['zerr'].to_numpy()
       zwarning_list=df['zwarning'].to_numpy()
+      coords  =SkyCoord(ra_list,dec_list,frame='icrs',unit='deg')
+      sfd     =SFDQuery()
+      ebv_list=sfd(coords)
+      #print('EBV=',ebv_list)
 
    for i in range(len(df)):
    #for i in range(100):
