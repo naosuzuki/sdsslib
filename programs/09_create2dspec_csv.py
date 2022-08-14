@@ -20,8 +20,9 @@ objtype=sys.argv[1]
 # Star
 #objtype='star'
 if(objtype=='star'):
-   csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
+   gaia_flag=True
    csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
+   csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
    df=pd.read_csv(csvfile)
    print(df)
    dfstar=df.copy()
@@ -51,9 +52,8 @@ if(objtype=='star'):
     #print(i,plate,mjd,fiber)
     print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
 
-   sys.exit(1)
    fitsfilename='sdssDR17_wd.fits'
-   #sdss_db.create_2dspec(dfspec,fitsfilename,objtype)
+   sdss_db.create_2dspec(dfspec,fitsfilename,objtype,gaia_flag)
 
    print('dfspec2=',dfspec2)
    for i in range(100,200):
@@ -64,8 +64,9 @@ if(objtype=='star'):
     print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
 
    fitsfilename='sdssDR17_star.fits'
-   sdss_db.create_2dspec(dfspec2,fitsfilename,objtype)
+   sdss_db.create_2dspec(dfspec2,fitsfilename,objtype,gaia_flag)
    del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
+   sys.exit(1)
 
 # Galaxy
 #objtype='galaxy'
