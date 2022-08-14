@@ -203,6 +203,11 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
 
    ra_list =df['ra'].to_numpy()
    dec_list=df['dec'].to_numpy()
+
+   coords  =SkyCoord(ra_list,dec_list,frame='icrs',unit='deg')
+   sfd     =SFDQuery()
+   ebv_list=sfd(coords)
+
    thing_id_list=df['thing_id'].to_numpy()
    snall_list   =df['snall'].to_numpy()
 
@@ -323,8 +328,9 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       col15=fits.Column(name='z',format='E',array=z_list)
       col16=fits.Column(name='zerr',format='E',array=zerr_list)
       col17=fits.Column(name='zwarning',format='J',array=zwarning_list)
+      col18=fits.Column(name='E(B-V)',format='E',array=ebv_list)
       cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
-                        col11,col12,col13,col14,col15,col16,col17])
+                        col11,col12,col13,col14,col15,col16,col17,col18])
 
 #  Define FITS Table
    tbhdu=fits.BinTableHDU.from_columns(cols)
@@ -376,5 +382,6 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       hdr['comment']='15: Z           (SDSS)'
       hdr['comment']='16: Zerr        (SDSS)'
       hdr['comment']='17: ZWARNING    (SDSS)'
+      hdr['comment']='18: E(B-V)      (SDSS)'
 
    hdulist.writeto(fitsfilename,overwrite=True)
