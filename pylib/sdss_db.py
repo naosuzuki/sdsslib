@@ -180,7 +180,7 @@ class SDSSspec:
 
           self.flux/=nfactor
 
-def create_2dspec(df,fitsfilename,objtype):
+def create_2dspec(df,fitsfilename,objtype,flag_gaia):
 # 2022-08-12 LBNL
 # Create 2D FITS File from DataFrame
 
@@ -222,6 +222,14 @@ def create_2dspec(df,fitsfilename,objtype):
       feh_list   =df['feh'].to_numpy()
       teff_list  =df['teff'].to_numpy()
       logg_list  =df['logg'].to_numpy()
+      if(flag_gaia):
+         parallax_list   =df['parallax'].to_numpy()
+         parallaxerr_list=df['parallax_error'].to_numpy()
+         parallaxsnr_list=df['parallax_over_error'].to_numpy()
+         gaia_gmag_list  =df['phot_g_mean_mag'].to_numpy()
+         gaia_bpmag_list =df['phot_bp_mean_mag'].to_numpy()
+         gaia_rpmag_list =df['phot_rp_mean_mag'].to_numpy()
+         gaia_bprp_list  =df['bp_rp'].to_numpy()
    else:
       z_list       =df['z'].to_numpy()
       zerr_list    =df['zerr'].to_numpy()
