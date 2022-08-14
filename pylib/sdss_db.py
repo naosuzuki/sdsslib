@@ -5,6 +5,8 @@ import numpy
 import scipy
 import fitsio
 from astropy.io import fits
+from astropy.coordinates import SkyCoord
+from dustmaps.sfd import SFDQuery
 
 ## Written by Nao Suzuki
 
