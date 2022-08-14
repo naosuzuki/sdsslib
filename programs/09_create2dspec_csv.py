@@ -126,53 +126,15 @@ if(objtype=='galaxy'):
 # Quasar
 #objtype='quasar'
 if(objtype=='quasar'):
-   df=pd.DataFrame(list(zip(spall.platelist,spall.mjdlist,spall.fiberlist,\
-               spall.ralist,spall.declist,\
-               spall.thing_idlist,\
-               spall.classlist,spall.subclasslist,\
-               spall.psfmaglist[:,0],spall.psfmagerrlist[:,0],\
-               spall.psfmaglist[:,1],spall.psfmagerrlist[:,1],\
-               spall.psfmaglist[:,2],spall.psfmagerrlist[:,2],\
-               spall.psfmaglist[:,3],spall.psfmagerrlist[:,3],\
-               spall.psfmaglist[:,4],spall.psfmagerrlist[:,4],\
-               spall.spectromaglist[:,0],spall.spectromagerrlist[:,0],\
-               spall.spectromaglist[:,1],spall.spectromagerrlist[:,1],\
-               spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
-               spall.spectromaglist[:,3],spall.spectromagerrlist[:,3],\
-               spall.spectromaglist[:,4],spall.spectromagerrlist[:,4],\
-               spall.airmasslist[:,0],\
-               spall.airmasslist[:,1],\
-               spall.airmasslist[:,2],\
-               spall.airmasslist[:,3],\
-               spall.airmasslist[:,4],\
-               spall.lambdaefflist,\
-               spall.xfocallist,spall.yfocallist,spall.zoffsetlist,\
-               spall.sn_medianalllist,spall.zspzbestlist,spall.zspzbesterrlist,spall.zwarninglist)),\
-               columns=['plate','mjd','fiber','ra','dec','thing_id','class','subclass',\
-               'psfmag_u','psfmagerr_u',\
-               'psfmag_g','psfmagerr_g',\
-               'psfmag_r','psfmagerr_r',\
-               'psfmag_i','psfmagerr_i',\
-               'psfmag_z','psfmagerr_z',\
-               'specmag_u','specmagerr_u',\
-               'specmag_g','specmagerr_g',\
-               'specmag_r','specmagerr_r',\
-               'specmag_i','specmagerr_i',\
-               'specmag_z','specmagerr_z',\
-               'airmass_u',\
-               'airmass_g',\
-               'airmass_r',\
-               'airmass_i',\
-               'airmass_z',\
-               'lambdaeff','xfocal','yfocal','zoffset',\
-               'snall','z','zerr','zwarning'])
-               #'lambdaeff','xfocal','yfocal','zoffset',\
-               #'snall','object','sptype','bv','feh','teff','logg'])
+   csvfile=gaiacsvdir+'gaiadr3_sdssdr8_quasar.csv'
+   csvfile=gaiacsvdir+'gaiadr3_sdssdr17_quasar.csv'
+   df=pd.read_csv(csvfile)
    print(df)
-   df['class']=df['class'].str.strip()
-   df['subclass']=df['subclass'].str.strip()
+   dfquasar=df.copy()
+   #df['class']=df['class'].str.strip()
+   #df['subclass']=df['subclass'].str.strip()
    #dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
-   dfquasar=df[(df['class']=='QSO') & (df['thing_id']!=-1)]
+   #dfquasar=df[(df['class']=='QSO') & (df['thing_id']!=-1)]
    #print(dfgalaxy)
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
