@@ -241,8 +241,8 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       zerr_list    =df['zerr'].to_numpy()
       zwarning_list=df['zwarning'].to_numpy()
 
-   #for i in range(len(dfwd)):
-   for i in range(100):
+   for i in range(len(df)):
+   #for i in range(100):
       plate=df['plate'].iloc[i]
       mjd  =df['mjd'].iloc[i]
       fiber=df['fiber'].iloc[i]
@@ -273,7 +273,6 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       imageflux[i,jstart:jend]=spec.flux[kstart:kend]
       imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
       imagemask[i,jstart:jend]=spec.mask[kstart:kend]
-
 
    hdu1=fits.PrimaryHDU(imageflux)
    hdu2=fits.ImageHDU(imageivar)
@@ -377,6 +376,3 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       hdr['comment']='17: ZWARNING    (SDSS)'
 
    hdulist.writeto(fitsfilename,overwrite=True)
-
-
-
