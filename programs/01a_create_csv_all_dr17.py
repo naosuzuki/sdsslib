@@ -122,6 +122,11 @@ if(objtype=='galaxy'):
                spall.cmodelmaglist[:,2],spall.cmodelmagerrlist[:,2],\
                spall.cmodelmaglist[:,3],spall.cmodelmagerrlist[:,3],\
                spall.cmodelmaglist[:,4],spall.cmodelmagerrlist[:,4],\
+               spall.fibermaglist[:,0],spall.fibermagerrlist[:,0],\
+               spall.fibermaglist[:,1],spall.fibermagerrlist[:,1],\
+               spall.fibermaglist[:,2],spall.fibermagerrlist[:,2],\
+               spall.fibermaglist[:,3],spall.fibermagerrlist[:,3],\
+               spall.fibermaglist[:,4],spall.fibermagerrlist[:,4],\
                spall.spectromaglist[:,0],spall.spectromagerrlist[:,0],\
                spall.spectromaglist[:,1],spall.spectromagerrlist[:,1],\
                spall.spectromaglist[:,2],spall.spectromagerrlist[:,2],\
@@ -140,6 +145,11 @@ if(objtype=='galaxy'):
                'cmodelmag_r','cmodelmagerr_r',\
                'cmodelmag_i','cmodelmagerr_i',\
                'cmodelmag_z','cmodelmagerr_z',\
+               'fibermag_u','fibermagerr_u',\
+               'fibermag_g','fibermagerr_g',\
+               'fibermag_r','fibermagerr_r',\
+               'fibermag_i','fibermagerr_i',\
+               'fibermag_z','fibermagerr_z',\
                'specmag_u','specmagerr_u',\
                'specmag_g','specmagerr_g',\
                'specmag_r','specmagerr_r',\
