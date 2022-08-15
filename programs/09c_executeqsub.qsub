@@ -5,6 +5,8 @@
 #PBS -l nodes=1
 
 #PBS -l mem=128gb
+
+#PBS -l vmem=128gb
  
 #PBS -V 
  
