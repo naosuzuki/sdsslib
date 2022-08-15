@@ -446,4 +446,4 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       hdr['comment']='17: ZWARNING    (SDSS)'
       hdr['comment']='18: E(B-V)      (SDSS)'
 
-   hdulist.writeto(fitsfilename,overwrite=True)
+   hdulist.writeto(fitsfilename)
