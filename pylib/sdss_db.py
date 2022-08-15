@@ -42,6 +42,7 @@ class SDSSspec:
           self.exptime=0.0
           self.nexp=0
           self.thingid=0
+          self.fitsfilename='sdss.fits'
 
       def read(self):
       #2022-04-22 Fri
