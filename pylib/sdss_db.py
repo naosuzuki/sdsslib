@@ -17,10 +17,10 @@ import extinction
 
 class SDSSspec:
       def __init__(self,plate,mjd,fiber):
-          if(plate>3509): 
+          if(int(plate)>3509): 
              self.dr='DR17'
              self.ver='v5_13_2'
-          elif(plate<=3509): 
+          elif(int(plate)<=3509): 
              self.dr='DR8'
              self.ver='DR8'
           self.plate=int(plate)
@@ -66,6 +66,7 @@ class SDSSspec:
                       self.fitsfilename=tmpfitsfile
                    else:
                       print('DR8 data does not exist')
+                      continue
               
           # Read FITS header
           h=fitsio.read_header(self.fitsfilename,ext=0)
