@@ -157,7 +157,6 @@ class spall():
           'SPEC2_G','SPEC2_R','SPEC2_I',\
           'PSFMAG','PSFMAGERR','THING_ID',\
           'CMODELMAG','CMODELMAGERR',\
-          'FIBERMAG','FIBERMAGERR',\
           'FIBER2MAG','FIBER2MAGERR',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
           'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR','EXTINCTION',\
@@ -208,6 +207,9 @@ class spall():
 
           self.cmodelmaglist   =d['CMODELMAG']
           self.cmodelmagerrlist=d['CMODELMAGERR']
+
+          self.fibermaglist   =d['FIBER2MAG']
+          self.fibermagerrlist=d['FIBER2MAGERR']
 
           # DR8 and DR9 definition
           self.spectrofluxlist=d['SPECTROFLUX']
