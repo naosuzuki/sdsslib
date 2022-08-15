@@ -339,7 +339,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       col12=fits.Column(name='psfmagerr_i',format='E',array=psfmagerr_i_list)
       col13=fits.Column(name='psfmag_z',format='E',array=psfmag_z_list)
       col14=fits.Column(name='psfmagerr_z',format='E',array=psfmagerr_z_list)
-   else(objtype=='galaxy'):
+   elif(objtype=='galaxy'):
       col5=fits.Column(name='fibermag_u',format='E',array=psfmag_u_list)
       col6=fits.Column(name='fibermagerr_u',format='E',array=psfmagerr_u_list)
       col7=fits.Column(name='fibermag_g',format='E',array=psfmag_g_list)
