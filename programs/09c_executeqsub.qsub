@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'SDSS-DR17c-Quasar'
+#PBS -N 'SDSS-DR17-Quasar'
  
 #PBS -l nodes=1
 
