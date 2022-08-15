@@ -446,4 +446,5 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       hdr['comment']='17: ZWARNING    (SDSS)'
       hdr['comment']='18: E(B-V)      (SDSS)'
 
+   if(os.path.exists(fitsfilename): os.remove(fitsfilename) 
    hdulist.writeto(fitsfilename)
