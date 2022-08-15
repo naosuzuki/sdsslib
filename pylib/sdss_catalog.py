@@ -157,6 +157,8 @@ class spall():
           'SPEC2_G','SPEC2_R','SPEC2_I',\
           'PSFMAG','PSFMAGERR','THING_ID',\
           'CMODELMAG','CMODELMAGERR',\
+          'FIBERMAG','FIBERMAGERR',\
+          'FIBER2MAG','FIBER2MAGERR',\
           'SPECTROFLUX','SPECTROFLUX_IVAR',\
           'SPECTROSYNFLUX','SPECTROSYNFLUX_IVAR','EXTINCTION',\
           'AIRMASS','OBJID','Z','Z_ERR',\

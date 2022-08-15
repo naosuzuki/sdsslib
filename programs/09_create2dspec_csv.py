@@ -87,6 +87,9 @@ if(objtype=='galaxy'):
       fitsfilename='sdssDR17_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
+   print('psfmag_u',df['psfmag_u'])
+   sys.exit(1)
+
    #df['class']=df['class'].str.strip()
    #df['subclass']=df['subclass'].str.strip()
    #dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
