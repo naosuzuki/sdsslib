@@ -17,10 +17,10 @@ import extinction
 
 class SDSSspec:
       def __init__(self,plate,mjd,fiber):
-          if(plate>3500): 
+          if(plate>3509): 
              self.dr='DR17'
              self.ver='v5_13_2'
-          elif(plate<3500): 
+          elif(plate<=3509): 
              self.dr='DR8'
              self.ver='DR8'
           self.plate=int(plate)
@@ -46,8 +46,27 @@ class SDSSspec:
       def read(self):
       #2022-04-22 Fri
           # Define Data Directory
-          self.fitsfilename=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
-          self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+          if(self.ver=='DR17'):
+             self.fitsfilename=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
+             self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+          elif(self.ver=='DR8'):
+             tmpfitsfile=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
+             self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+             if(os.path.exists(tmpfitsfile)): 
+                self.fitsfilename=tmpfitsfile
+             else:
+                tmpfitsfile=os.environ['SPECTRO_REDUX']+self.ver+'/103/'+\
+                self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+                if(os.path.exists(tmpfitsfile)): 
+                   self.fitsfilename=tmpfitsfile
+                else: 
+                   tmpfitsfile=os.environ['SPECTRO_REDUX']+self.ver+'/104/'+\
+                   self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
+                   if(os.path.exists(tmpfitsfile)): 
+                      self.fitsfilename=tmpfitsfile
+                   else:
+                      print('DR8 data does not exist')
+              
           # Read FITS header
           h=fitsio.read_header(self.fitsfilename,ext=0)
           self.nspec=h['NAXIS2']
