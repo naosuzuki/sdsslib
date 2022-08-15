@@ -286,7 +286,6 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
 
    Rv=3.1
    for i in range(len(df)):
-   #for i in range(100):
       plate=df['plate'].iloc[i]
       mjd  =df['mjd'].iloc[i]
       fiber=df['fiber'].iloc[i]
@@ -326,7 +325,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
          jend=npixall-1
 
       #print('reading',i,jstart,jend)
-      print('reading',i,plate,mjd,fiber)
+      print('reading',i,plate,mjd,fiber,'fraction=',"%5.2f"%(i/len(df)))
       imageflux[i,jstart:jend]=spec.flux[kstart:kend]
       imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
       imagemask[i,jstart:jend]=spec.mask[kstart:kend]
