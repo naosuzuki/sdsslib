@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'SDSS-DR17-galaxy'
+#PBS -N 'SDSS-DR17b-galaxy'
  
 #PBS -l nodes=1
 
