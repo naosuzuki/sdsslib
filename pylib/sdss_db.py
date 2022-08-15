@@ -66,7 +66,7 @@ class SDSSspec:
                       self.fitsfilename=tmpfitsfile
                    else:
                       print('DR8 data does not exist')
-                      continue
+                      return
               
           # Read FITS header
           h=fitsio.read_header(self.fitsfilename,ext=0)
