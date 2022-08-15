@@ -9,6 +9,7 @@ import sdss_db
 
 githubdir=os.environ['GITHUB_DIR']
 gaiacsvdir=githubdir+'projects_gaia/csvfiles/'
+sdsscsvdir=githubdir+'sdsslib/csvfiles/'
 
 objtype=sys.argv[1]
 dr=sys.argv[2]
@@ -80,10 +81,10 @@ if(objtype=='star'):
 if(objtype=='galaxy'):
    flag_gaia=False
    if(dr=='dr8'):
-      csvfile='../csvfiles/dr8_spall_galaxy.csv'
+      csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
       fitsfilename='sdssDR8_galaxy.fits'
    elif(dr=='dr17'):
-      csvfile='../csvfiles/v5_13_2_spall_galaxy.csv'
+      csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
@@ -103,10 +104,10 @@ if(objtype=='galaxy'):
 if(objtype=='quasar'):
    flag_gaia=False
    if(dr=='dr8'):
-      csvfile='../csvfiles/dr8_spall_quasar.csv'
+      csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
    elif(dr=='dr17'):
-      csvfile='../csvfiles/v5_13_2_spall_quasar.csv'
+      csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)

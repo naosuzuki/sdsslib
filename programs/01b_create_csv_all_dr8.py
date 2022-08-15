@@ -136,7 +136,8 @@ df0c=df0b.astype({'objid':'int'})
 #df=pd.merge(df0b,df1b,how='left',on='objid')
 
 df2=pd.merge(df0c,df1d,how='left',on='objid')
-df=df2[(df2['ra'].notnull()) & (df2['dec'].notnull())]
+df3=df2[(df2['ra'].notnull()) & (df2['dec'].notnull())]
+df=df3.rename(columns={"snmedian":"snall"})
 
 if(spobj.dr=='DR8'):
    df.to_csv('../csvfiles/dr8_spall.csv',index=False)
@@ -164,18 +165,19 @@ if(objtype=='star'):
                'airmass_z',\
                'xfocal','yfocal',\
                'z','zerr','zwarning',\
-               'object','sptype','bv','feh','teff','logg']
-   if(spobj.dr=='DR8'): output_columns.append('snmedian')
-   if(spobj.dr=='DR9'): output_columns.append('snall')
+               'object','sptype','bv','feh','teff','logg','snall']
+#   if(spobj.dr=='DR8'): output_columns.append('snmedian')
+#   if(spobj.dr=='DR9'): output_columns.append('snall')
    print(df)
-   dftmp=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
-   dfstar=dftmp.loc[:,output_columns]
+   dfstar=df[(df['class']=='STAR  ') & (df['thing_id']!=-1)]
+   #dftmp2=dftmp.loc[:,output_columns]
+   #dfstar=dftmp2.rename(columns={"snmedian":"snall"})
    print(dfstar)
    if(spobj.dr=='DR8'):
       dfstar.to_csv('../csvfiles/dr8_spall_star.csv',index=False)
    if(spobj.dr=='DR9'):
       dfstar.to_csv('../csvfiles/dr9_spall_star.csv',index=False)
-   del dfstar ;  del dftmp
+   del dfstar 
 
 # Galaxy
 objtype='galaxy'
@@ -202,9 +204,9 @@ if(objtype=='galaxy'):
                'airmass_i',\
                'airmass_z',\
                'xfocal','yfocal',\
-               'z','zerr','zwarning']
-   if(spobj.dr=='DR8'): output_columns.append('snmedian')
-   if(spobj.dr=='DR9'): output_columns.append('snall')
+               'z','zerr','zwarning','snall']
+#   if(spobj.dr=='DR8'): output_columns.append('snmedian')
+#   if(spobj.dr=='DR9'): output_columns.append('snall')
    print(df)
    dftmp=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
    dfgalaxy=dftmp.loc[:,output_columns]
@@ -236,9 +238,9 @@ if(objtype=='quasar'):
                'airmass_i',\
                'airmass_z',\
                'xfocal','yfocal',\
-               'z','zerr','zwarning']
-   if(spobj.dr=='DR8'): output_columns.append('snmedian')
-   if(spobj.dr=='DR9'): output_columns.append('snall')
+               'z','zerr','zwarning','snall']
+#   if(spobj.dr=='DR8'): output_columns.append('snmedian')
+#   if(spobj.dr=='DR9'): output_columns.append('snall')
    print(df)
    dftmp=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
    dfquasar=dftmp.loc[:,output_columns]
