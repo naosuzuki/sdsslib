@@ -287,7 +287,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
          extinction_mag=extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa')
          newflux=extinction.remove(extinction_mag,spec.flux,inplace=False)
          ivar1=extinction.apply(extinction_mag,spec.ivar,inplace=False)
-         ivar2=extinction.apply(extinction_mag,ivar2,inplace=False)
+         ivar2=extinction.apply(extinction_mag,ivar1,inplace=False)
          spec.flux=newflux  ; spec.ivar=ivar2 
          #for j in range(len(spec.wave)):
          #   print(spec.wave[j],spec.flux[j],newflux[j],extinction_mag[j],ebv_list[i])
