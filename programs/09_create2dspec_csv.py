@@ -126,10 +126,11 @@ if(objtype=='quasar'):
    print('df sn>3',len(dftmp3))
    dftmp1=df[df['snall']>1.0]
    print('df sn>1',len(dftmp1))
-   del dftmp5 ; del dftmp1
+   #del dftmp5 ; del dftmp1
    #del dftmp3  
 
-   dfquasar=dftmp3.copy()
+   # S/N>5 for DR17
+   dfquasar=dftmp5.copy()
    #dfquasar=df.copy()
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
