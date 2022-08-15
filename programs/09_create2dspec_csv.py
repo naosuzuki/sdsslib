@@ -33,7 +33,6 @@ if(objtype=='star'):
       fitsfilename2='sdssDR17_star.fits'
 
    df=pd.read_csv(csvfile)
-   print(df)
    dfstar=df.copy()
    #dfwd=dfstar[((dfstar['subclass']=='WDhotter') | \
    #            (dfstar['subclass']=='WDcooler') | \
