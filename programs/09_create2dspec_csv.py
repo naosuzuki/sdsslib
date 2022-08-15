@@ -80,7 +80,7 @@ if(objtype=='galaxy'):
    flag_gaia=False
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
-      fitsfilename='sdssDR8_galaxy.fits'
+      fitsfilename='sdssDR8snr3_galaxy.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17snr3_galaxy.fits'
