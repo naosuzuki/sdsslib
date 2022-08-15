@@ -285,7 +285,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       #print('EBV=',ebv_list)
 
    Rv=3.1
-   for i in range(5,len(df)):
+   for i in range(len(df)):
    #for i in range(100):
       plate=df['plate'].iloc[i]
       mjd  =df['mjd'].iloc[i]
