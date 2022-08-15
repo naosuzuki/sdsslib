@@ -282,8 +282,9 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       spec.read()
 
       if(objtype!='star'):
-         extinction_mag=numpy.zeros(len(spec.wave))
-         extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa',out=extinction_mag)
+         #extinction_mag=numpy.zeros(len(spec.wave))
+         #extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa',out=extinction_mag)
+         extinction_mag=extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa')
          newflux=extinction.remove(extinction_mag,spec.flux,inplace=False)
          for j in range(len(spec.wave)):
             print(spec.wave[j],spec.flux[j],newflux[j])
