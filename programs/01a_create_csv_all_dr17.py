@@ -236,5 +236,4 @@ if(objtype=='quasar'):
    print(df)
    dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
    dfquasar.to_csv('../csvfiles/v5_13_2_spall_quasar.csv',index=False)
-   #del products_list ; del df ; del dfquasar
    del df ; del dfquasar
