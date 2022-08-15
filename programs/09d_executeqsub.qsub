@@ -3,6 +3,8 @@
 #PBS -N 'SDSS-DR17-galaxy'
  
 #PBS -l nodes=1
+
+#PBS -l mem=64gb
  
 #PBS -V 
  
