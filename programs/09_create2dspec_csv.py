@@ -33,12 +33,16 @@ if(objtype=='star'):
       fitsfilename2='sdssDR17_star.fits'
 
    df=pd.read_csv(csvfile)
-   dfstar=df.copy()
-   #dfwd=dfstar[((dfstar['subclass']=='WDhotter') | \
-   #            (dfstar['subclass']=='WDcooler') | \
-   #            (dfstar['subclass']=='WDmagnetic') | \
-   #            (dfstar['subclass']=='CalciumWD'))]
+   print('df all=',len(df))
+   dftmp5=df[df['snall']>5.0]
+   print('df sn>5',len(dftmp5))
+   dftmp3=df[df['snall']>3.0]
+   print('df sn>3',len(dftmp3))
+   dftmp1=df[df['snall']>1.0]
+   print('df sn>1',len(dftmp1))
+   del dftmp5 ; del dftmp3 ; del dftmp1
 
+   dfstar=df.copy()
 # Selecting White Dwarfs
    dfwd=dfstar[dfstar['subclass'].str.contains('WD')]
    dfspec=dfwd.sort_values(by=['teff'],ascending=False)
@@ -90,8 +94,18 @@ if(objtype=='galaxy'):
    #df['class']=df['class'].str.strip()
    #df['subclass']=df['subclass'].str.strip()
    #dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
-   dfgalaxy=df.copy()
-   #print(dfgalaxy)
+   print('dfgalaxy all=',len(df))
+   dftmp5=df[df['snall']>5.0]
+   print('dfgalaxy sn>5',len(dftmp5))
+   dftmp3=df[df['snall']>3.0]
+   print('dfgalaxy sn>3',len(dftmp3))
+   dftmp1=df[df['snall']>1.0]
+   print('dfgalaxy sn>1',len(dftmp1))
+
+# S/N > 3 is chosen for DR17
+   dfgalaxy=dftmp3.copy()
+   del dftmp5 ; del dftmp3 ; del dftmp1
+
    dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)
 
    flag_gaia=False
@@ -110,12 +124,16 @@ if(objtype=='quasar'):
       fitsfilename='sdssDR17_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)
+   print('df all=',len(df))
+   dftmp5=df[df['snall']>5.0]
+   print('df sn>5',len(dftmp5))
+   dftmp3=df[df['snall']>3.0]
+   print('df sn>3',len(dftmp3))
+   dftmp1=df[df['snall']>1.0]
+   print('df sn>1',len(dftmp1))
+   del dftmp5 ; del dftmp3 ; del dftmp1
+
    dfquasar=df.copy()
-   #df['class']=df['class'].str.strip()
-   #df['subclass']=df['subclass'].str.strip()
-   #dfquasar=df[(df['class']=='QSO   ') & (df['thing_id']!=-1)]
-   #dfquasar=df[(df['class']=='QSO') & (df['thing_id']!=-1)]
-   #print(dfgalaxy)
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
