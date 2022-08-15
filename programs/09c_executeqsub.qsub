@@ -2,7 +2,7 @@
 
 #PBS -N 'SDSS-DR17-Quasar'
  
-#PBS -l nodes=2:ppn=2
+#PBS -l nodes=1
 
 #PBS -l mem=64gb
 
