@@ -129,7 +129,8 @@ if(objtype=='quasar'):
    del dftmp5 ; del dftmp1
    #del dftmp3  
 
-   dfquasar=dftmp3.copy()
+   #dfquasar=dftmp3.copy()
+   dfquasar=df.copy()
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
