@@ -47,10 +47,10 @@ class SDSSspec:
       def read(self):
       #2022-04-22 Fri
           # Define Data Directory
-          if(self.ver=='DR17'):
+          if(self.dr=='DR17'):
              self.fitsfilename=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
              self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
-          elif(self.ver=='DR8'):
+          elif(self.dr=='DR8'):
              tmpfitsfile=os.environ['SPECTRO_REDUX']+self.ver+'/'+\
              self.strplate+'/spPlate-'+self.strplate+'-'+self.strmjd+'.fits'
              if(os.path.exists(tmpfitsfile)): 
