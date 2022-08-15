@@ -126,9 +126,10 @@ if(objtype=='quasar'):
    print('df sn>3',len(dftmp3))
    dftmp1=df[df['snall']>1.0]
    print('df sn>1',len(dftmp1))
-   del dftmp5 ; del dftmp3 ; del dftmp1
+   del dftmp5 ; del dftmp1
+   #del dftmp3  
 
-   dfquasar=df.copy()
+   dfquasar=dftmp3.copy()
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
