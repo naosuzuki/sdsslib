@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'SDSS-DR17-Star'
+#PBS -N 'SDSS-DR8-Star'
  
 #PBS -l nodes=1
  
@@ -9,6 +9,6 @@
 #PBS -l walltime=48:00:00 
  
 
-/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py star dr17
-#/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py star dr8
+#/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py star dr17
+/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py star dr8
  
