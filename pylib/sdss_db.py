@@ -271,7 +271,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
       #print('EBV=',ebv_list)
 
    Rv=3.1
-   for i in range(len(df)):
+   for i in range(5,len(df)):
    #for i in range(100):
       plate=df['plate'].iloc[i]
       mjd  =df['mjd'].iloc[i]
@@ -287,7 +287,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
          extinction_mag=extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa')
          newflux=extinction.remove(extinction_mag,spec.flux,inplace=False)
          for j in range(len(spec.wave)):
-            print(spec.wave[j],spec.flux[j],newflux[j])
+            print(spec.wave[j],spec.flux[j],newflux[j],extinction_mag[j],ebv_list[i])
          sys.exit(1)
       #spec.normalize_at7000()
       #spec.read_MWcorrected()
