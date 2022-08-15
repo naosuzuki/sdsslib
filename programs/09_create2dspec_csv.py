@@ -88,7 +88,7 @@ if(objtype=='galaxy'):
       fitsfilename='sdssDR8_galaxy.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
-      fitsfilename='sdssDR17_galaxy.fits'
+      fitsfilename='sdssDR17snr3_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
    #df['class']=df['class'].str.strip()
