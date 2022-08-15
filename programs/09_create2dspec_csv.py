@@ -48,12 +48,7 @@ if(objtype=='star'):
    dfspec=dfwd.sort_values(by=['teff'],ascending=False)
    dfspec.reset_index()
    sdss_db.create_2dspec(dfspec,fitsfilename1,objtype,flag_gaia)
-
-   #dfstar2=dfstar[((dfstar['subclass']!='WDhotter') & \
-   #            (dfstar['subclass']!='WDcoller') & \
-   #            (dfstar['subclass']!='WDmagnetic') & \
-   #            (dfstar['subclass']!='WD') & \
-   #            (dfstar['subclass']!='CalciumWD'))]
+   del dfspec ; del df
 
 # All of Stars
    dfspec2=dfstar.sort_values(by=['teff'],ascending=False)
