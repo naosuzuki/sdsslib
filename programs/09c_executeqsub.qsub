@@ -2,11 +2,7 @@
 
 #PBS -N 'SDSS-DR8-QuasarSNR10'
  
-#PBS -l nodes=1
-
-#PBS -l mem=64gb
-
-#PBS -l vmem=64gb
+#PBS -L tasks=1:lprocs=2:memory=64gb
  
 #PBS -V 
  
