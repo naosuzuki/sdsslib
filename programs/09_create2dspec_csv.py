@@ -123,11 +123,11 @@ if(objtype=='quasar'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
-      fitsfilename='sdssDR8snr10_quasar.fits'
+      fitsfilename='sdssDR8snr10a_quasar.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
-      fitsfilename='sdssDR17snr10_quasar.fits'
+      fitsfilename='sdssDR17snr10a_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)
    print('df all=',len(df))
