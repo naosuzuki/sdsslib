@@ -107,7 +107,7 @@ if(objtype=='galaxy'):
    print('dfgalaxy sn>1',len(dftmp1))
 
 # S/N > 3 is chosen for DR17
-   dfgalaxy=dftmp3.copy()
+   dfgalaxy=dftmp10.copy()
    del dftmp5 ; del dftmp3 ; del dftmp1
 
    dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)

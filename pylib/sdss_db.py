@@ -447,3 +447,33 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
 
    if(os.path.exists(fitsfilename)): os.remove(fitsfilename) 
    hdulist.writeto(fitsfilename)
+
+class SDSSspec2d:
+   def __init__(self,fitsfilename):
+      # Reading FITS Image
+      self.fitsfilename=fitsfilename
+      self.fits=fitsio.FITS(self.fitsfilename)
+
+      h=fitsio.read_header(self.fitsfilename)
+      self.npix=h['NAXIS1']
+      self.nspec=h['NAXIS2']
+      self.coeff0=h['COEFF0']
+      self.coeff1=h['COEFF1']
+      self.wID=int(self.coeff0/self.coeff1)+numpy.arange(self.npix)
+      self.wave=10.0**(self.wID*self.coeff1)
+
+   def read(self):
+      self.imageflux=self.fits[0][:,:]
+      self.imageivar=self.fits[0][:,:][0]
+      self.imagemask=self.fits[0][:,:][0]
+      #self.imageivar=self.fits[1][:,:][0]
+      #self.imagemask=self.fits[2][:,:][0]
+      #self.imageflux=self.fits[0][:,:]
+      #self.imageivar=self.fits[1][:,:]
+      #self.imagemask=self.fits[2][:,:]
+
+   def extract(self,i):
+   # extract ith spectrum
+      self.flux=self.imageflux[i,:]
+      self.ivar=self.imageivar[i,:]
+      self.mask=self.imagemask[i,:]
