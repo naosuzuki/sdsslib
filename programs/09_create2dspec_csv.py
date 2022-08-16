@@ -27,13 +27,17 @@ if(objtype=='star'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
       fitsfilename1='sdssDR8_wd.fits'
       fitsfilename2='sdssDR8_star.fits'
+      fitsfilename1='sdssDR8snr10_wd.fits'
+      fitsfilename2='sdssDR8snr10_star.fits'
    elif(dr=='dr17'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
-      fitsfilename1='sdssDR17_wd.fits'
-      fitsfilename2='sdssDR17_star.fits'
+      fitsfilename1='sdssDR17snr10_wd.fits'
+      fitsfilename2='sdssDR17snr10_star.fits'
 
    df=pd.read_csv(csvfile)
    print('df all=',len(df))
+   dftmp10=df[df['snall']>=10.0]
+   print('df sn>10=',len(dftmp10))
    dftmp5=df[df['snall']>5.0]
    print('df sn>5',len(dftmp5))
    dftmp3=df[df['snall']>3.0]
@@ -42,7 +46,8 @@ if(objtype=='star'):
    print('df sn>1',len(dftmp1))
    del dftmp5 ; del dftmp3 ; del dftmp1
 
-   dfstar=df.copy()
+   #dfstar=df.copy()
+   dfstar=dftmp10.copy()
 # Selecting White Dwarfs
    dfwd=dfstar[dfstar['subclass'].str.contains('WD')]
    dfspec=dfwd.sort_values(by=['teff'],ascending=False)
@@ -81,15 +86,19 @@ if(objtype=='galaxy'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
       fitsfilename='sdssDR8snr3_galaxy.fits'
+      fitsfilename='sdssDR8snr10_galaxy.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17snr3_galaxy.fits'
+      fitsfilename='sdssDR17snr10_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
    #df['class']=df['class'].str.strip()
    #df['subclass']=df['subclass'].str.strip()
    #dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
    print('dfgalaxy all=',len(df))
+   dftmp10=df[df['snall']>=10.0]
+   print('dfgalaxy sn>10',len(dftmp10))
    dftmp5=df[df['snall']>5.0]
    print('dfgalaxy sn>5',len(dftmp5))
    dftmp3=df[df['snall']>3.0]
@@ -114,12 +123,16 @@ if(objtype=='quasar'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
+      fitsfilename='sdssDR8snr10_quasar.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
+      fitsfilename='sdssDR17snr10_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)
    print('df all=',len(df))
+   dftmp10=df[df['snall']>=10.0]
+   print('df sn>10',len(dftmp10))
    dftmp5=df[df['snall']>5.0]
    print('df sn>5',len(dftmp5))
    dftmp3=df[df['snall']>3.0]
@@ -129,8 +142,8 @@ if(objtype=='quasar'):
    #del dftmp5 ; del dftmp1
    #del dftmp3  
 
-   # S/N>5 for DR17
-   dfquasar=dftmp5.copy()
+   # S/N>10 for DR17
+   dfquasar=dftmp10.copy()
    #dfquasar=df.copy()
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
