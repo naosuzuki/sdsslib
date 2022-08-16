@@ -334,67 +334,69 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    hdu2=fits.ImageHDU(imageivar)
    hdu3=fits.ImageHDU(imagemask)
 
-   col1=fits.Column(name='RA',format='E',array=ra_list)
-   col2=fits.Column(name='DEC',format='E',array=dec_list)
+   col1=fits.Column(name='ra',format='E',array=ra_list)
+   col2=fits.Column(name='dec',format='E',array=dec_list)
    col3=fits.Column(name='thing_id',format='K',array=thing_id_list)
    col4=fits.Column(name='plate',format='J',array=plate_list)
    col5=fits.Column(name='mjd',format='J',array=mjd_list)
    col6=fits.Column(name='fiber',format='J',array=fiber_list)
-   col7=fits.Column(name='SNR',format='E',array=snall_list)
+   col7=fits.Column(name='snr',format='E',array=snall_list)
 
    if((objtype=='star') or (objtype=='quasar')):
-      col5=fits.Column(name='psfmag_u',format='E',array=psfmag_u_list)
-      col6=fits.Column(name='psfmagerr_u',format='E',array=psfmagerr_u_list)
-      col7=fits.Column(name='psfmag_g',format='E',array=psfmag_g_list)
-      col8=fits.Column(name='psfmagerr_g',format='E',array=psfmagerr_g_list)
-      col9=fits.Column(name='psfmag_r',format='E',array=psfmag_r_list)
-      col10=fits.Column(name='psfmagerr_r',format='E',array=psfmagerr_r_list)
-      col11=fits.Column(name='psfmag_i',format='E',array=psfmag_i_list)
-      col12=fits.Column(name='psfmagerr_i',format='E',array=psfmagerr_i_list)
-      col13=fits.Column(name='psfmag_z',format='E',array=psfmag_z_list)
-      col14=fits.Column(name='psfmagerr_z',format='E',array=psfmagerr_z_list)
+      col8=fits.Column(name='psfmag_u',format='E',array=psfmag_u_list)
+      col9=fits.Column(name='psfmagerr_u',format='E',array=psfmagerr_u_list)
+      col10=fits.Column(name='psfmag_g',format='E',array=psfmag_g_list)
+      col11=fits.Column(name='psfmagerr_g',format='E',array=psfmagerr_g_list)
+      col12=fits.Column(name='psfmag_r',format='E',array=psfmag_r_list)
+      col13=fits.Column(name='psfmagerr_r',format='E',array=psfmagerr_r_list)
+      col14=fits.Column(name='psfmag_i',format='E',array=psfmag_i_list)
+      col15=fits.Column(name='psfmagerr_i',format='E',array=psfmagerr_i_list)
+      col16=fits.Column(name='psfmag_z',format='E',array=psfmag_z_list)
+      col17=fits.Column(name='psfmagerr_z',format='E',array=psfmagerr_z_list)
    elif(objtype=='galaxy'):
-      col5=fits.Column(name='fibermag_u',format='E',array=fibermag_u_list)
-      col6=fits.Column(name='fibermagerr_u',format='E',array=fibermagerr_u_list)
-      col7=fits.Column(name='fibermag_g',format='E',array=fibermag_g_list)
-      col8=fits.Column(name='fibermagerr_g',format='E',array=fibermagerr_g_list)
-      col9=fits.Column(name='fibermag_r',format='E',array=fibermag_r_list)
-      col10=fits.Column(name='fibermagerr_r',format='E',array=fibermagerr_r_list)
-      col11=fits.Column(name='fibermag_i',format='E',array=fibermag_i_list)
-      col12=fits.Column(name='fibermagerr_i',format='E',array=fibermagerr_i_list)
-      col13=fits.Column(name='fibermag_z',format='E',array=fibermag_z_list)
-      col14=fits.Column(name='fibermagerr_z',format='E',array=fibermagerr_z_list)
+      col8=fits.Column(name='fibermag_u',format='E',array=fibermag_u_list)
+      col9=fits.Column(name='fibermagerr_u',format='E',array=fibermagerr_u_list)
+      col10=fits.Column(name='fibermag_g',format='E',array=fibermag_g_list)
+      col11=fits.Column(name='fibermagerr_g',format='E',array=fibermagerr_g_list)
+      col12=fits.Column(name='fibermag_r',format='E',array=fibermag_r_list)
+      col13=fits.Column(name='fibermagerr_r',format='E',array=fibermagerr_r_list)
+      col14=fits.Column(name='fibermag_i',format='E',array=fibermag_i_list)
+      col15=fits.Column(name='fibermagerr_i',format='E',array=fibermagerr_i_list)
+      col16=fits.Column(name='fibermag_z',format='E',array=fibermag_z_list)
+      col17=fits.Column(name='fibermagerr_z',format='E',array=fibermagerr_z_list)
 
    if(objtype=='star'):
-      col15=fits.Column(name='object',format='A',array=object_list)
-      col16=fits.Column(name='sptype',format='A',array=sptype_list)
-      col17=fits.Column(name='bv',format='E',array=bv_list)
-      col18=fits.Column(name='feh',format='E',array=feh_list)
-      col19=fits.Column(name='teff',format='E',array=teff_list)
-      col20=fits.Column(name='logg',format='E',array=logg_list)
+      col18=fits.Column(name='object',format='A',array=object_list)
+      col19=fits.Column(name='sptype',format='A',array=sptype_list)
+      col20=fits.Column(name='bv',format='E',array=bv_list)
+      col21=fits.Column(name='feh',format='E',array=feh_list)
+      col22=fits.Column(name='teff',format='E',array=teff_list)
+      col23=fits.Column(name='logg',format='E',array=logg_list)
       cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
-                        col11,col12,col13,col14,col15,col16,col17,col18,col19,col20])
+                        col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,\
+                        col21,col22,col23])
       if(flag_gaia):
-         col21=fits.Column(name='parallax',format='E',array=parallax_list)
-         col22=fits.Column(name='parallaxerr',format='E',array=parallaxerr_list)
-         col23=fits.Column(name='parallaxsnr',format='E',array=parallaxsnr_list)
-         col24=fits.Column(name='gaia_gmag',format='E',array=gaia_gmag_list)
-         col25=fits.Column(name='gaia_bpmag',format='E',array=gaia_bpmag_list)
-         col26=fits.Column(name='gaia_rpmag',format='E',array=gaia_rpmag_list)
-         col27=fits.Column(name='gaia_bprp',format='E',array=gaia_bprp_list)
-         col28=fits.Column(name='gaia_mg',format='E',array=gaia_mg_list)
-         col29=fits.Column(name='gaia_pc',format='E',array=gaia_pc_list)
+         col24=fits.Column(name='parallax',format='E',array=parallax_list)
+         col25=fits.Column(name='parallaxerr',format='E',array=parallaxerr_list)
+         col26=fits.Column(name='parallaxsnr',format='E',array=parallaxsnr_list)
+         col27=fits.Column(name='gaia_gmag',format='E',array=gaia_gmag_list)
+         col28=fits.Column(name='gaia_bpmag',format='E',array=gaia_bpmag_list)
+         col29=fits.Column(name='gaia_rpmag',format='E',array=gaia_rpmag_list)
+         col30=fits.Column(name='gaia_bprp',format='E',array=gaia_bprp_list)
+         col31=fits.Column(name='gaia_mg',format='E',array=gaia_mg_list)
+         col32=fits.Column(name='gaia_pc',format='E',array=gaia_pc_list)
          del cols
          cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
               col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,\
-              col21,col22,col23,col24,col25,col26,col27,col28,col29])
+              col21,col22,col23,col24,col25,col26,col27,col28,col29,col30,\
+              col31,col32])
    else:
-      col15=fits.Column(name='z',format='E',array=z_list)
-      col16=fits.Column(name='zerr',format='E',array=zerr_list)
-      col17=fits.Column(name='zwarning',format='J',array=zwarning_list)
-      col18=fits.Column(name='E(B-V)',format='E',array=ebv_list)
+      col18=fits.Column(name='z',format='E',array=z_list)
+      col19=fits.Column(name='zerr',format='E',array=zerr_list)
+      col20=fits.Column(name='zwarning',format='J',array=zwarning_list)
+      col21=fits.Column(name='E(B-V)',format='E',array=ebv_list)
       cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
-                        col11,col12,col13,col14,col15,col16,col17,col18])
+                        col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21])
 
 #  Define FITS Table
    tbhdu=fits.BinTableHDU.from_columns(cols)
@@ -414,39 +416,44 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    hdr['comment']='1:  RA          (SDSS)'
    hdr['comment']='2:  DEC         (SDSS)'
    hdr['comment']='3:  THING_ID    (SDSS)'
-   hdr['comment']='4:  S/N         (SDSS)'
-   hdr['comment']='5:  PSFMAG_u    (SDSS)'
-   hdr['comment']='6:  PSFMAGerr_u (SDSS)'
-   hdr['comment']='7:  PSFMAG_g    (SDSS)'
-   hdr['comment']='8:  PSFMAGerr_g (SDSS)'
-   hdr['comment']='9:  PSFMAG_r    (SDSS)'
-   hdr['comment']='10: PSFMAGerr_r (SDSS)'
-   hdr['comment']='11: PSFMAG_i    (SDSS)'
-   hdr['comment']='12: PSFMAGerr_i (SDSS)'
-   hdr['comment']='13: PSFMAG_z    (SDSS)'
-   hdr['comment']='14: PSFMAGerr_z (SDSS)'
+
+   hdr['comment']='4:  PLATE       (SDSS)'
+   hdr['comment']='5:  MJD         (SDSS)'
+   hdr['comment']='6:  FIBER       (SDSS)'
+
+   hdr['comment']='7:  S/N         (SDSS)'
+   hdr['comment']='8:  PSFMAG_u    (SDSS)'
+   hdr['comment']='9:  PSFMAGerr_u (SDSS)'
+   hdr['comment']='10: PSFMAG_g    (SDSS)'
+   hdr['comment']='11: PSFMAGerr_g (SDSS)'
+   hdr['comment']='12: PSFMAG_r    (SDSS)'
+   hdr['comment']='13: PSFMAGerr_r (SDSS)'
+   hdr['comment']='14: PSFMAG_i    (SDSS)'
+   hdr['comment']='15: PSFMAGerr_i (SDSS)'
+   hdr['comment']='16: PSFMAG_z    (SDSS)'
+   hdr['comment']='17: PSFMAGerr_z (SDSS)'
    if(objtype=='star'):
-      hdr['comment']='15: OBJECT      (SDSS)'
-      hdr['comment']='16: SPTYPE      (SDSS)'
-      hdr['comment']='17: BV          (SDSS)'
-      hdr['comment']='18: FEH         (SDSS)'
-      hdr['comment']='19: TEFF        (SDSS)'
-      hdr['comment']='20: LOGG        (SDSS)'
+      hdr['comment']='18: OBJECT      (SDSS)'
+      hdr['comment']='19: SPTYPE      (SDSS)'
+      hdr['comment']='20: BV          (SDSS)'
+      hdr['comment']='21: FEH         (SDSS)'
+      hdr['comment']='22: TEFF        (SDSS)'
+      hdr['comment']='23: LOGG        (SDSS)'
       if(flag_gaia):
-         hdr['comment']='21: PARALLAX    (GAIA)'
-         hdr['comment']='22: PARALLAXERR (GAIA)'
-         hdr['comment']='23: PARALLAXSNR (GAIA)'
-         hdr['comment']='24: GAIA g-mag  (GAIA)'
-         hdr['comment']='25: GAIA bp-mag (GAIA)'
-         hdr['comment']='26: GAIA bp-mag (GAIA)'
-         hdr['comment']='27: GAIA bp-rp  (GAIA)'
-         hdr['comment']='28: GAIA M_g    (GAIA)'
-         hdr['comment']='29: GAIA pc     (GAIA)'
+         hdr['comment']='24: PARALLAX    (GAIA)'
+         hdr['comment']='25: PARALLAXERR (GAIA)'
+         hdr['comment']='26: PARALLAXSNR (GAIA)'
+         hdr['comment']='27: GAIA g-mag  (GAIA)'
+         hdr['comment']='28: GAIA bp-mag (GAIA)'
+         hdr['comment']='29: GAIA bp-mag (GAIA)'
+         hdr['comment']='30: GAIA bp-rp  (GAIA)'
+         hdr['comment']='31: GAIA M_g    (GAIA)'
+         hdr['comment']='32: GAIA pc     (GAIA)'
    else:
-      hdr['comment']='15: Z           (SDSS)'
-      hdr['comment']='16: Zerr        (SDSS)'
-      hdr['comment']='17: ZWARNING    (SDSS)'
-      hdr['comment']='18: E(B-V)      (SDSS)'
+      hdr['comment']='18: Z           (SDSS)'
+      hdr['comment']='19: Zerr        (SDSS)'
+      hdr['comment']='20: ZWARNING    (SDSS)'
+      hdr['comment']='21: E(B-V)      (SDSS)'
 
    if(os.path.exists(fitsfilename)): os.remove(fitsfilename) 
    hdulist.writeto(fitsfilename)
@@ -476,10 +483,13 @@ class SDSSspec2d:
       self.imageivar=self.hdul[1].data
       self.imagemask=self.hdul[2].data
       tbl=self.hdul[3].data
-      self.ra_list=tbl.field('RA')
-      self.dec_list=tbl.field('DEC')
+      self.ra_list=tbl.field('ra')
+      self.dec_list=tbl.field('dec')
       self.thing_id_list=tbl.field('thing_id')
-      self.snr_list=tbl.field('SNR')
+      self.snr_list=tbl.field('snr')
+      self.plate_list=tbl.field('plate')
+      self.mjd_list=tbl.field('mjd')
+      self.fiber_list=tbl.field('fiber')
       #self.imageivar=self.fits[1][:,:][0]
       #self.imagemask=self.fits[2][:,:][0]
 
