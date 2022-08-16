@@ -337,7 +337,10 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    col1=fits.Column(name='RA',format='E',array=ra_list)
    col2=fits.Column(name='DEC',format='E',array=dec_list)
    col3=fits.Column(name='thing_id',format='K',array=thing_id_list)
-   col4=fits.Column(name='SNR',format='E',array=snall_list)
+   col4=fits.Column(name='plate',format='J',array=plate_list)
+   col5=fits.Column(name='mjd',format='J',array=mjd_list)
+   col6=fits.Column(name='fiber',format='J',array=fiber_list)
+   col7=fits.Column(name='SNR',format='E',array=snall_list)
 
    if((objtype=='star') or (objtype=='quasar')):
       col5=fits.Column(name='psfmag_u',format='E',array=psfmag_u_list)
