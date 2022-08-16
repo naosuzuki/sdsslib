@@ -10,6 +10,7 @@ import sdss_db
 githubdir=os.environ['GITHUB_DIR']
 gaiacsvdir=githubdir+'projects_gaia/csvfiles/'
 sdsscsvdir=githubdir+'sdsslib/csvfiles/'
+fitsdatadir=githubdir+'sdsslib/fitsdata/'
 
 objtype=sys.argv[1]
 dr=sys.argv[2]
@@ -27,12 +28,12 @@ if(objtype=='star'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
       fitsfilename1='sdssDR8_wd.fits'
       fitsfilename2='sdssDR8_star.fits'
-      fitsfilename1='sdssDR8snr10b_wd.fits'
-      fitsfilename2='sdssDR8snr10b_star.fits'
+      fitsfilename1=fitsdatadir+'sdssDR8snr10b_wd.fits'
+      fitsfilename2=fitsdatadir+'sdssDR8snr10b_star.fits'
    elif(dr=='dr17'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
-      fitsfilename1='sdssDR17snr10b_wd.fits'
-      fitsfilename2='sdssDR17snr10b_star.fits'
+      fitsfilename1=fitsdatadir+'sdssDR17snr10b_wd.fits'
+      fitsfilename2=fitsdatadir+'sdssDR17snr10b_star.fits'
 
    df=pd.read_csv(csvfile)
    print('df all=',len(df))
@@ -86,11 +87,11 @@ if(objtype=='galaxy'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
       fitsfilename='sdssDR8snr3_galaxy.fits'
-      fitsfilename='sdssDR8snr10b_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr10b_galaxy.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17snr3_galaxy.fits'
-      fitsfilename='sdssDR17snr10b_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr10b_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
    #df['class']=df['class'].str.strip()
@@ -123,11 +124,11 @@ if(objtype=='quasar'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
-      fitsfilename='sdssDR8snr10b_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr10b_quasar.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
-      fitsfilename='sdssDR17snr10b_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr10b_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)
    print('df all=',len(df))
