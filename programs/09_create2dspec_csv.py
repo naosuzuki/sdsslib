@@ -53,13 +53,14 @@ if(objtype=='star'):
    dfspec=dfwd.sort_values(by=['teff'],ascending=False)
    dfspec.reset_index()
    sdss_db.create_2dspec(dfspec,fitsfilename1,objtype,flag_gaia)
-   del dfspec ; del df
+   del dfspec ; del df ; del dfwd ; dftmp10
 
 # All of Stars
    dfspec2=dfstar.sort_values(by=['teff'],ascending=False)
    dfspec2.reset_index()
    print('dfspec2=',dfspec2)
    sdss_db.create_2dspec(dfspec2,fitsfilename2,objtype,flag_gaia)
+   del dfspec2
 
    #for i in range(1000):
 #   for i in range(len(dfspec)):
@@ -77,7 +78,6 @@ if(objtype=='star'):
    # print(i,plate,mjd,fiber)
    # print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
 
-   del dfwd ; del dfstar ; del df ; del dfspec ; del dfspec2
 
 # Galaxy
 #objtype='galaxy'
