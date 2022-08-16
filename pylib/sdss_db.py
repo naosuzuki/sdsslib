@@ -464,17 +464,11 @@ class SDSSspec2d:
       self.fitsfilename=fitsfilename
       self.hdul=fits.open(fitsfilename)
       hdr =self.hdul[0].header
-      #self.fits=fitsio.FITS(self.fitsfilename)
 
-      #h=fitsio.read_header(self.fitsfilename,ext=0)
       self.npix =hdr['NAXIS1']
       self.nspec=hdr['NAXIS2']
       self.coeff0=hdr['COEFF0']
       self.coeff1=hdr['COEFF1']
-      #self.npix =hdul[0].header['NAXIS1']
-      #self.nspec=hdul[0].header['NAXIS2']
-      #self.coeff0=hdul[0].header['COEFF0']
-      #self.coeff1=hdul[0].header['COEFF1']
       self.wID=int(self.coeff0/self.coeff1)+numpy.arange(self.npix)
       self.wave=10.0**(self.wID*self.coeff1)
 
@@ -487,9 +481,9 @@ class SDSSspec2d:
       self.dec_list=tbl.field('dec')
       self.thing_id_list=tbl.field('thing_id')
       self.snr_list=tbl.field('snr')
-      #self.plate_list=tbl.field('plate')
-      #self.mjd_list=tbl.field('mjd')
-      #self.fiber_list=tbl.field('fiber')
+      self.plate_list=tbl.field('plate')
+      self.mjd_list=tbl.field('mjd')
+      self.fiber_list=tbl.field('fiber')
 
    def read_gaia(self):
       tbl=self.hdul[3].data
