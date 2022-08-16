@@ -454,7 +454,7 @@ class SDSSspec2d:
       self.fitsfilename=fitsfilename
       self.fits=fitsio.FITS(self.fitsfilename)
 
-      h=fitsio.read_header(self.fitsfilename)
+      h=fitsio.read_header(self.fitsfilename,ext=0)
       self.npix=h['NAXIS1']
       self.nspec=h['NAXIS2']
       self.coeff0=h['COEFF0']
@@ -464,13 +464,10 @@ class SDSSspec2d:
 
    def read(self):
       self.imageflux=self.fits[0][:,:]
-      self.imageivar=self.fits[0][:,:][0]
-      self.imagemask=self.fits[0][:,:][0]
+      self.imageivar=self.fits[1][:,:]
+      self.imagemask=self.fits[2][:,:]
       #self.imageivar=self.fits[1][:,:][0]
       #self.imagemask=self.fits[2][:,:][0]
-      #self.imageflux=self.fits[0][:,:]
-      #self.imageivar=self.fits[1][:,:]
-      #self.imagemask=self.fits[2][:,:]
 
    def extract(self,i):
    # extract ith spectrum
