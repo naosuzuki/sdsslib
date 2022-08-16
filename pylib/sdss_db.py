@@ -480,6 +480,44 @@ class SDSSspec2d:
       #self.imageivar=self.fits[1][:,:][0]
       #self.imagemask=self.fits[2][:,:][0]
 
+   def read_gaia(self):
+      tbl=self.hdul[3].data
+      self.parallax_list=tbl.field('parallax')
+      self.parallaxerr_list=tbl.field('parallaxerr')
+      self.parallaxsnr_list=tbl.field('parallaxsnr')
+      self.gaia_gmag_list=tbl.field('gaia_gmag')
+      self.gaia_bpmag_list=tbl.field('gaia_bpmag')
+      self.gaia_rpmag_list=tbl.field('gaia_rpmag')
+      self.gaia_bprp_list=tbl.field('gaia_bprp')
+      self.gaia_mg_list=tbl.field('gaia_mg')
+      self.gaia_pc_list=tbl.field('gaia_pc')
+
+   def read_psfmag(self):
+      tbl=self.hdul[3].data
+      self.psfmag_u_list=tbl.field('psfmag_u')
+      self.psfmagerr_u_list=tbl.field('psfmagerr_u')
+      self.psfmag_g_list=tbl.field('psfmag_g')
+      self.psfmagerr_g_list=tbl.field('psfmagerr_g')
+      self.psfmag_r_list=tbl.field('psfmag_r')
+      self.psfmagerr_r_list=tbl.field('psfmagerr_r')
+      self.psfmag_i_list=tbl.field('psfmag_i')
+      self.psfmagerr_i_list=tbl.field('psfmagerr_i')
+      self.psfmag_z_list=tbl.field('psfmag_z')
+      self.psfmagerr_z_list=tbl.field('psfmagerr_z')
+
+   def read_fibermag(self):
+      tbl=self.hdul[3].data
+      self.fibermag_u_list=tbl.field('fibermag_u')
+      self.fibermagerr_u_list=tbl.field('fibermagerr_u')
+      self.fibermag_g_list=tbl.field('fibermag_g')
+      self.fibermagerr_g_list=tbl.field('fibermagerr_g')
+      self.fibermag_r_list=tbl.field('fibermag_r')
+      self.fibermagerr_r_list=tbl.field('fibermagerr_r')
+      self.fibermag_i_list=tbl.field('fibermag_i')
+      self.fibermagerr_i_list=tbl.field('fibermagerr_i')
+      self.fibermag_z_list=tbl.field('fibermag_z')
+      self.fibermagerr_z_list=tbl.field('fibermagerr_z')
+
    def extract(self,i):
    # extract ith spectrum
       self.flux=self.imageflux[i,:]
