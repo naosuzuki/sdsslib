@@ -487,11 +487,9 @@ class SDSSspec2d:
       self.dec_list=tbl.field('dec')
       self.thing_id_list=tbl.field('thing_id')
       self.snr_list=tbl.field('snr')
-      self.plate_list=tbl.field('plate')
-      self.mjd_list=tbl.field('mjd')
-      self.fiber_list=tbl.field('fiber')
-      #self.imageivar=self.fits[1][:,:][0]
-      #self.imagemask=self.fits[2][:,:][0]
+      #self.plate_list=tbl.field('plate')
+      #self.mjd_list=tbl.field('mjd')
+      #self.fiber_list=tbl.field('fiber')
 
    def read_gaia(self):
       tbl=self.hdul[3].data
