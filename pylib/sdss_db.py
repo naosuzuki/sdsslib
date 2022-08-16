@@ -452,20 +452,31 @@ class SDSSspec2d:
    def __init__(self,fitsfilename):
       # Reading FITS Image
       self.fitsfilename=fitsfilename
-      self.fits=fitsio.FITS(self.fitsfilename)
+      self.hdul=fits.open(fitsfilename)
+      hdr =self.hdul[0].header
+      #self.fits=fitsio.FITS(self.fitsfilename)
 
-      h=fitsio.read_header(self.fitsfilename,ext=0)
-      self.npix=h['NAXIS1']
-      self.nspec=h['NAXIS2']
-      self.coeff0=h['COEFF0']
-      self.coeff1=h['COEFF1']
+      #h=fitsio.read_header(self.fitsfilename,ext=0)
+      self.npix =hdr['NAXIS1']
+      self.nspec=hdr['NAXIS2']
+      self.coeff0=hdr['COEFF0']
+      self.coeff1=hdr['COEFF1']
+      #self.npix =hdul[0].header['NAXIS1']
+      #self.nspec=hdul[0].header['NAXIS2']
+      #self.coeff0=hdul[0].header['COEFF0']
+      #self.coeff1=hdul[0].header['COEFF1']
       self.wID=int(self.coeff0/self.coeff1)+numpy.arange(self.npix)
       self.wave=10.0**(self.wID*self.coeff1)
 
    def read(self):
-      self.imageflux=self.fits[0][:,:]
-      self.imageivar=self.fits[1][:,:]
-      self.imagemask=self.fits[2][:,:]
+      self.imageflux=self.hdul[0].data
+      self.imageivar=self.hdul[1].data
+      self.imagemask=self.hdul[2].data
+      tbl=self.hdul[3].data
+      self.ra_list=tbl.field('RA')
+      self.dec_list=tbl.field('DEC')
+      self.thing_id_list=tbl.field('thing_id')
+      self.snr_list=tbl.field('SNR')
       #self.imageivar=self.fits[1][:,:][0]
       #self.imagemask=self.fits[2][:,:][0]
 
