@@ -27,12 +27,12 @@ if(objtype=='star'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
       fitsfilename1='sdssDR8_wd.fits'
       fitsfilename2='sdssDR8_star.fits'
-      fitsfilename1='sdssDR8snr10_wd.fits'
-      fitsfilename2='sdssDR8snr10_star.fits'
+      fitsfilename1='sdssDR8snr10a_wd.fits'
+      fitsfilename2='sdssDR8snr10a_star.fits'
    elif(dr=='dr17'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
-      fitsfilename1='sdssDR17snr10_wd.fits'
-      fitsfilename2='sdssDR17snr10_star.fits'
+      fitsfilename1='sdssDR17snr10a_wd.fits'
+      fitsfilename2='sdssDR17snr10a_star.fits'
 
    df=pd.read_csv(csvfile)
    print('df all=',len(df))
