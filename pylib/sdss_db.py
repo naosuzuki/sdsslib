@@ -416,11 +416,9 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    hdr['comment']='1:  RA          (SDSS)'
    hdr['comment']='2:  DEC         (SDSS)'
    hdr['comment']='3:  THING_ID    (SDSS)'
-
    hdr['comment']='4:  PLATE       (SDSS)'
    hdr['comment']='5:  MJD         (SDSS)'
    hdr['comment']='6:  FIBER       (SDSS)'
-
    hdr['comment']='7:  S/N         (SDSS)'
    hdr['comment']='8:  PSFMAG_u    (SDSS)'
    hdr['comment']='9:  PSFMAGerr_u (SDSS)'
@@ -481,9 +479,9 @@ class SDSSspec2d:
       self.dec_list=tbl.field('dec')
       self.thing_id_list=tbl.field('thing_id')
       self.snr_list=tbl.field('snr')
-      self.plate_list=tbl.field('plate')
-      self.mjd_list=tbl.field('mjd')
-      self.fiber_list=tbl.field('fiber')
+      #self.plate_list=tbl.field('plate')
+      #self.mjd_list=tbl.field('mjd')
+      #self.fiber_list=tbl.field('fiber')
 
    def read_gaia(self):
       tbl=self.hdul[3].data
