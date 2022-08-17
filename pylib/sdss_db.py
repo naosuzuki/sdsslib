@@ -9,6 +9,7 @@ from astropy.coordinates import SkyCoord
 from dustmaps.sfd import SFDQuery
 import extinction
 import astrolib
+import cosmology
 
 ## Written by Nao Suzuki
 
@@ -226,7 +227,7 @@ class SDSSspec:
 
           self.flux/=nfactor
 
-def create_2dspec(df,fitsfilename,objtype,flag_gaia):
+def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
 # 2022-08-12 LBNL
 # Create 2D FITS File from DataFrame
 
@@ -236,6 +237,24 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
    startID=35486
    endID  =40177
    npixall=endID-startID+1
+
+   if(flag_restframe==True):
+   # Distance Modulus I : Setup
+      ndata=len(df)
+      mu_list=numpy.zeros(ndata,numpy.float32)
+      muerr_list=numpy.zeros(ndata,numpy.float32)
+      muz2_list=numpy.zeros(ndata,numpy.float32)
+      muz2err_list=numpy.zeros(ndata,numpy.float32)
+      startID_list=numpy.zeros(ndata,numpy.int32)
+      npix_list=numpy.zeros(ndata,numpy.int32)
+      coeff0_list=numpy.zeros(ndata,numpy.float32)
+
+      cosmo=cosmology.Cosmology()
+      cosmo.h=0.7
+      cosmo.Ol=0.7
+      cosmo.Om=0.3
+      z1=2.0
+      z2mu=cosmo.DistMod(z1)
 
    #wave=10.0**(coeff0+numpy.arrange(npixall)*coeff1)
    # Define Arrays
@@ -347,9 +366,34 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia):
 
       #print('reading',i,jstart,jend)
       print('reading',i,plate,mjd,fiber,'fraction=',"%5.2f"%(i/len(df)))
-      imageflux[i,jstart:jend]=spec.flux[kstart:kend]
-      imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
-      imagemask[i,jstart:jend]=spec.mask[kstart:kend]
+      if(flag_restframe==False):
+         imageflux[i,jstart:jend]=spec.flux[kstart:kend]
+         imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
+         imagemask[i,jstart:jend]=spec.mask[kstart:kend]
+      elif(flag_restframe==True):
+         spec.deredshift(dlog=0.0001)
+         specmask1=numpy.where((spec.rmask == 0 ),1.0,0.0)
+         specmask2=numpy.where((spec.rmask == 2**24 ),1.0,0.0)
+         specmask3=specmask1+specmask2
+         specmask=numpy.where(specmask3 >=1.0,1.0,0.0)
+         spec.rivar*=specmask
+         del specmask1 ; del specmask2 ; del specmask3 ; del specmask
+
+         startID_list.append(spec.rid[0])
+         coeff0_list.append("%6.4f"%(spec.rid[0]*coeff1))
+         npix_list.append(len(spec.rid))
+         # Find Catalog ID
+         spec.specID=specID_list[i]
+
+         # Distance Modulus II: Calculations
+         z=z_list[i]
+         [dmu]=cosmology.find_dmuerr(z)
+         [dmuz2]=cosmology.find_dmuerrz2(z)
+         mu=cosmo.DistMod(z)
+         mu_list[i]=mu
+         muerr_list[i]=dmu
+         muz2_list[i]=mu-z2mu
+         muz2err_list[i]=dmuz2
 
    hdu1=fits.PrimaryHDU(imageflux)
    hdu2=fits.ImageHDU(imageivar)
