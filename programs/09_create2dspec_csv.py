@@ -14,6 +14,7 @@ fitsdatadir=githubdir+'sdsslib/fitsdata/'
 
 objtype=sys.argv[1]
 dr=sys.argv[2]
+snr=int(sys.argv[3])
 
 #spall=sdss_catalog.spall()
 #print(spall.dr)
@@ -30,14 +31,16 @@ if(objtype=='star'):
       fitsfilename2='sdssDR8_star.fits'
       fitsfilename1=fitsdatadir+'sdssDR8snr10b_wd.fits'
       fitsfilename2=fitsdatadir+'sdssDR8snr10b_star.fits'
+      fitsfilename1=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_wd.fits'
+      fitsfilename2=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_star.fits'
    elif(dr=='dr17'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
-      fitsfilename1=fitsdatadir+'sdssDR17snr10b_wd.fits'
-      fitsfilename2=fitsdatadir+'sdssDR17snr10b_star.fits'
+      fitsfilename1=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'+_wd.fits'
+      fitsfilename2=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_star.fits'
 
    df=pd.read_csv(csvfile)
    print('df all=',len(df))
-   dftmp10=df[df['snall']>=10.0]
+   dftmp10=df[df['snall']>=float(snr)]
    print('df sn>10=',len(dftmp10))
    dftmp5=df[df['snall']>5.0]
    print('df sn>5',len(dftmp5))
@@ -86,18 +89,18 @@ if(objtype=='galaxy'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
       fitsfilename='sdssDR8snr3_galaxy.fits'
-      fitsfilename=fitsdatadir+'sdssDR8snr10b_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_galaxy.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17snr3_galaxy.fits'
-      fitsfilename=fitsdatadir+'sdssDR17snr10b_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_galaxy.fits'
    df=pd.read_csv(csvfile)
    print(df)
    #df['class']=df['class'].str.strip()
    #df['subclass']=df['subclass'].str.strip()
    #dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
    print('dfgalaxy all=',len(df))
-   dftmp10=df[df['snall']>=10.0]
+   dftmp10=df[df['snall']>=float(snr)]
    print('dfgalaxy sn>10',len(dftmp10))
    dftmp5=df[df['snall']>5.0]
    print('dfgalaxy sn>5',len(dftmp5))
@@ -123,15 +126,15 @@ if(objtype=='quasar'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
-      fitsfilename=fitsdatadir+'sdssDR8snr10b_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_quasar.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
-      fitsfilename=fitsdatadir+'sdssDR17snr10b_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_quasar.fits'
    df=pd.read_csv(csvfile)
    print(df)
    print('df all=',len(df))
-   dftmp10=df[df['snall']>=10.0]
+   dftmp10=df[df['snall']>=float(snr)]
    print('df sn>10',len(dftmp10))
    dftmp5=df[df['snall']>5.0]
    print('df sn>5',len(dftmp5))
