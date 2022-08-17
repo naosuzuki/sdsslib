@@ -25,6 +25,7 @@ snr=int(sys.argv[3])
 #objtype='star'
 if(objtype=='star'):
    flag_gaia=True
+   flag_restframe=False
    if(dr=='dr8'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
       fitsfilename1='sdssDR8_wd.fits'
@@ -86,14 +87,17 @@ if(objtype=='star'):
 #objtype='galaxy'
 if(objtype=='galaxy'):
    flag_gaia=False
+   flag_restframe=True
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
       fitsfilename='sdssDR8snr3_galaxy.fits'
       fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_galaxy_rest.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17snr3_galaxy.fits'
       fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_galaxy_rest.fits'
    df=pd.read_csv(csvfile)
    print(df)
    #df['class']=df['class'].str.strip()
@@ -116,21 +120,24 @@ if(objtype=='galaxy'):
    dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)
 
    flag_gaia=False
-   sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
+   sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia,flag_restframe)
    del dfgalaxy ; del dfspec ; del df
 
 # Quasar
 #objtype='quasar'
 if(objtype=='quasar'):
    flag_gaia=False
+   flag_restframe=True
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
       fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_quasar_rest.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
       fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_quasar_rest.fits'
    df=pd.read_csv(csvfile)
    print(df)
    print('df all=',len(df))
@@ -150,6 +157,6 @@ if(objtype=='quasar'):
    #dfquasar=df.copy()
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
-   sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia)
+   sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia,flag_restframe)
    #del products_list ; del df ; del dfquasar
    del df ; del dfquasar ;  del dfspec
