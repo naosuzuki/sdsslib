@@ -79,7 +79,6 @@ if(objtype=='star'):
    # print(i,plate,mjd,fiber)
    # print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
 
-
 # Galaxy
 #objtype='galaxy'
 if(objtype=='galaxy'):
