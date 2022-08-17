@@ -1,17 +1,13 @@
-import commands
 import sys
 import os
 import string
-import urllib
-import pyfits
 import numpy
-import astrolib
 import scipy
 from scipy import signal
 import scipy.integrate as integrate
 
-nspylibdir=os.environ['NSPYLIB']
-sys.path.append(nspylibdir+'/sdss')
+#nspylibdir=os.environ['NSPYLIB']
+#sys.path.append(nspylibdir+'/sdss')
 
 '''
 This is a series of libraries for cosmology
@@ -27,7 +23,7 @@ class Cosmology:
         self.Om = 0.3
         self.Ol = 0.7
         self.w  = -1.0
-        self.h  = 0.68
+        self.h  = 0.7
         #self.Om = 0.27
         #self.Ol = 0.73
         #self.w  = -1.0
