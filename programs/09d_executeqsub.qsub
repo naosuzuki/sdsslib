@@ -8,5 +8,5 @@
  
 #PBS -l walltime=48:00:00 
  
-/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr17 20
+/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr17 50
 #/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr8 20
