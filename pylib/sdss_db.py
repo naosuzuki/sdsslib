@@ -355,9 +355,9 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
             spec.rivar*=specmask
             del specmask1 ; del specmask2 ; del specmask3 ; del specmask
 
-            startID_list.append(spec.rid[0])
-            coeff0_list.append("%6.4f"%(spec.rid[0]*coeff1))
-            npix_list.append(len(spec.rid))
+            startID_list[i]=spec.rid[0]
+            coeff0_list[i]="%6.4f"%(spec.rid[0]*coeff1)
+            npix_list[i]=len(spec.rid)
 
          # Distance Modulus II: Calculations
             z=z_list[i]
@@ -387,6 +387,13 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
       #print('reading',i,jstart,jend)
       print('reading',i,plate,mjd,fiber,'fraction=',"%5.2f"%(i/len(df)))
       if(flag_restframe==False):
+         imageflux[i,jstart:jend]=spec.flux[kstart:kend]
+         imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
+         imagemask[i,jstart:jend]=spec.mask[kstart:kend]
+      elif(flag_restframe==True):
+         # For Rest Frame Data
+         jstart=0 ; jend=len(spec.rid)-1
+         kstart=0 ; kend=len(spec.rid)-1
          imageflux[i,jstart:jend]=spec.flux[kstart:kend]
          imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
          imagemask[i,jstart:jend]=spec.mask[kstart:kend]
@@ -451,13 +458,25 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
               col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,\
               col21,col22,col23,col24,col25,col26,col27,col28,col29,col30,\
               col31,col32])
+
    else:
       col18=fits.Column(name='z',format='E',array=z_list)
       col19=fits.Column(name='zerr',format='E',array=zerr_list)
       col20=fits.Column(name='zwarning',format='J',array=zwarning_list)
       col21=fits.Column(name='E(B-V)',format='E',array=ebv_list)
-      cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
-                        col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21])
+      if(flag_restframe==False):
+         cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
+             col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,col21])
+      elif(flag_restframe==True):
+         col22=fits.Column(name='COEFF0',format='E',array=coeff0_list)
+         col23=fits.Column(name='STARTID',format='J',array=startID_list)
+         col24=fits.Column(name='DM',format='E',array=mu_list)
+         col25=fits.Column(name='DMERR',format='E',array=muerr_list)
+         col26=fits.Column(name='DMZ2',format='E',array=muz2_list)
+         col27=fits.Column(name='DMZ2ERR',format='E',array=muz2err_list)
+         cols=fits.ColDefs([col1,col2,col3,col4,col5,col6,col7,col8,col9,col10,\
+                   col11,col12,col13,col14,col15,col16,col17,col18,col19,col20,\
+                   col21,col22,col23,col24,col25,col26,col27])
 
 #  Define FITS Table
    tbhdu=fits.BinTableHDU.from_columns(cols)
