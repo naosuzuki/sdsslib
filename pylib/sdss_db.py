@@ -8,9 +8,11 @@ from astropy.io import fits
 from astropy.coordinates import SkyCoord
 from dustmaps.sfd import SFDQuery
 import extinction
+import astrolib
 
 ## Written by Nao Suzuki
 
+# 2022-08-16 (Tue) deredshift is added
 # 2022-08-13 (Sat) Create 2D Fits is added
 # 2022-07-16 (Sat) DR8 is added
 # 2022-07-03 (Sun) Update
@@ -43,6 +45,21 @@ class SDSSspec:
           self.nexp=0
           self.thingid=0
           self.fitsfilename='sdss.fits'
+
+      def deredshift(self,dlog=0.0001):
+          # Deredshift
+          self.restwave=self.wave/(1.0+self.z)
+          # Log Linear Velocity Binning : vpix=70.0 km/s
+          self.dlog=dlog
+
+          # Log Liner Rebinning : 
+          #[self.rwave,self.rflux,self.rivar,self.rid,self.rmask,self.rlambdaflux,self.rlambdaivar]=\
+          #astrolib.exec_logrebinning_fluxivarmask2(self.dlog,self.restwave,self.mwcorrected_flux,\
+          #self.mwcorrected_ivar,self.mask,self.mwcorrected_lambdaflux,self.mwcorrected_lambdaivar)
+
+          # Log Liner Rebinning : 
+          [self.rwave,self.rflux,self.rivar,self.rid,self.rmask]=\
+          astrolib.exec_logrebinning_fluxivarmask(dlog,self.restwave,self.flux,self.ivar,self.mask)
 
       def read(self):
       #2022-04-22 Fri
