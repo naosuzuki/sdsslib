@@ -48,15 +48,13 @@ class SDSSspec:
           self.fitsfilename='sdss.fits'
 
       def deredshift(self,dlog=0.0001):
+          # Bring spectra into restframe 
+          # Written in 2012, revised 2022-08-17 (Wed)
+
           # Deredshift
           self.restwave=self.wave/(1.0+self.z)
           # Log Linear Velocity Binning : vpix=70.0 km/s
           self.dlog=dlog
-
-          # Log Liner Rebinning : 
-          #[self.rwave,self.rflux,self.rivar,self.rid,self.rmask,self.rlambdaflux,self.rlambdaivar]=\
-          #astrolib.exec_logrebinning_fluxivarmask2(self.dlog,self.restwave,self.mwcorrected_flux,\
-          #self.mwcorrected_ivar,self.mask,self.mwcorrected_lambdaflux,self.mwcorrected_lambdaivar)
 
           # Log Liner Rebinning : 
           [self.rwave,self.rflux,self.rivar,self.rid,self.rmask]=\
@@ -338,7 +336,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
       if(objtype!='star'):
          #extinction_mag=numpy.zeros(len(spec.wave))
          #extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa',out=extinction_mag)
-
+         spec.z=z_list[i]
          #Milky Way Extinction Correction by CCM89
          extinction_mag=extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa')
          newflux=extinction.remove(extinction_mag,spec.flux,inplace=False)
@@ -346,8 +344,30 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
          ivar2=extinction.apply(extinction_mag,ivar1,inplace=False)
          spec.flux=newflux  ; spec.ivar=ivar2 
          del newflux ; del ivar1 ; del ivar2
-      #spec.normalize_at7000()
-      #spec.read_MWcorrected()
+
+         if(flag_restframe==True):
+         # Deredshift the Spectrum
+            spec.deredshift(dlog=0.0001)
+            specmask1=numpy.where((spec.rmask == 0 ),1.0,0.0)
+            specmask2=numpy.where((spec.rmask == 2**24 ),1.0,0.0)
+            specmask3=specmask1+specmask2
+            specmask=numpy.where(specmask3 >=1.0,1.0,0.0)
+            spec.rivar*=specmask
+            del specmask1 ; del specmask2 ; del specmask3 ; del specmask
+
+            startID_list.append(spec.rid[0])
+            coeff0_list.append("%6.4f"%(spec.rid[0]*coeff1))
+            npix_list.append(len(spec.rid))
+
+         # Distance Modulus II: Calculations
+            z=z_list[i]
+            [dmu]=cosmology.find_dmuerr(z)
+            [dmuz2]=cosmology.find_dmuerrz2(z)
+            mu=cosmo.DistMod(z)
+            mu_list[i]=mu
+            muerr_list[i]=dmu
+            muz2_list[i]=mu-z2mu
+            muz2err_list[i]=dmuz2
 
       # Define the spectrum range : first pixel and the last pixel
       if(spec.wid[0] > startID):
@@ -370,30 +390,6 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
          imageflux[i,jstart:jend]=spec.flux[kstart:kend]
          imageivar[i,jstart:jend]=spec.ivar[kstart:kend]
          imagemask[i,jstart:jend]=spec.mask[kstart:kend]
-      elif(flag_restframe==True):
-         spec.deredshift(dlog=0.0001)
-         specmask1=numpy.where((spec.rmask == 0 ),1.0,0.0)
-         specmask2=numpy.where((spec.rmask == 2**24 ),1.0,0.0)
-         specmask3=specmask1+specmask2
-         specmask=numpy.where(specmask3 >=1.0,1.0,0.0)
-         spec.rivar*=specmask
-         del specmask1 ; del specmask2 ; del specmask3 ; del specmask
-
-         startID_list.append(spec.rid[0])
-         coeff0_list.append("%6.4f"%(spec.rid[0]*coeff1))
-         npix_list.append(len(spec.rid))
-         # Find Catalog ID
-         spec.specID=specID_list[i]
-
-         # Distance Modulus II: Calculations
-         z=z_list[i]
-         [dmu]=cosmology.find_dmuerr(z)
-         [dmuz2]=cosmology.find_dmuerrz2(z)
-         mu=cosmo.DistMod(z)
-         mu_list[i]=mu
-         muerr_list[i]=dmu
-         muz2_list[i]=mu-z2mu
-         muz2err_list[i]=dmuz2
 
    hdu1=fits.PrimaryHDU(imageflux)
    hdu2=fits.ImageHDU(imageivar)
