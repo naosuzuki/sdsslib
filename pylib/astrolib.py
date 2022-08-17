@@ -1,5 +1,5 @@
 import sys
-import commands
+#import commands
 import numpy
 import math
 
@@ -157,76 +157,76 @@ class Reddening:
                  + c2 * ( y**2 )
                  + c3 * ( y**3 ) )
 
-def find_MWEBV(radeg,decdeg):
+#def find_MWEBV(radeg,decdeg):
 # Nao Suzuki
 # Nov, 27 (Thu) 2008 Thanks Giving Day yeah!
 # find E(B-V) from Schlegel table from RA & DEC in degrees
 #
-    radegstr=str("%12.5f"%(radeg))+'d'
-    decdegstr=str("%12.5f"%(decdeg))+'d'
-    ned_query="\'http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?in_csys=\
-               Equatorial&in_equinox=J2000.0&obs_epoch=2000.0&\
-               lon="+radegstr+"&lat="+decdegstr+"&pa=0.0&\
-               out_csys=Equatorial&out_equinox=J2000.0\'"
-    nedlist=commands.getoutput('GET '+ned_query)
-    stringposition=nedlist.find("E(B-V)")
-    mwebv=eval(nedlist[stringposition+9:stringposition+15])
-    return [mwebv]
+#    radegstr=str("%12.5f"%(radeg))+'d'
+#    decdegstr=str("%12.5f"%(decdeg))+'d'
+#    ned_query="\'http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?in_csys=\
+#               Equatorial&in_equinox=J2000.0&obs_epoch=2000.0&\
+#               lon="+radegstr+"&lat="+decdegstr+"&pa=0.0&\
+#               out_csys=Equatorial&out_equinox=J2000.0\'"
+#    nedlist=commands.getoutput('GET '+ned_query)
+#    stringposition=nedlist.find("E(B-V)")
+#    mwebv=eval(nedlist[stringposition+9:stringposition+15])
+#    return [mwebv]
 
-def find_MWEBVfromNED(radeg,decdeg):
+#def find_MWEBVfromNED(radeg,decdeg):
 # Nao Suzuki
 # Jun, 11 (Mon) 2011 : New Extinction DB from NED
 # 2011 Schafly et al. vs 1998 Schlegel et al.
 # Nov, 27 (Thu) 2008 Thanks Giving Day yeah!
 # find E(B-V) from Schlegel table from RA & DEC in degrees
 #
-    radegstr=str("%12.5f"%(radeg))+'d'
-    decdegstr=str("%12.5f"%(decdeg))+'d'
-    ned_query="\'http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?in_csys=\
-               Equatorial&in_equinox=J2000.0&obs_epoch=2000.0&\
-               lon="+radegstr+"&lat="+decdegstr+"&pa=0.0&\
-               out_csys=Equatorial&out_equinox=J2000.0\'"
-    nedlist=commands.getoutput('GET '+ned_query)
-    filterlist=["Landolt U (0.35)",\
-                "Landolt B (0.43)",\
-                "Landolt V (0.54)",\
-                "Landolt R (0.64)",\
-                "Landolt I (0.80)",\
-                "SDSS    u (0.36)",\
-                "SDSS    g (0.47)",\
-                "SDSS    r (0.62)",\
-                "SDSS    i (0.75)",\
-                "SDSS    z (0.89)",\
-                "UKIRT   J (1.25)",\
-                "UKIRT   H (1.66)",\
-                "UKIRT   K (2.19)",\
-                "UKIRT   L'(3.78)"]
+#    radegstr=str("%12.5f"%(radeg))+'d'
+#    decdegstr=str("%12.5f"%(decdeg))+'d'
+#    ned_query="\'http://nedwww.ipac.caltech.edu/cgi-bin/nph-calc?in_csys=\
+#               Equatorial&in_equinox=J2000.0&obs_epoch=2000.0&\
+#               lon="+radegstr+"&lat="+decdegstr+"&pa=0.0&\
+#               out_csys=Equatorial&out_equinox=J2000.0\'"
+#    nedlist=commands.getoutput('GET '+ned_query)
+#    filterlist=["Landolt U (0.35)",\
+#                "Landolt B (0.43)",\
+#                "Landolt V (0.54)",\
+#                "Landolt R (0.64)",\
+#                "Landolt I (0.80)",\
+#                "SDSS    u (0.36)",\
+#                "SDSS    g (0.47)",\
+#                "SDSS    r (0.62)",\
+#                "SDSS    i (0.75)",\
+#                "SDSS    z (0.89)",\
+#                "UKIRT   J (1.25)",\
+#                "UKIRT   H (1.66)",\
+#                "UKIRT   K (2.19)",\
+#                "UKIRT   L'(3.78)"]
 
-    landolt11=numpy.zeros(5) # Landolt UBVRI for Schafly  2011
-    landolt98=numpy.zeros(5) # Landolt UBVRI for Schlegel 1998
-    sdss11=numpy.zeros(5) # SDSS ugriz for Schafly  2011
-    sdss98=numpy.zeros(5) # SDSS ugriz for Schlegel 1998
-    ukirt11=numpy.zeros(4) # UKIRT JHKL for Schafly  2011
-    ukirt98=numpy.zeros(4) # UKIRT JHKL for Schlegel 1998
+#    landolt11=numpy.zeros(5) # Landolt UBVRI for Schafly  2011
+#    landolt98=numpy.zeros(5) # Landolt UBVRI for Schlegel 1998
+#    sdss11=numpy.zeros(5) # SDSS ugriz for Schafly  2011
+#    sdss98=numpy.zeros(5) # SDSS ugriz for Schlegel 1998
+#    ukirt11=numpy.zeros(4) # UKIRT JHKL for Schafly  2011
+#    ukirt98=numpy.zeros(4) # UKIRT JHKL for Schlegel 1998
 
-    for i in range(len(filterlist)):
-        stringposition=nedlist.find(filterlist[i])
+#    for i in range(len(filterlist)):
+#        stringposition=nedlist.find(filterlist[i])
         #print nedlist[stringposition:stringposition+79]
         #print nedlist[stringposition+18:stringposition+23]
         #print nedlist[stringposition+74:stringposition+79]
-        if(i>=0 and i<=4):
-           landolt11[i]=eval(nedlist[stringposition+18:stringposition+23])
-           landolt98[i]=eval(nedlist[stringposition+74:stringposition+79])
-        elif(i>=5 and i<=9):
-           sdss11[i-5]=eval(nedlist[stringposition+18:stringposition+23])
-           sdss98[i-5]=eval(nedlist[stringposition+74:stringposition+79])
-        elif(i>=10 and i<=13):
-           ukirt11[i-10]=eval(nedlist[stringposition+18:stringposition+23])
-           ukirt98[i-10]=eval(nedlist[stringposition+74:stringposition+79])
+#        if(i>=0 and i<=4):
+#           landolt11[i]=eval(nedlist[stringposition+18:stringposition+23])
+#           landolt98[i]=eval(nedlist[stringposition+74:stringposition+79])
+#        elif(i>=5 and i<=9):
+#           sdss11[i-5]=eval(nedlist[stringposition+18:stringposition+23])
+#           sdss98[i-5]=eval(nedlist[stringposition+74:stringposition+79])
+#        elif(i>=10 and i<=13):
+#           ukirt11[i-10]=eval(nedlist[stringposition+18:stringposition+23])
+#           ukirt98[i-10]=eval(nedlist[stringposition+74:stringposition+79])
         
-    mwebv=landolt98[1]-landolt98[2]
-    mwebv2011=landolt11[1]-landolt11[2]
-    return [mwebv,mwebv2011,landolt11,sdss11,ukirt11,landolt98,sdss98,ukirt98]
+#    mwebv=landolt98[1]-landolt98[2]
+#    mwebv2011=landolt11[1]-landolt11[2]
+#    return [mwebv,mwebv2011,landolt11,sdss11,ukirt11,landolt98,sdss98,ukirt98]
 
 def exec_vrebinning_flux(vpix,wave,flux):      
 # Nao Suzuki
