@@ -271,6 +271,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
    snall_list   =df['snall'].to_numpy()
 
    if((objtype=='star') or (objtype=='quasar')):
+   # PSF Magnitudes for Point Source
       psfmag_u_list=df['psfmag_u'].to_numpy()
       psfmagerr_u_list=df['psfmagerr_u'].to_numpy()
       psfmag_g_list=df['psfmag_g'].to_numpy()
@@ -282,6 +283,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
       psfmag_z_list=df['psfmag_z'].to_numpy()
       psfmagerr_z_list=df['psfmagerr_z'].to_numpy()
    elif(objtype=='galaxy'):
+   # Fiber Magnitudes for Galaxies
       fibermag_u_list=df['fibermag_u'].to_numpy()
       fibermagerr_u_list=df['fibermagerr_u'].to_numpy()
       fibermag_g_list=df['fibermag_g'].to_numpy()
@@ -294,6 +296,7 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
       fibermagerr_z_list=df['fibermagerr_z'].to_numpy()
 
    if(objtype=='star'):
+   # Stars
       object_list=df['object'].to_numpy()
       sptype_list=df['sptype'].to_numpy()
       bv_list    =df['bv'].to_numpy()
@@ -315,13 +318,14 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
          gaia_pc_list    =numpy.nan_to_num(gaia_pc_list,nan=-1.0)
          #phot_g_mean_mag+5*log10(parallax)-10 as mg, 1000/parallax as dpc
    else:
+   # Extragalacic Objects
       z_list       =df['z'].to_numpy()
       zerr_list    =df['zerr'].to_numpy()
       zwarning_list=df['zwarning'].to_numpy()
+   # E(B-V) of Milky Way
       coords  =SkyCoord(ra_list,dec_list,frame='icrs',unit='deg')
       sfd     =SFDQuery()
       ebv_list=sfd(coords)
-      #print('EBV=',ebv_list)
 
    Rv=3.1
    for i in range(len(df)):
@@ -334,8 +338,6 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
       spec.read()
 
       if(objtype!='star'):
-         #extinction_mag=numpy.zeros(len(spec.wave))
-         #extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa',out=extinction_mag)
          spec.z=z_list[i]
          #Milky Way Extinction Correction by CCM89
          extinction_mag=extinction.ccm89(spec.wave,ebv_list[i]*Rv,Rv,unit='aa')
