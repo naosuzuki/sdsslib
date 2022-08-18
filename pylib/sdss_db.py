@@ -225,15 +225,23 @@ class SDSSspec:
 
           self.flux/=nfactor
 
-def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe):
+def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe,dr):
+# 2022-08-19 LBNL dr8/dr17 switch is introduced
+# 2022-08-18 LBNL restframe is added
 # 2022-08-12 LBNL
 # Create 2D FITS File from DataFrame
 
-   # Wavelength Range : 3536.71 - 10415.98
-   coeff0=3.5486 
    coeff1=0.0001
-   startID=35486
-   endID  =40177
+   if(dr=='dr17'):
+   # Wavelength Range : 3536.71 - 10415.98 : 4692 pixels
+      coeff0=3.5486 
+      startID=35486
+      endID  =40177
+   elif(dr=='dr8'):
+   # Wavelength Range : 3760.11 - 9274.70  : 3922 pixels
+      coeff0=3.5752
+      startID=35752
+      endID  =39673
    npixall=endID-startID+1
 
    if(flag_restframe==True):
