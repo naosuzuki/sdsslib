@@ -25,8 +25,6 @@ if(objtype=='star'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
       fitsfilename1='sdssDR8_wd.fits'
       fitsfilename2='sdssDR8_star.fits'
-      fitsfilename1=fitsdatadir+'sdssDR8snr10b_wd.fits'
-      fitsfilename2=fitsdatadir+'sdssDR8snr10b_star.fits'
       fitsfilename1=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_wd.fits'
       fitsfilename2=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_star.fits'
    elif(dr=='dr17'):
