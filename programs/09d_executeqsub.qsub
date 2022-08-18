@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'SDSS-DR17-galaxy5'
+#PBS -N 'SDSS-DR8-galaxy5'
  
 #PBS -l nodes=1:ppn=2,mem=64gb,vmem=128gb
  
@@ -8,5 +8,5 @@
  
 #PBS -l walltime=48:00:00 
  
-#/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr8 10
-/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr17 5
+/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr8 5
+#/work/nsuzuki/anaconda3/bin/python /work/nsuzuki/github/sdsslib/programs/09_create2dspec_csv.py galaxy dr17 5
