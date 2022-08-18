@@ -49,14 +49,14 @@ if(objtype=='star'):
    dfwd=dfstar[dfstar['subclass'].str.contains('WD')]
    dfspec=dfwd.sort_values(by=['teff'],ascending=True)
    dfspec.reset_index()
-   sdss_db.create_2dspec(dfspec,fitsfilename1,objtype,flag_gaia,dr)
+   sdss_db.create_2dspec(dfspec,fitsfilename1,objtype,flag_gaia,flag_restframe,dr)
    del dfspec ; del df ; del dfwd ; dftmp10
 
 # All of Stars
    dfspec2=dfstar.sort_values(by=['teff'],ascending=True)
    dfspec2.reset_index()
    print('dfspec2=',dfspec2)
-   sdss_db.create_2dspec(dfspec2,fitsfilename2,objtype,flag_gaia,dr)
+   sdss_db.create_2dspec(dfspec2,fitsfilename2,objtype,flag_gaia,flag_restframe,dr)
    del dfspec2
 
 # Galaxy
