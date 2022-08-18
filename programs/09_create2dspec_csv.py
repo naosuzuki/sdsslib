@@ -49,13 +49,13 @@ if(objtype=='star'):
    dfstar=dftmp10.copy()
 # Selecting White Dwarfs
    dfwd=dfstar[dfstar['subclass'].str.contains('WD')]
-   dfspec=dfwd.sort_values(by=['teff'],ascending=False)
+   dfspec=dfwd.sort_values(by=['teff'],ascending=True)
    dfspec.reset_index()
    sdss_db.create_2dspec(dfspec,fitsfilename1,objtype,flag_gaia)
    del dfspec ; del df ; del dfwd ; dftmp10
 
 # All of Stars
-   dfspec2=dfstar.sort_values(by=['teff'],ascending=False)
+   dfspec2=dfstar.sort_values(by=['teff'],ascending=True)
    dfspec2.reset_index()
    print('dfspec2=',dfspec2)
    sdss_db.create_2dspec(dfspec2,fitsfilename2,objtype,flag_gaia)
@@ -93,7 +93,7 @@ if(objtype=='galaxy'):
    dfgalaxy=dftmp10.copy()
    del dftmp5 ; del dftmp3 ; del dftmp1
 
-   dfspec=dfgalaxy.sort_values(by=['z'],ascending=False)
+   dfspec=dfgalaxy.sort_values(by=['z'],ascending=True)
 
    flag_gaia=False
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia,flag_restframe)
@@ -129,7 +129,7 @@ if(objtype=='quasar'):
    # S/N>10 for DR17
    dfquasar=dftmp10.copy()
    #dfquasar=df.copy()
-   dfspec=dfquasar.sort_values(by=['z'],ascending=False)
+   dfspec=dfquasar.sort_values(by=['z'],ascending=True)
 
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia,flag_restframe)
    del df ; del dfquasar ;  del dfspec
