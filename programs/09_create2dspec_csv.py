@@ -51,7 +51,6 @@ if(objtype=='star'):
    print('df sn>1',len(dftmp1))
    del dftmp5 ; del dftmp3 ; del dftmp1
 
-   #dfstar=df.copy()
    dfstar=dftmp10.copy()
 # Selecting White Dwarfs
    dfwd=dfstar[dfstar['subclass'].str.contains('WD')]
@@ -66,22 +65,6 @@ if(objtype=='star'):
    print('dfspec2=',dfspec2)
    sdss_db.create_2dspec(dfspec2,fitsfilename2,objtype,flag_gaia)
    del dfspec2
-
-   #for i in range(1000):
-#   for i in range(len(dfspec)):
-#    plate=dfspec['plate'].iloc[i]
-#    mjd  =dfspec['mjd'].iloc[i]
-#    fiber=dfspec['fiber'].iloc[i]
-    #print(i,plate,mjd,fiber)
-#    print(i,plate,mjd,fiber,dfspec['subclass'].iloc[i],dfspec['teff'].iloc[i])
-
-   #for i in range(100,200):
-   #for i in range(len(dfspec2)):
-   # plate=dfspec2['plate'].iloc[i]
-   # mjd  =dfspec2['mjd'].iloc[i]
-   # fiber=dfspec2['fiber'].iloc[i]
-   # print(i,plate,mjd,fiber)
-   # print(i,plate,mjd,fiber,dfspec2['subclass'].iloc[i],dfspec2['teff'].iloc[i])
 
 # Galaxy
 #objtype='galaxy'
@@ -100,9 +83,7 @@ if(objtype=='galaxy'):
       fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_galaxy_rest.fits'
    df=pd.read_csv(csvfile)
    print(df)
-   #df['class']=df['class'].str.strip()
-   #df['subclass']=df['subclass'].str.strip()
-   #dfgalaxy=df[(df['class']=='GALAXY') & (df['thing_id']!=-1)]
+
    print('dfgalaxy all=',len(df))
    dftmp10=df[df['snall']>=float(snr)]
    print('dfgalaxy sn>10',len(dftmp10))
@@ -149,8 +130,6 @@ if(objtype=='quasar'):
    print('df sn>3',len(dftmp3))
    dftmp1=df[df['snall']>1.0]
    print('df sn>1',len(dftmp1))
-   #del dftmp5 ; del dftmp1
-   #del dftmp3  
 
    # S/N>10 for DR17
    dfquasar=dftmp10.copy()
@@ -158,5 +137,4 @@ if(objtype=='quasar'):
    dfspec=dfquasar.sort_values(by=['z'],ascending=False)
 
    sdss_db.create_2dspec(dfspec,fitsfilename,objtype,flag_gaia,flag_restframe)
-   #del products_list ; del df ; del dfquasar
    del df ; del dfquasar ;  del dfspec
