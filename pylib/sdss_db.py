@@ -542,6 +542,13 @@ def create_2dspec(df,fitsfilename,objtype,flag_gaia,flag_restframe,dr):
       hdr['comment']='19: Zerr        (SDSS)'
       hdr['comment']='20: ZWARNING    (SDSS)'
       hdr['comment']='21: E(B-V)      (SDSS)'
+      if(flag_restframe==True):
+         hdr['comment']='22: COEFF0      (SDSS)'
+         hdr['comment']='23: STARTID     (SDSS)'
+         hdr['comment']='24: DM distanceM(SDSS)'
+         hdr['comment']='25: DMERR       (SDSS)'
+         hdr['comment']='26: DMZ2        (SDSS)'
+         hdr['comment']='27: DMZ2ERR     (SDSS)'
 
    if(os.path.exists(fitsfilename)): os.remove(fitsfilename) 
    hdulist.writeto(fitsfilename)
