@@ -29,7 +29,7 @@ if(objtype=='star'):
       fitsfilename2=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_star.fits'
    elif(dr=='dr17'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
-      fitsfilename1=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'+_wd.fits'
+      fitsfilename1=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_wd.fits'
       fitsfilename2=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_star.fits'
 
    df=pd.read_csv(csvfile)
