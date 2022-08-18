@@ -42,11 +42,11 @@ def read2dspec(fitsfilename):
       'gaia_gmag','gaia_bprp','gaia_mg','gaia_pc'])
 
    print('total=',len(df))
-   #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna())]
+   dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna())]
    #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>3.)]
    #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>5.)]
    #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=10.)]
-   dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=20.)]
+   #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=20.)]
    ptx=dfgaia['gaia_bprp'].to_numpy()
    pty=dfgaia['gaia_mg'].to_numpy()
    parallaxsnr=dfgaia['parallaxsnr'].to_numpy()
