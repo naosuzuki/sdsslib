@@ -16,11 +16,6 @@ objtype=sys.argv[1]
 dr=sys.argv[2]
 snr=int(sys.argv[3])
 
-#spall=sdss_catalog.spall()
-#print(spall.dr)
-#print(spall.fitstablename)
-#spall.read()
-
 # Star
 #objtype='star'
 if(objtype=='star'):
