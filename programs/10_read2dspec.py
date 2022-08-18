@@ -45,8 +45,8 @@ def read2dspec(fitsfilename):
    #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna())]
    #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>3.)]
    #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>5.)]
-   dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=10.)]
-   #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=20.)]
+   #dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=10.)]
+   dfgaia=df[(df['gaia_mg'].notna()) & (df['gaia_bprp'].notna()) & (df['parallaxsnr']>=20.)]
    ptx=dfgaia['gaia_bprp'].to_numpy()
    pty=dfgaia['gaia_mg'].to_numpy()
    parallaxsnr=dfgaia['parallaxsnr'].to_numpy()
@@ -88,8 +88,8 @@ def plot_wd(ptx,pty,parallaxsnr):
    #plt.title('SDSS DR17 + GAIA DR3 Parallax S/N : '+"%6i"%(len(ptx))+" Stars")
    #plt.title('SDSS DR17 + GAIA DR3 Parallax S/N > 3 : '+"%6i"%(len(ptx))+" Stars")
    #plt.title('SDSS DR17 + GAIA DR3 Parallax S/N > 5 : '+"%6i"%(len(ptx))+" Stars")
-   plt.title('SDSS DR17 + GAIA DR3 Parallax S/N > 10 : '+"%6i"%(len(ptx))+" Stars")
-   #plt.title('SDSS DR17 + GAIA DR3 Parallax S/N > 20 : '+"%6i"%(len(ptx))+" Stars")
+   #plt.title('SDSS DR17 + GAIA DR3 Parallax S/N > 10 : '+"%6i"%(len(ptx))+" Stars")
+   plt.title('SDSS DR17 + GAIA DR3 Parallax S/N > 20 : '+"%6i"%(len(ptx))+" Stars")
    print(ptx,pty)
    #plt.scatter(ptx,pty,marker='.',c='k',s=3.0,edgecolors='none')
    plt.scatter(ptx,pty,c=parallaxsnr,s=0.5,cmap='rainbow',alpha=1.00,vmin=0.1,vmax=20.0)
@@ -103,9 +103,8 @@ def plot_wd(ptx,pty,parallaxsnr):
    #plt.savefig('HR_SDSSDR17GAIADR3.png',orientation='portrait')
    #plt.savefig('HR_SDSSDR17GAIADR3SNR3.png',orientation='portrait')
    #plt.savefig('HR_SDSSDR17GAIADR3SNR5.png',orientation='portrait')
-   plt.savefig('HR_SDSSDR17GAIADR3SNR10.png',orientation='portrait')
-   #plt.savefig('HR_SDSSDR17GAIADR3SNR20.png',orientation='portrait')
-   #plt.savefig('HR_SDSSDR17GAIADR3SNR20.png',orientation='portrait')
+   #plt.savefig('HR_SDSSDR17GAIADR3SNR10.png',orientation='portrait')
+   plt.savefig('HR_SDSSDR17GAIADR3SNR20.png',orientation='portrait')
    plt.clf()
    plt.close()
 
