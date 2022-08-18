@@ -1,6 +1,6 @@
 #!/bin/sh
 
-#PBS -N 'SDSS-DR17-Star10'
+#PBS -N 'SDSS-DR8-Star10'
  
 #PBS -l nodes=1:ppn=4,mem=64gb,vmem=128gb
  
