@@ -25,12 +25,12 @@ if(objtype=='star'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr8_star.csv'
       fitsfilename1='sdssDR8_wd.fits'
       fitsfilename2='sdssDR8_star.fits'
-      fitsfilename1=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_wd.fits'
-      fitsfilename2=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_star.fits'
+      fitsfilename1=fitsdatadir+'sdssDR8snr'+"%02i"%(snr)+'_wd.fits'
+      fitsfilename2=fitsdatadir+'sdssDR8snr'+"%02i"%(snr)+'_star.fits'
    elif(dr=='dr17'):
       csvfile=gaiacsvdir+'gaiadr3_sdssdr17_star.csv'
-      fitsfilename1=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_wd.fits'
-      fitsfilename2=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_star.fits'
+      fitsfilename1=fitsdatadir+'sdssDR17snr'+"%02i"%(snr)+'_wd.fits'
+      fitsfilename2=fitsdatadir+'sdssDR17snr'+"%02i"%(snr)+'_star.fits'
 
    df=pd.read_csv(csvfile)
    print('df all=',len(df))
@@ -67,13 +67,13 @@ if(objtype=='galaxy'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_galaxy.csv'
       fitsfilename='sdssDR8snr3_galaxy.fits'
-      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_galaxy.fits'
-      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_galaxy_rest.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%02i"%(snr)+'_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%02i"%(snr)+'_galaxy_rest.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_galaxy.csv'
       fitsfilename='sdssDR17snr3_galaxy.fits'
-      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_galaxy.fits'
-      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_galaxy_rest.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%02i"%(snr)+'_galaxy.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%02i"%(snr)+'_galaxy_rest.fits'
    df=pd.read_csv(csvfile)
    print(df)
 
@@ -105,13 +105,13 @@ if(objtype=='quasar'):
    if(dr=='dr8'):
       csvfile=sdsscsvdir+'dr8_spall_quasar.csv'
       fitsfilename='sdssDR8_quasar.fits'
-      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_quasar.fits'
-      fitsfilename=fitsdatadir+'sdssDR8snr'+"%2i"%(snr)+'_quasar_rest.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%02i"%(snr)+'_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR8snr'+"%02i"%(snr)+'_quasar_rest.fits'
    elif(dr=='dr17'):
       csvfile=sdsscsvdir+'v5_13_2_spall_quasar.csv'
       fitsfilename='sdssDR17_quasar.fits'
-      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_quasar.fits'
-      fitsfilename=fitsdatadir+'sdssDR17snr'+"%2i"%(snr)+'_quasar_rest.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%02i"%(snr)+'_quasar.fits'
+      fitsfilename=fitsdatadir+'sdssDR17snr'+"%02i"%(snr)+'_quasar_rest.fits'
    df=pd.read_csv(csvfile)
    print(df)
    print('df all=',len(df))
